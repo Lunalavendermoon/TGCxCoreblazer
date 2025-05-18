@@ -8,11 +8,11 @@ using System.Numerics;
 public class BlockLevelManager : MonoBehaviour
 {
     public int day;
-    public GameObject helpUiManager;
+    public HelpUIManager helpUiManager;
     public GameObject hintManager;
     public GameObject blockPrefab;
 
-    public GameObject gameGrid;
+    public BlockGrid grid;
 
     // 2.0f for big cell, 4.0f for small cell
     public int scalefact;
@@ -30,8 +30,6 @@ public class BlockLevelManager : MonoBehaviour
     public GameObject levelWarning;
     public float warningTimer;
     float timer;
-
-    BlockGrid grid;
 
     Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
 
@@ -55,8 +53,6 @@ public class BlockLevelManager : MonoBehaviour
         // maxSize = GameManager.blockMaxSize;
         // maxNutrition = GameManager.blockMaxGroupSize;
 
-        grid = gameGrid.GetComponent<BlockGrid>();
-
         // BlockType[] blocksToSpawn = GameManager.blockSpawnList;
 
         float ycarb = 2.5f;
@@ -75,9 +71,9 @@ public class BlockLevelManager : MonoBehaviour
         updateUI();
 
         if (day == 1) {
-            helpUiManager.GetComponent<HelpUIManager>().startTutorialDay1();
+            helpUiManager.startTutorialDay1();
         } else if (day == 3) {
-            helpUiManager.GetComponent<HelpUIManager>().startTutorialDay3();
+            helpUiManager.startTutorialDay3();
         }
     }
 
@@ -213,7 +209,7 @@ public class BlockLevelManager : MonoBehaviour
         if (timer > 0.0f) {
             timer -= Time.deltaTime;
         } else {
-            levelWarning.SetActive(false);
+            // levelWarning.SetActive(false);
             // levelWarning.GetComponent<FlashingAnim>().SetAnimated(false);
         }
         if (selectedBlock != -1) {

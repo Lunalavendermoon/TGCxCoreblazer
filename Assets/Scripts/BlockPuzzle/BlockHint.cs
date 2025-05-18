@@ -10,7 +10,7 @@ public class BlockHint : MonoBehaviour
     public float hintTimer;
 
     public GameObject helpButton;
-    public GameObject levelManager;
+    public BlockLevelManager levelManager;
 
     float timer = 0;
 
@@ -85,7 +85,7 @@ public class BlockHint : MonoBehaviour
         helpButton.GetComponent<HelpButton>().ButtonClickable(false);
         curId = id;
         GameObject obj;
-        if (id == -1 || levelManager.GetComponent<BlockLevelManager>().metRequirements()) {
+        if (id == -1 || levelManager.metRequirements()) {
             hintText.text = "Click <color=#ffd666>Next Phase</color> to move on!";
             obj = hintTextObject;
         } else {

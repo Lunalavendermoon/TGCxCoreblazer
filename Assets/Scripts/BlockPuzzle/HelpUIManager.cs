@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HelpUIManager : MonoBehaviour
 {
-    public GameObject blockLevelManager;
+    public BlockLevelManager blockLevelManager;
     // public GameObject tutorialDialogueManager;
     public GameObject tutorialContent;
     public GameObject helpBg;
@@ -11,12 +11,7 @@ public class HelpUIManager : MonoBehaviour
 
     // TutorialDialogueManager dialogueManager;
 
-    BlockLevelManager levelManager;
-
     void initializeStuff() {
-        if (levelManager == null) {
-            levelManager = blockLevelManager.GetComponent<BlockLevelManager>();
-        }
         // if (dialogueManager == null) {
         //     dialogueManager = tutorialDialogueManager.GetComponent<TutorialDialogueManager>();
         // }
@@ -45,7 +40,7 @@ public class HelpUIManager : MonoBehaviour
 
     public void startTutorialFromButton(int day) {
         tutorialContent.SetActive(true);
-        levelManager.setPopupStatus(true);
+        blockLevelManager.setPopupStatus(true);
         helpButton.GetComponent<HelpButton>().ButtonClickable(false);
 
         if (day == 1 || day == 3) {
@@ -71,6 +66,6 @@ public class HelpUIManager : MonoBehaviour
 
     void setStatus(bool status) {
         helpBg.SetActive(status);
-        levelManager.setPopupStatus(status);
+        blockLevelManager.setPopupStatus(status);
     }
 }
