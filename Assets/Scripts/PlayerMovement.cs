@@ -6,8 +6,9 @@ public class Player : MonoBehaviour
 {
 
     public Rigidbody rb;
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float jumpForce = 5f;
+    [SerializeField] float weight_max10; //max is double of moveSpeed
+    [SerializeField] float moveSpeed;
+    [SerializeField] float jumpForce;
 
     private float moveX;
     private float moveY;
@@ -34,7 +35,8 @@ public class Player : MonoBehaviour
     {
         moveX = inputActions.Player.Move.ReadValue<Vector2>().x;
         moveY = inputActions.Player.Move.ReadValue<Vector2>().y;
-        transform.position += new Vector3(moveX, 0f, moveY) * moveSpeed * Time.deltaTime;
+        transform.position += new Vector3(moveX, 0f, moveY) * (moveSpeed - weight_max10 / 2) * Time.deltaTime;
+        //for physics based movement: rb.AddForce(new Vector3(moveX, 0f, moveY) * 2f * moveSpeed * Time.deltaTime, ForceMode.VelocityChange);
     }
 
     private void OnCollisionStay(Collision collision)
@@ -54,7 +56,7 @@ public class Player : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * (jumpForce - weight_max10/4), ForceMode.Impulse);
             isGrounded = false;
         }
     }
