@@ -3,13 +3,13 @@ using UnityEngine;
 public class HelpUIManager : MonoBehaviour
 {
     public GameObject blockLevelManager;
-    public GameObject tutorialDialogueManager;
+    // public GameObject tutorialDialogueManager;
     public GameObject tutorialContent;
     public GameObject helpBg;
     public GameObject helpButton;
     public GameObject closeButton;
 
-    TutorialDialogueManager dialogueManager;
+    // TutorialDialogueManager dialogueManager;
 
     BlockLevelManager levelManager;
 
@@ -17,16 +17,16 @@ public class HelpUIManager : MonoBehaviour
         if (levelManager == null) {
             levelManager = blockLevelManager.GetComponent<BlockLevelManager>();
         }
-        if (dialogueManager == null) {
-            dialogueManager = tutorialDialogueManager.GetComponent<TutorialDialogueManager>();
-        }
+        // if (dialogueManager == null) {
+        //     dialogueManager = tutorialDialogueManager.GetComponent<TutorialDialogueManager>();
+        // }
     }
 
     void Start() {
         initializeStuff();
-        if (GameManager.day == 2) {
-            hideHelp();
-        }
+        // if (GameManager.day == 2) {
+        //     hideHelp();
+        // }
     }
 
     public void startTutorialDay1() {
@@ -49,9 +49,9 @@ public class HelpUIManager : MonoBehaviour
         helpButton.GetComponent<HelpButton>().ButtonClickable(false);
 
         if (day == 1 || day == 3) {
-            dialogueManager.StartDialogueFromDay(day);
+            // dialogueManager.StartDialogueFromDay(day);
         } else {
-            dialogueManager.StartDialogueFromTutorial();
+            // dialogueManager.StartDialogueFromTutorial();
         }
     }
 

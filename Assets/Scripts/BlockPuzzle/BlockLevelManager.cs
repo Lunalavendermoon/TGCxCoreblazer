@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using System;
 using System.Numerics;
-using DG.Tweening;
+// using DG.Tweening;
 
 public class BlockLevelManager : MonoBehaviour
 {
@@ -31,7 +31,7 @@ public class BlockLevelManager : MonoBehaviour
     public float warningTimer;
     float timer;
 
-    Grid grid;
+    BlockGrid grid;
 
     Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
 
@@ -48,29 +48,29 @@ public class BlockLevelManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.LoadBlockData(day);
+        // GameManager.LoadBlockData(day);
 
         blockLabel.text = "";
 
-        maxSize = GameManager.blockMaxSize;
-        maxNutrition = GameManager.blockMaxGroupSize;
+        // maxSize = GameManager.blockMaxSize;
+        // maxNutrition = GameManager.blockMaxGroupSize;
 
-        grid = gameGrid.GetComponent<Grid>();
+        grid = gameGrid.GetComponent<BlockGrid>();
 
-        BlockType[] blocksToSpawn = GameManager.blockSpawnList;
+        // BlockType[] blocksToSpawn = GameManager.blockSpawnList;
 
         float ycarb = 2.5f;
 
-        grid.initGrid(
-            GameManager.blockGridArray, GameManager.blockXOffset, GameManager.blockYOffset, GameManager.blockSolutionArray, day
-        );
+        // grid.initGrid(
+        //     GameManager.blockGridArray, GameManager.blockXOffset, GameManager.blockYOffset, GameManager.blockSolutionArray, day
+        // );
         
         // BLOCK ID MUST BE 1 OR GREATER
         int id = 1;
-        foreach (BlockType b in blocksToSpawn) {
-            spawnBlock(id, b, id - 1, ycarb);
-            id++;
-        }
+        // foreach (BlockType b in blocksToSpawn) {
+        //     spawnBlock(id, b, id - 1, ycarb);
+        //     id++;
+        // }
 
         updateUI();
 
@@ -94,7 +94,7 @@ public class BlockLevelManager : MonoBehaviour
 
     public void showHint() {
         int id = grid.getFirstMismatch();
-        hintManager.GetComponent<BlockHintScript>().showBlock(id);
+        hintManager.GetComponent<BlockHint>().showBlock(id);
     }
     
     void spawnBlock(int id, BlockType type, int count, float yoffset) {
@@ -117,9 +117,9 @@ public class BlockLevelManager : MonoBehaviour
         blocks.Add(id, block);
 
         object[] transforms = new object[] {false, false, 0, 0, 0};
-        if (GameManager.blockPositionArray.ContainsKey(id)) {
-            transforms = GameManager.blockPositionArray[id];
-        }
+        // if (GameManager.blockPositionArray.ContainsKey(id)) {
+        //     transforms = GameManager.blockPositionArray[id];
+        // }
 
         UnityEngine.Vector3 hintPos = grid.arrayToWorld((int)transforms[3], (int)transforms[4]);
         // idk why these blocks specifically are broken but i guess i have to hardcode it now..
@@ -129,7 +129,7 @@ public class BlockLevelManager : MonoBehaviour
                 hintPos += new UnityEngine.Vector3(-0.25f, -0.25f);
             }
         }
-        hintManager.GetComponent<BlockHintScript>().initBlock(
+        hintManager.GetComponent<BlockHint>().initBlock(
             id, type, hintPos, (bool)transforms[0], (bool)transforms[1], (int)transforms[2], this, grid, scalefact
         );
     }
@@ -214,7 +214,7 @@ public class BlockLevelManager : MonoBehaviour
             timer -= Time.deltaTime;
         } else {
             levelWarning.SetActive(false);
-            levelWarning.GetComponent<FlashingAnim>().SetAnimated(false);
+            // levelWarning.GetComponent<FlashingAnim>().SetAnimated(false);
         }
         if (selectedBlock != -1) {
             UnityEngine.Vector3 anchor = getBlock(selectedBlock).getSpriteTopLeft();
@@ -247,13 +247,13 @@ public class BlockLevelManager : MonoBehaviour
     public void toNextLvl() {
         if (!metRequirements()) {
             levelWarning.SetActive(true);
-            levelWarning.GetComponent<FlashingAnim>().SetAnimated(true);
-            AudioSFXManager.Instance.PlayAudio("bad");
+            // levelWarning.GetComponent<FlashingAnim>().SetAnimated(true);
+            // AudioSFXManager.Instance.PlayAudio("bad");
             timer = warningTimer;
             return;
         }
-        DOTween.KillAll();
-        GameManager.StoreNutritionInfo(size, nutrition);
-        ChangeScene.LoadNextSceneStatic();
+        // DOTween.KillAll();
+        // GameManager.StoreNutritionInfo(size, nutrition);
+        // ChangeScene.LoadNextSceneStatic();
     }
 }

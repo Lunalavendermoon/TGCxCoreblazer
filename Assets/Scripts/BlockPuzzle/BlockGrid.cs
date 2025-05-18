@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Grid : MonoBehaviour
+public class BlockGrid : MonoBehaviour
 {
     public Tilemap tilemap;
 

@@ -8,7 +8,7 @@ public class HelpButton : MonoBehaviour
 
     void OnMouseDown() {
         if (click) {
-            AudioSFXManager.Instance.PlayAudio("ding");
+            // AudioSFXManager.Instance.PlayAudio("ding");
             levelManager.GetComponent<BlockLevelManager>().showHint();
         }
     }

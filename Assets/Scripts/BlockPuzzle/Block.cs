@@ -6,7 +6,7 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     BlockLevelManager levelManager;
-    Grid grid;
+    BlockGrid grid;
     new SpriteRenderer renderer;
 
     public int id {get; set;}
@@ -57,8 +57,8 @@ public class Block : MonoBehaviour
     bool pauseDragging = false;
     bool selected = false;
 
-    public void initBlock(int id, BlockType type, BlockLevelManager levelManager, Grid grid, int scaling) {
-        GetComponent<FlashingAnim>().SetAnimated(false);
+    public void initBlock(int id, BlockType type, BlockLevelManager levelManager, BlockGrid grid, int scaling) {
+        // GetComponent<FlashingAnim>().SetAnimated(false);
 
         this.id = id;
         isOnGrid = false;
@@ -236,7 +236,7 @@ public class Block : MonoBehaviour
     void makeTransparent() {
         if (selected == false)
         {
-            AudioSFXManager.Instance.PlayAudio("pop");
+            // AudioSFXManager.Instance.PlayAudio("pop");
             selected = true;
         }
         Color col = renderer.color;
@@ -247,7 +247,7 @@ public class Block : MonoBehaviour
     void makeOpaque() {
         if (selected == true)
         {
-            AudioSFXManager.Instance.PlayAudio("pop");
+            // AudioSFXManager.Instance.PlayAudio("pop");
             selected = false;
         }
         Color col = renderer.color;
@@ -274,7 +274,7 @@ public class Block : MonoBehaviour
     }
 
     public void placeBlockAt(UnityEngine.Vector3 position) {
-        AudioSFXManager.Instance.PlayAudio("thump");
+        // AudioSFXManager.Instance.PlayAudio("thump");
         transform.position = position
         + new UnityEngine.Vector3(
             blockType.shape[0].Length / (2.0f / scalefact) + xoffset,
