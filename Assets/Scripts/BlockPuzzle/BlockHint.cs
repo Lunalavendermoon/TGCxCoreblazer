@@ -29,7 +29,7 @@ public class BlockHint : MonoBehaviour
         // hintText.text = "";
     }
 
-    public void initBlock(int id, string type, Vector3 position, bool hflip, bool vflip, int rot, BlockLevelManager script, BlockGrid grid) {
+    public void initBlock(int id, BlockType type, Vector3 position, bool hflip, bool vflip, int rot, BlockLevelManager script, BlockGrid grid) {
         GameObject block = Instantiate(blockPrefab, position, Quaternion.identity);
         block.GetComponent<Block>().initBlock(id, type, script, grid);
 

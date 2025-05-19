@@ -6,8 +6,7 @@ public class BlockGrid : MonoBehaviour
 {
     public Tilemap tilemap;
 
-    public Tile blank;
-    public Tile dropshadow;
+    public Tile bgTile;
 
     int xoffset, yoffset;
     int rows, cols;
@@ -27,7 +26,14 @@ public class BlockGrid : MonoBehaviour
         // map Block ID -> top-left corner's relative offset from the block w/ lowest ID
         this.solution = solution;
 
+        // draw da tilemap
         tilemap.ClearAllTiles();
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                Vector3Int cell = arrayToCell(new Vector3Int(i, j, 0));
+                tilemap.SetTile(cell, bgTile);
+            }
+        }
     }
 
     public Vector3 snapToGrid(Vector3 world) {
@@ -49,11 +55,9 @@ public class BlockGrid : MonoBehaviour
         return new Vector3(og.x - (currentDay == 1 ? 0.5f : 0), og.y);
     }
 
-    public int checkBlockPosition(int id, Vector3 position, string blockType) {
+    public bool checkBlockPosition(Vector3 position, BlockType blockType) {
         Vector3Int off = worldToArray(position);
-        // TODO calculate
-        // -1 = out of bounds, -2 = intersection with obstacle
-        return 0;
+        return off.x >= 0 && off.y >= 0 && off.x + blockType.width < cols && off.y + blockType.height < rows;
     }
 
     public void addBlock(int id, Vector3 position, string blockType)

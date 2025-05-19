@@ -53,7 +53,7 @@ public class BlockLevelManager : MonoBehaviour
         float ycarb = 2.5f;
 
         grid.initGrid(
-            new Dictionary<int, UnityEngine.Vector2>(), 10, 10, 0, 0, day
+            new Dictionary<int, UnityEngine.Vector2>(), 9, 8, 0, 5, day
         );
 
         // BLOCK ID MUST BE 1 OR GREATER
@@ -62,9 +62,9 @@ public class BlockLevelManager : MonoBehaviour
         //     spawnBlock(id, b, id - 1, ycarb);
         //     id++;
         // }
-        spawnBlock(1, "square", 0, 2.5f);
-        spawnBlock(2, "square", 1, 2.5f);
-        spawnBlock(3, "square", 2, 2.5f);
+        spawnBlock(1, BlockType.square(), 0, 2.5f);
+        spawnBlock(2, BlockType.square(), 1, 2.5f);
+        spawnBlock(3, BlockType.square(), 2, 2.5f);
 
         updateUI();
 
@@ -94,7 +94,7 @@ public class BlockLevelManager : MonoBehaviour
         hintManager.showBlock(id);
     }
     
-    void spawnBlock(int id, string type, int count, float yoffset) {
+    void spawnBlock(int id, BlockType type, int count, float yoffset) {
         int x = count % 5;
         int y = count / 5;
         UnityEngine.Vector3 position = new UnityEngine.Vector3(-7.0f + 1.2f * x, yoffset - 1.7f * y);

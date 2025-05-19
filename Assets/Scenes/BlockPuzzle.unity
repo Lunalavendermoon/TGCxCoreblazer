@@ -382,7 +382,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -442,8 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 952269033}
-  blank: {fileID: 0}
-  dropshadow: {fileID: 0}
+  bgTile: {fileID: 11400000, guid: 46ec3653dac15432abfacaca2202b014, type: 2}
 --- !u!1 &1161892255
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +619,6 @@ MonoBehaviour:
   hintManager: {fileID: 756877912}
   blockPrefab: {fileID: 3631039357533901830, guid: 9cb37f39ad62749f7943b6d1209abe4e, type: 3}
   grid: {fileID: 952269034}
-  scalefact: 2
   camera: {fileID: 798787324}
   levelWarning: {fileID: 0}
   warningTimer: 3

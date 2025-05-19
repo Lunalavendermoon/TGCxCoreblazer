@@ -9,7 +9,7 @@ public class Block : MonoBehaviour
 
     public int id {get; set;}
 
-    public string blockType {get; set;}
+    public BlockType blockType {get; set;}
 
     public bool isOnGrid {get; set;}
     
@@ -24,7 +24,7 @@ public class Block : MonoBehaviour
     private Vector3 screenPoint;
     private Vector3 offset;
 
-    public void initBlock(int id, string type, BlockLevelManager levelManager, BlockGrid grid)
+    public void initBlock(int id, BlockType type, BlockLevelManager levelManager, BlockGrid grid)
     {
         // GetComponent<FlashingAnim>().SetAnimated(false);
 
@@ -36,7 +36,7 @@ public class Block : MonoBehaviour
         resetPosition = transform.position;
 
         renderer = GetComponent<SpriteRenderer>();
-        switch (type)
+        switch (type.name)
         {
             case "square":
                 renderer.sprite = squareSprite;
@@ -90,33 +90,27 @@ public class Block : MonoBehaviour
         }
         isDragging = false;
 
-        int status = grid.checkBlockPosition(id, getSpriteTopLeft(), blockType);
-
-        if (status == 0)
+        if (grid.checkBlockPosition(getSpriteTopLeft(), blockType))
         {
             makeOpaque();
 
             if (isOnGrid)
             {
-                grid.updateBlock(id, getSpriteTopLeft(), blockType);
+                grid.updateBlock(id, getSpriteTopLeft(), blockType.name);
             }
             else
             {
                 isOnGrid = true;
-                grid.addBlock(id, getSpriteTopLeft(), blockType);
+                grid.addBlock(id, getSpriteTopLeft(), blockType.name);
                 levelManager.playerAddBlock(id);
                 levelManager.deselectBlock();
             }
             placeBlockAt(grid.snapToGrid(getSpriteTopLeft()));
         }
-        else if (status == -1)
+        else 
         {
             transform.position = resetPosition;
             makeOpaque();
-        }
-        else
-        {
-            makeTransparent();
         }
     }
 
@@ -155,7 +149,7 @@ public class Block : MonoBehaviour
     public void placeBlockAt(Vector3 position) {
         // AudioSFXManager.Instance.PlayAudio("thump");
         Vector2 S = renderer.sprite.bounds.size;
-        transform.position = position + new Vector3(S.x / 2.0f, -S.y / 2.0f);
+        transform.position = position + new Vector3(S.x / 2.0f, 0);
     }
 
     public void hintColor() {
