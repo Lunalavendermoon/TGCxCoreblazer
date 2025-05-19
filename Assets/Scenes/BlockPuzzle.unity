@@ -166,7 +166,7 @@ MonoBehaviour:
   hintTimer: 3
   helpButton: {fileID: 0}
   levelManager: {fileID: 1719107321}
-  blockPrefab: {fileID: 0}
+  blockPrefab: {fileID: 3631039357533901830, guid: 9cb37f39ad62749f7943b6d1209abe4e, type: 3}
   hintTextObject: {fileID: 0}
 --- !u!1 &798787322
 GameObject:
@@ -616,20 +616,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35eea02c7dcba4882937334c063765d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  day: 0
   helpUiManager: {fileID: 1161892257}
-  hintManager: {fileID: 0}
-  blockPrefab: {fileID: 0}
+  hintManager: {fileID: 756877912}
+  blockPrefab: {fileID: 3631039357533901830, guid: 9cb37f39ad62749f7943b6d1209abe4e, type: 3}
   grid: {fileID: 952269034}
-  scalefact: 0
-  vegText: {fileID: 0}
-  proteinText: {fileID: 0}
-  carbText: {fileID: 0}
-  camera: {fileID: 0}
-  blockLabel: {fileID: 0}
-  sizeBar: {fileID: 0}
+  scalefact: 2
+  camera: {fileID: 798787324}
   levelWarning: {fileID: 0}
-  warningTimer: 0
+  warningTimer: 3
 --- !u!1 &1761776374
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,133 +745,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &1987364281
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1987364283}
-  - component: {fileID: 1987364282}
-  - component: {fileID: 1987364284}
-  m_Layer: 0
-  m_Name: Block
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &1987364282
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987364281}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &1987364283
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987364281}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.0133724, y: -0.77949727, z: 1.1331048}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1987364284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987364281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe04bc11dce2b404cbf4ebf5717056f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appleSprite: {fileID: 21300000, guid: 2b62f169ad6c04c2d9a3fa4e8c3aa694, type: 3}
-  baconSprite: {fileID: 0}
-  bananaSprite: {fileID: 0}
-  beanSprite: {fileID: 0}
-  breadSprite: {fileID: 0}
-  bread2Sprite: {fileID: 0}
-  bread3Sprite: {fileID: 0}
-  bread4Sprite: {fileID: 0}
-  broccoliSprite: {fileID: 0}
-  cabbageSprite: {fileID: 0}
-  carrotSprite: {fileID: 0}
-  cheeseSprite: {fileID: 0}
-  chickenLegSprite: {fileID: 0}
-  cornSprite: {fileID: 0}
-  cucumberSprite: {fileID: 0}
-  eggSprite: {fileID: 0}
-  eggplantSprite: {fileID: 0}
-  fishSprite: {fileID: 0}
-  fishSliceSprite: {fileID: 0}
-  hamSprite: {fileID: 0}
-  lettuceSprite: {fileID: 0}
-  mushroomSprite: {fileID: 0}
-  noodleSprite: {fileID: 0}
-  oatsSprite: {fileID: 0}
-  riceSprite: {fileID: 0}
-  tofuSprite: {fileID: 0}
-  tomatoSprite: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -885,5 +752,4 @@ SceneRoots:
   - {fileID: 798787325}
   - {fileID: 1761776376}
   - {fileID: 1300248615}
-  - {fileID: 1987364283}
   - {fileID: 1487576893}

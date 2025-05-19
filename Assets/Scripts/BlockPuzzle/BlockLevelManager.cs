@@ -7,24 +7,14 @@ using System.Numerics;
 
 public class BlockLevelManager : MonoBehaviour
 {
-    public int day;
+    int day;
     public HelpUIManager helpUiManager;
-    public GameObject hintManager;
+    public BlockHint hintManager;
     public GameObject blockPrefab;
 
     public BlockGrid grid;
 
-    // 2.0f for big cell, 4.0f for small cell
-    public int scalefact;
-
-    public TMP_Text vegText;
-    public TMP_Text proteinText;
-    public TMP_Text carbText;
-
     public new Camera camera;
-    public TMP_Text blockLabel;
-
-    public GameObject sizeBar;
 
 
     public GameObject levelWarning;
@@ -46,9 +36,14 @@ public class BlockLevelManager : MonoBehaviour
 
     void Start()
     {
-        // GameManager.LoadBlockData(day);
+        // TODO call from another manager?
+        initLevel(1);
+    }
 
-        blockLabel.text = "";
+    void initLevel(int day)
+    {
+        this.day = day;
+        // GameManager.LoadBlockData(day);
 
         // maxSize = GameManager.blockMaxSize;
         // maxNutrition = GameManager.blockMaxGroupSize;
@@ -57,59 +52,55 @@ public class BlockLevelManager : MonoBehaviour
 
         float ycarb = 2.5f;
 
-        // grid.initGrid(
-        //     GameManager.blockGridArray, GameManager.blockXOffset, GameManager.blockYOffset, GameManager.blockSolutionArray, day
-        // );
-        
+        grid.initGrid(
+            new Dictionary<int, UnityEngine.Vector2>(), 10, 10, 0, 0, day
+        );
+
         // BLOCK ID MUST BE 1 OR GREATER
-        int id = 1;
+        // int id = 1;
         // foreach (BlockType b in blocksToSpawn) {
         //     spawnBlock(id, b, id - 1, ycarb);
         //     id++;
         // }
+        spawnBlock(1, "square", 0, 2.5f);
+        spawnBlock(2, "square", 1, 2.5f);
+        spawnBlock(3, "square", 2, 2.5f);
 
         updateUI();
 
-        if (day == 1) {
-            helpUiManager.startTutorialDay1();
-        } else if (day == 3) {
-            helpUiManager.startTutorialDay3();
-        }
+        // if (day == 1) {
+        //     helpUiManager.startTutorialDay1();
+        // } else if (day == 3) {
+        //     helpUiManager.startTutorialDay3();
+        // }
     }
 
-    public void setPopupStatus(bool status) {
-        if (status == popupIsOpen) {
+    public void setPopupStatus(bool status)
+    {
+        if (status == popupIsOpen)
+        {
             return;
         }
         popupIsOpen = status;
         deselectBlock();
-        foreach (var block in blocks.Values) {
+        foreach (var block in blocks.Values)
+        {
             block.GetComponent<Block>().setEnabled(!status);
         }
     }
 
     public void showHint() {
         int id = grid.getFirstMismatch();
-        hintManager.GetComponent<BlockHint>().showBlock(id);
+        hintManager.showBlock(id);
     }
     
-    void spawnBlock(int id, BlockType type, int count, float yoffset) {
+    void spawnBlock(int id, string type, int count, float yoffset) {
         int x = count % 5;
         int y = count / 5;
         UnityEngine.Vector3 position = new UnityEngine.Vector3(-7.0f + 1.2f * x, yoffset - 1.7f * y);
-        if (scalefact == 3) {
-            x = count < 12 ? count % 3 : (count - 12) % 2;
-            y = count < 12 ? count / 3 : 4 + (count - 12) / 2;
-            position = new UnityEngine.Vector3(-6.0f + 1.7f * x, yoffset - 1.3f * y);
-        }
-        UnityEngine.Vector3 jitter;
-        if (count == 4 && scalefact == 4) {
-            jitter = UnityEngine.Vector3.zero;
-        } else {
-            jitter = new UnityEngine.Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
-        }
+        UnityEngine.Vector3 jitter = new UnityEngine.Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
         GameObject block = Instantiate(blockPrefab, position + jitter, UnityEngine.Quaternion.identity);
-        block.GetComponent<Block>().initBlock(id, type, this, grid, scalefact);
+        block.GetComponent<Block>().initBlock(id, type, this, grid);
         blocks.Add(id, block);
 
         object[] transforms = new object[] {false, false, 0, 0, 0};
@@ -119,14 +110,8 @@ public class BlockLevelManager : MonoBehaviour
 
         UnityEngine.Vector3 hintPos = grid.arrayToWorld((int)transforms[3], (int)transforms[4]);
         // idk why these blocks specifically are broken but i guess i have to hardcode it now..
-        if (day == 3 && (int)transforms[2] != 0) {
-            hintPos += new UnityEngine.Vector3(-0.25f, -0.25f);
-            if (type.name.Equals("eggplant")) {
-                hintPos += new UnityEngine.Vector3(-0.25f, -0.25f);
-            }
-        }
-        hintManager.GetComponent<BlockHint>().initBlock(
-            id, type, hintPos, (bool)transforms[0], (bool)transforms[1], (int)transforms[2], this, grid, scalefact
+        hintManager.initBlock(
+            id, type, hintPos, (bool)transforms[0], (bool)transforms[1], (int)transforms[2], this, grid
         );
     }
 
@@ -138,48 +123,23 @@ public class BlockLevelManager : MonoBehaviour
     public void playerAddBlock(int id) {
         blocks[id].GetComponent<Renderer>().sortingOrder = 0;
         Block block = getBlock(id);
-        size += block.blockType.size;
-        switch (block.blockType.foodGroup) {
-            case "veg":
-                nutrition[0] += block.blockType.size;
-                break;
-            case "carb":
-                nutrition[1] += block.blockType.size;
-                break;
-            case "protein":
-                nutrition[2] += block.blockType.size;
-                break;
-        }
+        // TODO
         updateUI();
     }
 
     public void playerRemoveBlock(int id) {
         Block block = getBlock(id);
-        size -= block.blockType.size;
-        switch (block.blockType.foodGroup) {
-            case "veg":
-                nutrition[0] -= block.blockType.size;
-                break;
-            case "carb":
-                nutrition[1] -= block.blockType.size;
-                break;
-            case "protein":
-                nutrition[2] -= block.blockType.size;
-                break;
-        }
+        // TODO
         updateUI();
     }
 
-    void updateUI() {
-        sizeBar.transform.localScale = new UnityEngine.Vector3(0.93f * Mathf.Min(((float)size) / maxSize, 1), 0.93f, 1);
-        vegText.SetText(nutrition[0] + "/" + maxNutrition[0]);
-        carbText.SetText(nutrition[1] + "/" + maxNutrition[1]);
-        proteinText.SetText(nutrition[2] + "/" + maxNutrition[2]);
+    void updateUI()
+    {
+        // TODO
     }
 
     public void selectBlock(int id) {
         selectedBlock = id;
-        blockLabel.text = getBlock(id).blockType.displayName;
         blocks[id].GetComponent<Renderer>().sortingOrder = orderCount++;
         // this will probably never happen but yknow, just in case lol
         if (orderCount == 30000) {
@@ -199,7 +159,6 @@ public class BlockLevelManager : MonoBehaviour
     }
 
     public void deselectBlock() {
-        blockLabel.text = "";
         selectedBlock = -1;
     }
 
@@ -211,23 +170,6 @@ public class BlockLevelManager : MonoBehaviour
         } else {
             // levelWarning.SetActive(false);
             // levelWarning.GetComponent<FlashingAnim>().SetAnimated(false);
-        }
-        if (selectedBlock != -1) {
-            UnityEngine.Vector3 anchor = getBlock(selectedBlock).getSpriteTopLeft();
-            UnityEngine.Vector3 center = blocks[selectedBlock].transform.position;
-            blockLabel.transform.position = camera.WorldToScreenPoint(new UnityEngine.Vector3(center.x, anchor.y + 0.1f, center.z));
-            // space = confirm placement
-            // R = rotate CW
-            // D,F = flip horiz,vert
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                getBlock(selectedBlock).placeBlock();
-            } else if (Input.GetKeyDown(KeyCode.R)) {
-                getBlock(selectedBlock).rotate();
-            } else if (Input.GetKeyDown(KeyCode.H)) {
-                getBlock(selectedBlock).flip(true);
-            } else if (Input.GetKeyDown(KeyCode.V)) {
-                getBlock(selectedBlock).flip(false);
-            }
         }
     }
 

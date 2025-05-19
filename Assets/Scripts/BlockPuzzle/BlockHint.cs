@@ -17,7 +17,7 @@ public class BlockHint : MonoBehaviour
     public GameObject blockPrefab;
     public GameObject hintTextObject;
 
-    TextMeshProUGUI hintText;
+    // TextMeshProUGUI hintText;
 
     int curId = 0;
 
@@ -25,13 +25,13 @@ public class BlockHint : MonoBehaviour
 
     void Start()
     {
-        hintText = hintTextObject.GetComponent<TextMeshProUGUI>();
-        hintText.text = "";
+        // hintText = hintTextObject.GetComponent<TextMeshProUGUI>();
+        // hintText.text = "";
     }
 
-    public void initBlock(int id, BlockType type, Vector3 position, bool hflip, bool vflip, int rot, BlockLevelManager script, BlockGrid grid, int scalefact) {
+    public void initBlock(int id, string type, Vector3 position, bool hflip, bool vflip, int rot, BlockLevelManager script, BlockGrid grid) {
         GameObject block = Instantiate(blockPrefab, position, Quaternion.identity);
-        block.GetComponent<Block>().initBlock(id, type, script, grid, scalefact);
+        block.GetComponent<Block>().initBlock(id, type, script, grid);
 
         SpriteRenderer renderer = block.GetComponent<SpriteRenderer>();
         if (hflip) {
@@ -45,8 +45,8 @@ public class BlockHint : MonoBehaviour
             block.transform.Rotate(0, 0, -90f);
         }
 
-        // make sure block is in correct position after rotating
-        block.GetComponent<Block>().placeBlockAt(position);
+        block.transform.position = position;
+
         block.GetComponent<Block>().hintColor();
         block.GetComponent<Renderer>().sortingOrder = 29999;
 
@@ -86,7 +86,7 @@ public class BlockHint : MonoBehaviour
         curId = id;
         GameObject obj;
         if (id == -1 || levelManager.metRequirements()) {
-            hintText.text = "Click <color=#ffd666>Next Phase</color> to move on!";
+            // hintText.text = "Click <color=#ffd666>Next Phase</color> to move on!";
             obj = hintTextObject;
         } else {
             // if (GameManager.blockPositionArray.ContainsKey(curId)) {
