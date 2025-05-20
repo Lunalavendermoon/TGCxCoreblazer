@@ -1,4 +1,4 @@
-Shader "Unlit/BlockUnlitShader"
+Shader "Unlit/BlockPuzzleShader2"
 {
     Properties
     {
@@ -7,8 +7,8 @@ Shader "Unlit/BlockUnlitShader"
     SubShader
     {
         Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
-        BlendOp Min
-        Blend One One
+        BlendOp Add, Min
+        Blend One One, One OneMinusDstAlpha
         ZWrite Off
         Cull Off
         Lighting Off
