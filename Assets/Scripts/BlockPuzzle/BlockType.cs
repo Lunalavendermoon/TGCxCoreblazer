@@ -11,8 +11,33 @@ public class BlockType
         height = h;
     }
 
-    public static BlockType square()
+    public static BlockType bigSquare()
     {
-        return new BlockType("square", 2, 2);
+        return new BlockType("bigSquare", 2, 2);
+    }
+
+    public static BlockType smallSquare()
+    {
+        return new BlockType("smallSquare", 1, 1);
+    }
+
+    public static BlockType bigTriangle()
+    {
+        return new BlockType("bigTriangle", 2, 2);
+    }
+
+    public static BlockType smallTriangle()
+    {
+        return new BlockType("smallTriangle", 1, 1);
+    }
+
+    public static BlockType bigCircle()
+    {
+        return new BlockType("bigCircle", 2, 2);
+    }
+
+    public static BlockType quarterCircle()
+    {
+        return new BlockType("quarterCircle", 1, 1);
     }
 }

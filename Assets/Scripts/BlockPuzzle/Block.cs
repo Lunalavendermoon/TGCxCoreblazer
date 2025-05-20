@@ -15,7 +15,12 @@ public class Block : MonoBehaviour
     
     Vector3 resetPosition;
 
-    public Sprite squareSprite;
+    public Sprite bigSquare;
+    public Sprite smallSquare;
+    public Sprite bigTriangle;
+    public Sprite smallTriangle;
+    public Sprite bigCircle;
+    public Sprite quarterCircle;
 
     bool isEnabled = true;
     bool selected = false;
@@ -38,11 +43,26 @@ public class Block : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
         switch (type.name)
         {
-            case "square":
-                renderer.sprite = squareSprite;
+            case "bigSquare":
+                renderer.sprite = bigSquare;
+                break;
+            case "smallSquare":
+                renderer.sprite = smallSquare;
+                break;
+            case "bigTriangle":
+                renderer.sprite = bigTriangle;
+                break;
+            case "smallTriangle":
+                renderer.sprite = smallTriangle;
+                break;
+            case "bigCircle":
+                renderer.sprite = bigCircle;
+                break;
+            case "quarterCircle":
+                renderer.sprite = quarterCircle;
                 break;
             default:
-                renderer.sprite = squareSprite;
+                renderer.sprite = bigSquare;
                 break;
         }
 
@@ -149,7 +169,7 @@ public class Block : MonoBehaviour
     public void placeBlockAt(Vector3 position) {
         // AudioSFXManager.Instance.PlayAudio("thump");
         Vector2 S = renderer.sprite.bounds.size;
-        transform.position = position + new Vector3(S.x / 2.0f, 0);
+        transform.position = position + new Vector3(blockType.width / 2.0f, (blockType.height % 2) * (blockType.height / 2.0f));
     }
 
     public void hintColor() {

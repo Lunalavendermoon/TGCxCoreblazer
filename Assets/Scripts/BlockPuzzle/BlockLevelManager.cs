@@ -50,7 +50,7 @@ public class BlockLevelManager : MonoBehaviour
 
         // BlockType[] blocksToSpawn = GameManager.blockSpawnList;
 
-        float ycarb = 2.5f;
+        // float ycarb = 2.5f;
 
         grid.initGrid(
             new Dictionary<int, UnityEngine.Vector2>(), 9, 8, 0, 5, day
@@ -62,9 +62,13 @@ public class BlockLevelManager : MonoBehaviour
         //     spawnBlock(id, b, id - 1, ycarb);
         //     id++;
         // }
-        spawnBlock(1, BlockType.square(), 0, 2.5f);
-        spawnBlock(2, BlockType.square(), 1, 2.5f);
-        spawnBlock(3, BlockType.square(), 2, 2.5f);
+        spawnBlock(1, BlockType.bigSquare(), 0, 2.5f);
+        spawnBlock(2, BlockType.bigSquare(), 1, 2.5f);
+        spawnBlock(3, BlockType.smallSquare(), 2, 2.5f);
+        spawnBlock(4, BlockType.smallTriangle(), 3, 2.5f);
+        spawnBlock(5, BlockType.bigTriangle(), 4, 2.5f);
+        spawnBlock(6, BlockType.bigCircle(), 5, 2.5f);
+        spawnBlock(7, BlockType.quarterCircle(), 6, 2.5f);
 
         updateUI();
 

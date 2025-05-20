@@ -101,7 +101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe04bc11dce2b404cbf4ebf5717056f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squareSprite: {fileID: 21300000, guid: cd5b871d4b0924e37b0c6277b1e0bd48, type: 3}
+  bigSquare: {fileID: 21300000, guid: cd5b871d4b0924e37b0c6277b1e0bd48, type: 3}
+  smallSquare: {fileID: 21300000, guid: 5b09ee0fc15e0450cb532de7f0d0dcce, type: 3}
+  bigTriangle: {fileID: 21300000, guid: ced1c8c3b7c8c4c5bb2105a2cc58684b, type: 3}
+  smallTriangle: {fileID: 21300000, guid: 0329ceaddf968487886588e59c642fe5, type: 3}
+  bigCircle: {fileID: -2413806693520163455, guid: e8e282adcceb44bd1a1f7d84450867e4, type: 3}
+  quarterCircle: {fileID: 21300000, guid: cc36b7dbc10614813b7f3d3fcb205a76, type: 3}
 --- !u!61 &1294435878337519249
 BoxCollider2D:
   m_ObjectHideFlags: 0
