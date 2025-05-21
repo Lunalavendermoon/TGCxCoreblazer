@@ -102,6 +102,9 @@ public class Block : MonoBehaviour
                 break;
         }
 
+        renderer.flipX = type.hflipped;
+        renderer.flipY = type.vflipped;
+
         Vector2 S = renderer.sprite.bounds.size;
         gameObject.GetComponent<BoxCollider2D>().size = S;
     }

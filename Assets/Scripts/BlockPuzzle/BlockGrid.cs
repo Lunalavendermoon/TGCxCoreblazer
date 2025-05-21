@@ -57,7 +57,6 @@ public class BlockGrid : MonoBehaviour
 
     public bool checkBlockPosition(Vector3 position, BlockType blockType) {
         Vector3Int off = worldToArray(position);
-        Debug.Log(cols + " " + rows + " " + off.y + " " + off.x + " " + blockType.width + " " + blockType.height);
         return off.x >= 0 && off.y >= 0 && off.y + blockType.width <= cols && off.x + blockType.height <= rows;
     }
 

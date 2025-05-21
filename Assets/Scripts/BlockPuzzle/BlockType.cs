@@ -4,11 +4,15 @@ public class BlockType
     public int width { get; }
     public int height { get; }
 
+    public bool hflipped { set; get; }
+    public bool vflipped { set; get; }
+
     public BlockType(string n, int w, int h)
     {
         name = n;
         width = w;
         height = h;
+        hflipped = false;
     }
 
     public static BlockType bigSquare()

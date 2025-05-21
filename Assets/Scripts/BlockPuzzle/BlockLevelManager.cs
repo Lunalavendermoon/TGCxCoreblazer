@@ -62,13 +62,15 @@ public class BlockLevelManager : MonoBehaviour
         //     spawnBlock(id, b, id - 1, ycarb);
         //     id++;
         // }
-        spawnBlock(1, BlockType.bigSquare(), 0, 2.5f);
-        spawnBlock(2, BlockType.bigSquare(), 1, 2.5f);
-        spawnBlock(3, BlockType.smallSquare(), 2, 2.5f);
-        spawnBlock(4, BlockType.smallTriangle(), 3, 2.5f);
-        spawnBlock(5, BlockType.bigTriangle(), 4, 2.5f);
-        spawnBlock(6, BlockType.bigCircle(), 5, 2.5f);
-        spawnBlock(7, BlockType.quarterCircle2(), 6, 2.5f);
+        spawnBlock(1, BlockType.bigSquare(), 0, 2.5f, false, false);
+        spawnBlock(2, BlockType.bigSquare(), 1, 2.5f, false, false);
+        spawnBlock(3, BlockType.smallSquare(), 2, 2.5f, false, false);
+        spawnBlock(4, BlockType.smallTriangle(), 3, 2.5f, false, false);
+        spawnBlock(5, BlockType.bigTriangle(), 4, 2.5f, false, false);
+        spawnBlock(6, BlockType.bigCircle(), 5, 2.5f, false, false);
+        spawnBlock(7, BlockType.quarterCircle2(), 6, 2.5f, false, false);
+        spawnBlock(8, BlockType.bigTriangle(), 7, 2.5f, true, false);
+        spawnBlock(9, BlockType.smallTriangle(), 8, 2.5f, true, false);
 
         updateUI();
 
@@ -98,12 +100,14 @@ public class BlockLevelManager : MonoBehaviour
         hintManager.showBlock(id);
     }
     
-    void spawnBlock(int id, BlockType type, int count, float yoffset) {
+    void spawnBlock(int id, BlockType type, int count, float yoffset, bool hflip, bool vflip) {
         int x = count % 5;
         int y = count / 5;
         UnityEngine.Vector3 position = new UnityEngine.Vector3(-7.0f + 1.2f * x, yoffset - 1.7f * y);
         UnityEngine.Vector3 jitter = new UnityEngine.Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
         GameObject block = Instantiate(blockPrefab, position + jitter, UnityEngine.Quaternion.identity);
+        type.hflipped = hflip;
+        type.vflipped = vflip;
         block.GetComponent<Block>().initBlock(id, type, this, grid);
         blocks.Add(id, block);
 
