@@ -26,9 +26,36 @@ public class BlockType
         return new BlockType("bigTriangle", 2, 2);
     }
 
+    public static BlockType bigTriangle2()
+    {
+        return new BlockType("bigTriangle2", 2, 2);
+    }
+    public static BlockType bigTriangle3()
+    {
+        return new BlockType("bigTriangle3", 2, 2);
+    }
+    public static BlockType bigTriangle4()
+    {
+        return new BlockType("bigTriangle4", 2, 2);
+    }
+
     public static BlockType smallTriangle()
     {
         return new BlockType("smallTriangle", 1, 1);
+    }
+
+
+    public static BlockType smallTriangle2()
+    {
+        return new BlockType("smallTriangle2", 1, 1);
+    }
+    public static BlockType smallTriangle3()
+    {
+        return new BlockType("smallTriangle3", 1, 1);
+    }
+    public static BlockType smallTriangle4()
+    {
+        return new BlockType("smallTriangle4", 1, 1);
     }
 
     public static BlockType bigCircle()
@@ -39,5 +66,18 @@ public class BlockType
     public static BlockType quarterCircle()
     {
         return new BlockType("quarterCircle", 1, 1);
+    }
+
+    public static BlockType quarterCircle2()
+    {
+        return new BlockType("quarterCircle2", 1, 1);
+    }
+    public static BlockType quarterCircle3()
+    {
+        return new BlockType("quarterCircle3", 1, 1);
+    }
+    public static BlockType quarterCircle4()
+    {
+        return new BlockType("quarterCircle4", 1, 1);
     }
 }

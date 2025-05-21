@@ -18,9 +18,18 @@ public class Block : MonoBehaviour
     public Sprite bigSquare;
     public Sprite smallSquare;
     public Sprite bigTriangle;
+    public Sprite bigTriangle2;
+    public Sprite bigTriangle3;
+    public Sprite bigTriangle4;
     public Sprite smallTriangle;
+    public Sprite smallTriangle2;
+    public Sprite smallTriangle3;
+    public Sprite smallTriangle4;
     public Sprite bigCircle;
     public Sprite quarterCircle;
+    public Sprite quarterCircle2;
+    public Sprite quarterCircle3;
+    public Sprite quarterCircle4;
 
     bool isEnabled = true;
     bool selected = false;
@@ -52,14 +61,41 @@ public class Block : MonoBehaviour
             case "bigTriangle":
                 renderer.sprite = bigTriangle;
                 break;
+            case "bigTriangle2":
+                renderer.sprite = bigTriangle2;
+                break;
+            case "bigTriangle3":
+                renderer.sprite = bigTriangle3;
+                break;
+            case "bigTriangle4":
+                renderer.sprite = bigTriangle4;
+                break;
             case "smallTriangle":
                 renderer.sprite = smallTriangle;
+                break;
+            case "smallTriangle2":
+                renderer.sprite = smallTriangle2;
+                break;
+            case "smallTriangle3":
+                renderer.sprite = smallTriangle3;
+                break;
+            case "smallTriangle4":
+                renderer.sprite = smallTriangle4;
                 break;
             case "bigCircle":
                 renderer.sprite = bigCircle;
                 break;
             case "quarterCircle":
                 renderer.sprite = quarterCircle;
+                break;
+            case "quarterCircle2":
+                renderer.sprite = quarterCircle2;
+                break;
+            case "quarterCircle3":
+                renderer.sprite = quarterCircle3;
+                break;
+            case "quarterCircle4":
+                renderer.sprite = quarterCircle4;
                 break;
             default:
                 renderer.sprite = bigSquare;

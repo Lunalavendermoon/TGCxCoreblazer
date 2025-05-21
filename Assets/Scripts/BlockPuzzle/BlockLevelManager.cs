@@ -68,7 +68,7 @@ public class BlockLevelManager : MonoBehaviour
         spawnBlock(4, BlockType.smallTriangle(), 3, 2.5f);
         spawnBlock(5, BlockType.bigTriangle(), 4, 2.5f);
         spawnBlock(6, BlockType.bigCircle(), 5, 2.5f);
-        spawnBlock(7, BlockType.quarterCircle(), 6, 2.5f);
+        spawnBlock(7, BlockType.quarterCircle2(), 6, 2.5f);
 
         updateUI();
 
