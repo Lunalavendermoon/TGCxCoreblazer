@@ -128,10 +128,10 @@ public class BlockLevelManager : MonoBehaviour
         return block.GetComponent<Block>();
     }
 
-    public void playerAddBlock(int id) {
-        blocks[id].GetComponent<Renderer>().sortingOrder = 0;
+    public void playerAddBlock(int id)
+    {
         Block block = getBlock(id);
-        // TODO
+        // TODO update stuff - check if player solution is correct, etc
         updateUI();
     }
 
