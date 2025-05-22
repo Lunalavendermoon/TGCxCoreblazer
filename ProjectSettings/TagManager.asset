@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - GroundSurface
+  - hasDialogue
   layers:
   - Default
   - TransparentFX
