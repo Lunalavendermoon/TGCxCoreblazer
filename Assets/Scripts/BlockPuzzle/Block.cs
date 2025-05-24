@@ -149,24 +149,27 @@ public class Block : MonoBehaviour
         }
         isDragging = false;
 
-        if (grid.checkBlockPosition(getSpriteTopLeft(), blockType))
+        Vector3 pos = getSpriteTopLeft();
+        // Vector3 pos = transform.position;
+
+        if (grid.checkBlockPosition(pos, blockType))
         {
             makeOpaque();
 
             if (isOnGrid)
             {
-                grid.updateBlock(id, getSpriteTopLeft(), blockType.name);
+                grid.updateBlock(id, pos, blockType.name);
             }
             else
             {
                 isOnGrid = true;
-                grid.addBlock(id, getSpriteTopLeft(), blockType.name);
+                grid.addBlock(id, pos, blockType.name);
                 levelManager.playerAddBlock(id);
                 levelManager.deselectBlock();
             }
-            placeBlockAt(grid.snapToGrid(getSpriteTopLeft()));
+            placeBlockAt(grid.snapToGrid(pos));
         }
-        else 
+        else
         {
             transform.position = resetPosition;
             makeOpaque();
