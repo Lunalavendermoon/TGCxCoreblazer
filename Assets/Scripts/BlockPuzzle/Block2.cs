@@ -58,7 +58,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         renderer = GetComponent<Image>();
         renderer.sprite = spriteByName(type.name);
 
-        rectTransform.sizeDelta = new Vector2(type.width, type.height) * 100.0f;
+        rectTransform.sizeDelta = new Vector2(type.width, type.height) * BlockLevelManager.pixelsPerUnit;
 
         rectTransform.localScale = new Vector3(
             rectTransform.localScale.x * (type.hflipped ? -1 : 1), rectTransform.localScale.y * (type.vflipped ? -1 : 1),

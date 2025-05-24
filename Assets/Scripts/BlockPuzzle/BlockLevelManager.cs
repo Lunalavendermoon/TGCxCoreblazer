@@ -6,7 +6,7 @@ using System;
 
 public class BlockLevelManager : MonoBehaviour
 {
-    int day;
+    public static float pixelsPerUnit = 75;
     public HelpUIManager helpUiManager;
     public BlockHint hintManager;
     public GameObject blockPrefab;
@@ -42,7 +42,7 @@ public class BlockLevelManager : MonoBehaviour
 
     void initLevel(int day)
     {
-        this.day = day;
+        // this.day = day;
         // GameManager.LoadBlockData(day);
 
         // maxSize = GameManager.blockMaxSize;
@@ -103,14 +103,17 @@ public class BlockLevelManager : MonoBehaviour
 
     void spawnBlock(int id, BlockType type, int count, float yoffset, bool hflip, bool vflip)
     {
-        int x = count % 5;
-        int y = count / 5;
-        Vector3 position = new Vector3(-70f + 12f * x, yoffset - 17f * y, 0);
-        Vector3 jitter = new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0);
+        int x = count % 4;
+        int y = count / 4;
+
+        Vector3 position = new Vector3(-60f + 12f * x, yoffset - 17f * y, 0);
+        Vector3 jitter = new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), 0);
+
         GameObject block = Instantiate(blockPrefab, position + jitter, Quaternion.identity, canvas.transform);
         Vector3 blockpos = block.GetComponent<RectTransform>().anchoredPosition3D;
         blockpos.z = 0f;
         block.GetComponent<RectTransform>().anchoredPosition3D = blockpos;
+
         type.hflipped = hflip;
         type.vflipped = vflip;
         block.GetComponent<Block2>().initBlock(id, type, this, canvas);
