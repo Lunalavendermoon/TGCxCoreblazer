@@ -44,7 +44,6 @@ public class BlockGrid : MonoBehaviour
 
     public Vector3Int worldToArray(Vector3 world) {
         Vector3Int conv = snapToGrid(world);
-        Debug.Log(world + " " + conv);
         return new Vector3Int(yoffset - conv.y, conv.x - xoffset);
     }
 
