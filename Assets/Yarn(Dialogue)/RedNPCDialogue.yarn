@@ -1,10 +1,18 @@
-﻿title: RedNPC
+﻿title: BabyBear
 ---
-RedNPC: Wow! u picked the superior NPC, redNPC.
-NOW SCR
+BabyBear: Are you new here?
+BabyBear: I haven’t seen you around.
+BabyBear: Do you want to go on an adventure together?
+BabyBear: It’s quite cold now…but we can still have a lot of fun!
+BabyBear: Like playing in the snow together?
 
--> keep talking
--> leave
+-> Open memory inventory
+    -> Take Community memory
+        BabyBear: I remember that I…I? What did I do?
+        BabyBear: What did I feel?
+        BabyBear: I’m…I’m tired…
+        <<set_quest_complete BabyBear>>
+-> Leave
 ===
 
 title: BlueNPC

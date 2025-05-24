@@ -8,14 +8,14 @@ public class Dialogue : MonoBehaviour
 {
 
     [SerializeField] DialogueRunner dialogueRunner;
-    [SerializeField] YarnProject yarnProject;
     [SerializeField] Camera mainCamera;
     PlayerInputActions playerInputActions;
 
+    // Possible values: "Incomplete", "Completed"
     Dictionary<string, string> questStatus = new Dictionary<string, string>
     {
-        {"RedNPC", "NotStarted"},
-        {"YellowNPC", "NotStarted"}
+        {"BabyBear", "Incomplete"},
+        {"BlueNPC", "Incomplete"}
     };
 
     void Awake()
@@ -39,7 +39,8 @@ public class Dialogue : MonoBehaviour
     */
     void OnStartDialogue()
     {
-        Debug.Log(questStatus["RedNPC"]);
+        //questStatus["RedNPC"] = "new";
+        //Debug.Log(questStatus["RedNPC"]);
 
         if (!dialogueRunner.IsDialogueRunning)
         {
@@ -52,8 +53,32 @@ public class Dialogue : MonoBehaviour
             {
                 string npcName = objectHit.collider.gameObject.name;
                 //Debug.Log("Clicked: " + npcName);
-                dialogueRunner.StartDialogue($"{npcName}");
+                //dialogueRunner.StartDialogue($"{npcName}");
+                RunQuest(npcName);
             }
         }
     }
+
+    public void RunQuest(string npcName)
+    {
+        if (questStatus[npcName] == "Incomplete")
+        {
+            dialogueRunner.StartDialogue($"{npcName}");
+        }
+        else
+        {
+            Debug.Log($"Quest for {npcName} has been completed");
+        }
+    }
+
+    public void SetQuestComplete(string npcName)
+    {
+        questStatus[npcName] = "Complete";
+    }
+
+    /*
+     * how to:
+     * 1. send values to yarnspinner (probably more like retrieve values from c#)
+     * 2. run script based on value (variable?)
+     */
 }
