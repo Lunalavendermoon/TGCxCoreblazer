@@ -53,7 +53,7 @@ public class BlockLevelManager : MonoBehaviour
         // float ycarb = 2.5f;
 
         grid.initGrid(
-            new Dictionary<int, UnityEngine.Vector2>(), 9, 8, 0, 5, day
+            new Dictionary<int, UnityEngine.Vector2>(), 9, 8, 0, 4, day
         );
 
         // BLOCK ID MUST BE 1 OR GREATER
