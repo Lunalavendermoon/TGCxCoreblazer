@@ -10,37 +10,43 @@ public class MemoryData : ScriptableObject
 
     Dictionary<string, Dictionary<string, string>> MemoryInfo = new Dictionary<string, Dictionary<string, string>>()
     {
-        {"Joy", new Dictionary<string, string>
+        {"Community Memory", new Dictionary<string, string>
             {
-                {"title", "Joy" },
+                {"type", "Community" },
+                {"description", "a description for Community memory"}
+            }
+        },
+        {"Joy Memory", new Dictionary<string, string>
+            {
+                {"type", "Joy" },
                 {"description", "a description for joy memory"}
             }
         },
-        {"Love", new Dictionary<string, string>
+        {"Love Memory", new Dictionary<string, string>
             {
-                {"type", "Love" },
+                {"title", "Love" },
                 {"description", "another description for love memory"}
             }
         }
     };
 
     [SerializeField]
-    public List<string> MemoryList = new List<string>();
+    public static List<string> MemoryList = new List<string>();
 
     public Dictionary<string, string> GetMemoryInfo(string memoryName)
     {
         return MemoryInfo[memoryName];
     }
 
-    [YarnCommand("add_memory")]
-    public void AddMemory(string memoryName)
-    {
-        MemoryList.Add(memoryName);
-        Debug.Log($"{memoryName} added");
-        Debug.Log("Current MemoryList: ");
-        foreach(string memory in MemoryList)
-        {
-            Debug.Log(memory);
-        }
-    }
+    //[YarnCommand("take_memory")]
+    //public static void TakeMemory(string memoryName)
+    //{
+    //    MemoryList.Add(memoryName);
+    //}
+
+    //[YarnCommand("give_memory")]
+    //public static void GiveMemory(string memoryName)
+    //{
+    //    MemoryList.Remove(memoryName);
+    //}
 }

@@ -1,21 +1,16 @@
 ﻿title: BabyBear
 ---
 BabyBear: Are you new here?
-BabyBear: I haven’t seen you around.
-BabyBear: Do you want to go on an adventure together?
-BabyBear: It’s quite cold now…but we can still have a lot of fun!
-BabyBear: Like playing in the snow together?
-
--> Open memory inventory
-    -> Take Community memory
-        BabyBear: I remember that I…I? What did I do?
-        BabyBear: What did I feel?
-        BabyBear: I’m…I’m tired…
-        <<set_quest_complete BabyBear>>
--> Leave
+-> run command: take memory (secretly is Community memory)
+    <<take_memory "Community Memory">>
+-> leave
 ===
 
-title: BlueNPC
+title: ElderlyGardener
 ---
-BlueNPC: it's blue NPC
+ElderlyGardener: yo
+-> run command: give memory (secretly is community memory) - prompts memory menu
+    <<give_memory "Community Memory">>
+-> run command: take memory (secretly is Joy memory)
+    <<take_memory "Joy Memory">>
 ===

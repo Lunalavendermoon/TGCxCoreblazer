@@ -15,7 +15,7 @@ public class Dialogue : MonoBehaviour
     Dictionary<string, string> questStatus = new Dictionary<string, string>
     {
         {"BabyBear", "Incomplete"},
-        {"BlueNPC", "Incomplete"}
+        {"ElderlyGardener", "Incomplete"}
     };
 
     void Awake()

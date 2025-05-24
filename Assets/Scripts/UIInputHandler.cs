@@ -35,10 +35,10 @@ public class UIInputHandler : MonoBehaviour
             {
                 GameObject UI_element = result.gameObject;
 
-                //Debug.Log(UI_element.name);
+                Debug.Log(UI_element.name);
 
                 // menu on/off button clicked
-                if(UI_element.name == "MemoryMenuButton")
+                if (UI_element.name == "MemoryMenuButton")
                 {
                     memoryMenu.SetActive(!memoryMenu.activeSelf);
                 }
