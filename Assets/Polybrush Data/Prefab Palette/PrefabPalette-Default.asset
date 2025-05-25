@@ -13,38 +13,6 @@ MonoBehaviour:
   m_Name: PrefabPalette-Default
   m_EditorClassIdentifier: 
   prefabs:
-  - gameObject: {fileID: 1623550287110000554, guid: 50ef193e1cc6d984ba76a592dc69f5ce, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 54.084534, y: 360, z: 74.36623}
-      m_ScaleRangeMin: {x: 0, y: 1, z: 0}
-      m_ScaleRangeMax: {x: 1.0798119, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 1
-      m_YScaleBool: 0
-      m_ZScaleBool: 1
-    name: styledFlower
-  - gameObject: {fileID: 4782472190288484864, guid: eccca54e78e0a1240a86ba3678aeb996, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 158.87323, z: 0}
-      m_ScaleRangeMin: {x: 0, y: 0.29577464, z: 0}
-      m_ScaleRangeMax: {x: 1.3615026, y: 1.1877937, z: 1.1737093}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 1
-      m_YScaleBool: 1
-      m_ZScaleBool: 1
-    name: styledFlower 1
   - gameObject: {fileID: 2415297209321937816, guid: 4aeca75ecd48be94883f5d8533a9b877, type: 3}
     settings:
       m_Strength: 50
@@ -60,38 +28,6 @@ MonoBehaviour:
       m_XScaleBool: 0
       m_YScaleBool: 0
       m_ZScaleBool: 0
-    name: Road
-  - gameObject: {fileID: 919132149155446097, guid: 2b84348604e880143b48809cd6b52c9b, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 3.3474176, y: 2.6431932, z: 3.0187798}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 1
-      m_YScaleBool: 1
-      m_ZScaleBool: 1
-    name: Road
-  - gameObject: {fileID: 2582049901742647169, guid: 12b2e4a06b55bd24cb3bdc5e9155f0e5, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 1
-      m_YScaleBool: 1
-      m_ZScaleBool: 1
     name: Road
   - gameObject: {fileID: 7770421615312388726, guid: 1a4bbef1ea2230b469fe49234ec3fcea, type: 3}
     settings:
