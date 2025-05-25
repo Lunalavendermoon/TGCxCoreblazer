@@ -15,9 +15,6 @@ public class BlockHint : MonoBehaviour
     float timer = 0;
 
     public GameObject blockPrefab;
-    public GameObject hintTextObject;
-
-    // TextMeshProUGUI hintText;
 
     int curId = 0;
 
@@ -29,29 +26,24 @@ public class BlockHint : MonoBehaviour
         // hintText.text = "";
     }
 
-    public void initBlock(int id, BlockType type, Vector3 position, bool hflip, bool vflip, int rot, BlockLevelManager script, BlockGrid grid) {
-        GameObject block = Instantiate(blockPrefab, position, Quaternion.identity);
-        block.GetComponent<Block>().initBlock(id, type, script, grid);
+    public void initLevel()
+    {
+        blocks.Clear();
+    }
 
-        SpriteRenderer renderer = block.GetComponent<SpriteRenderer>();
-        if (hflip) {
-            renderer.flipX = !renderer.flipX;
-        }
-        if (vflip) {
-            renderer.flipY = !renderer.flipY;
-        }
+    public void initBlock(int id, BlockType type, Vector3 position, BlockLevelManager script, Canvas canvas)
+    {
+        GameObject block = Instantiate(blockPrefab, position, Quaternion.identity, canvas.transform);
+        Vector3 blockpos = block.GetComponent<RectTransform>().anchoredPosition3D;
+        blockpos.z = 0f;
+        block.GetComponent<RectTransform>().anchoredPosition3D = blockpos;
 
-        for (int i = 0; i < rot; ++i) {
-            block.transform.Rotate(0, 0, -90f);
-        }
+        block.GetComponent<Block2>().initBlock(id, type, script, canvas);
 
-        block.transform.position = position;
-
-        block.GetComponent<Block>().hintColor();
-        block.GetComponent<Renderer>().sortingOrder = 29999;
+        block.GetComponent<Block2>().hintColor();
 
         // shouldn't be draggable
-        block.GetComponent<Block>().setEnabled(false);
+        block.GetComponent<Block2>().setEnabled(false);
 
         // hide for now
         block.SetActive(false);
@@ -66,40 +58,27 @@ public class BlockHint : MonoBehaviour
             return;
         }
         if (curId != 0) {
-            GameObject obj;
-            // if (GameManager.blockPositionArray.ContainsKey(curId)) {
-            //     blocks[curId].SetActive(false);
-            //     obj = blocks[curId];
-            // } else {
-            //     hintText.text = "";
-            //     obj = hintTextObject;
-            // }
+            blocks[curId].SetActive(false);
+            // GameObject obj = blocks[curId];
             // obj.GetComponent<FlashingAnim>().SetAnimated(false);
-            helpButton.GetComponent<HelpButton>().ButtonClickable(true);
+            // helpButton.GetComponent<HelpButton>().ButtonClickable(true);
             curId = 0;
         }
     }
 
-    public void showBlock(int id) {
+
+    public void showBlock(int id)
+    {
+        if (id == -1)
+        {
+            return;
+        }
         timer = hintTimer;
         helpButton.GetComponent<HelpButton>().ButtonClickable(false);
         curId = id;
-        GameObject obj;
-        if (id == -1 || levelManager.metRequirements()) {
-            // hintText.text = "Click <color=#ffd666>Next Phase</color> to move on!";
-            obj = hintTextObject;
-        } else {
-            // if (GameManager.blockPositionArray.ContainsKey(curId)) {
-            //     blocks[curId].SetActive(true);
-            //     obj = blocks[curId];
-            // } else {
-            //     string foodName = blocks[curId].GetComponent<Block>().blockType.displayName;
-            //     hintText.text = "<color=#ffd666>" +
-            //         char.ToUpperInvariant(foodName[0]) + foodName.Substring(1, foodName.Length - 1) +
-            //         "</color> should not be on the grid!";
-            //     obj = hintTextObject;
-            // }
-        }
-        // obj.GetComponent<FlashingAnim>().SetAnimated(true);
+        blocks[curId].SetActive(true);
+        GameObject obj = blocks[curId];
+        obj.transform.SetAsLastSibling(); // bring to front
+        // TODO flashing animation on obj?
     }
 }

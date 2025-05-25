@@ -130,7 +130,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     public void OnDrag(PointerEventData eventData)
     {
         // Move the UI element
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        rectTransform.anchoredPosition3D += new Vector3(eventData.delta.x, eventData.delta.y, 0) / canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -142,25 +142,25 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         isDragging = false;
 
         Vector3 pos = getSpriteTopLeft();
-        // Vector3 pos = transform.position;
 
         if (levelManager.checkBlockPosition(pos, blockType))
         {
             makeOpaque();
 
+            Vector3Int snap = levelManager.snapToGrid(pos, blockType);
+
             if (isOnGrid)
             {
-                levelManager.updateBlock(id, pos, blockType.name);
+                levelManager.updateBlock(id, snap, blockType.name);
             }
             else
             {
                 isOnGrid = true;
-                levelManager.addBlock(id, pos, blockType.name);
+                levelManager.addBlock(id, snap, blockType.name);
                 levelManager.playerAddBlock(id);
                 levelManager.deselectBlock();
             }
-            placeBlockAt(levelManager.snapToGrid(pos));
-            Debug.Log(rectTransform.anchoredPosition3D);
+            placeBlockAt(snap);
         }
         else
         {
@@ -171,8 +171,9 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public Vector3 getSpriteTopLeft()
     {
-        return new Vector3(rectTransform.rect.xMin, rectTransform.rect.yMin);
-        // return GetComponent<Renderer>().transform.TransformPoint(new Vector3(renderer.sprite.bounds.min.x, renderer.sprite.bounds.max.y, 0));
+        Vector3 pos = rectTransform.anchoredPosition3D;
+        return new Vector3(pos.x - blockType.width * BlockLevelManager.pixelsPerUnit / 2,
+                            pos.y - blockType.height * BlockLevelManager.pixelsPerUnit / 2, 0);
     }
 
     void removeFromGrid() {
@@ -206,8 +207,9 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     public void placeBlockAt(Vector3 position)
     {
         // AudioSFXManager.Instance.PlayAudio("thump");
-        // transform.position = position + new Vector3(blockType.width / 2.0f, (blockType.height % 2) * (blockType.height / 2.0f));
-        rectTransform.anchoredPosition3D = position;
+        Vector3 offset = new Vector3(3, -2, 0);
+        rectTransform.anchoredPosition3D = new Vector3(position.x + blockType.width * BlockLevelManager.pixelsPerUnit / 2,
+                                                        position.y - blockType.height * BlockLevelManager.pixelsPerUnit / 2, 0) + offset;
     }
 
     public void hintColor()
@@ -218,5 +220,4 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         renderer.color = Color.HSVToRGB(H, S, 1.5f);
         makeTransparent();
     }
-    
 }

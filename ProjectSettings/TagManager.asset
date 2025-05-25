@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GroundSurface
   - hasDialogue
+  - PuzzleBlock
   layers:
   - Default
   - TransparentFX
