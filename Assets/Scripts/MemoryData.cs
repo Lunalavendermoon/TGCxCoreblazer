@@ -1,8 +1,5 @@
-using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
-using Yarn.Unity;
 
 [CreateAssetMenu(fileName = "MemoryInventory", menuName = "Scriptable Objects/MemoryInventory")]
 public class MemoryData : ScriptableObject
@@ -37,16 +34,4 @@ public class MemoryData : ScriptableObject
     {
         return MemoryInfo[memoryName];
     }
-
-    //[YarnCommand("take_memory")]
-    //public static void TakeMemory(string memoryName)
-    //{
-    //    MemoryList.Add(memoryName);
-    //}
-
-    //[YarnCommand("give_memory")]
-    //public static void GiveMemory(string memoryName)
-    //{
-    //    MemoryList.Remove(memoryName);
-    //}
 }

@@ -713,7 +713,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5019507179869299052, guid: 1fd1bd3896490f44aa4f9f4a362ce2c3, type: 3}
       propertyPath: m_Name
-      value: MemoryObject
+      value: MemoryObjectTest
+      objectReference: {fileID: 0}
+    - target: {fileID: 5019507179869299052, guid: 1fd1bd3896490f44aa4f9f4a362ce2c3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -846,7 +850,7 @@ GameObject:
   - component: {fileID: 1156276216}
   - component: {fileID: 1156276215}
   m_Layer: 0
-  m_Name: BlueNPC
+  m_Name: ElderlyGardener
   m_TagString: hasDialogue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1729,6 +1733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1324b78fe26a6d46a76f723d331aa8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueRunner: {fileID: 930433913}
   canvas: {fileID: 1477144236}
   memoryMenu: {fileID: 2030516071}
 --- !u!114 &1477144242
@@ -1743,9 +1748,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039906574b0882147837faa36ac3bb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueRunner: {fileID: 930433913}
   memoryData: {fileID: 11400000, guid: 3a1d55117d9121a4e87bf31231576d1c, type: 2}
-  memoryObjectPrefab: {fileID: 0}
+  memoryObjectPrefab: {fileID: 5019507179869299052, guid: 1fd1bd3896490f44aa4f9f4a362ce2c3, type: 3}
   contentPanel: {fileID: 810270962}
+  memoryMenu: {fileID: 2030516071}
 --- !u!1001 &1717666321
 PrefabInstance:
   m_ObjectHideFlags: 0

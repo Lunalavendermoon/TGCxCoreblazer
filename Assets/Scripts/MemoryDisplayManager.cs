@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Yarn.Unity;
-using static UnityEngine.Rendering.DebugUI;
 
 public class MemoryDisplayManager : MonoBehaviour
 {
 
     [SerializeField] DialogueRunner dialogueRunner;
-    [SerializeField] MemoryData memoryData;
+    [SerializeField] MemoryData memoryData; //memory inventory ScriptableObject
     [SerializeField] GameObject memoryObjectPrefab; //Memory object UI prefab
     [SerializeField] Transform contentPanel; //parent UI to hold memory objects
+    [SerializeField] GameObject memoryMenu;
 
     List<string> memoryDataList;
     List<GameObject> displayedMemoryUI;
@@ -22,6 +22,7 @@ public class MemoryDisplayManager : MonoBehaviour
 
         dialogueRunner.AddCommandHandler<string>("take_memory", TakeMemory);
         dialogueRunner.AddCommandHandler<string>("give_memory", GiveMemory);
+        dialogueRunner.AddFunction<string, bool>("check_has_memory", CheckHasMemory); //param: string, return: boolean
     }
 
     public void RefreshUI()
@@ -31,7 +32,6 @@ public class MemoryDisplayManager : MonoBehaviour
         {
             //destroy every corresponding gameObject
             Destroy(memoryUI);
-            //Debug.Log(memoryUI.name + "destroyed");
         }
         //clear displayedMemoryUI list
         displayedMemoryUI.Clear();
@@ -52,7 +52,6 @@ public class MemoryDisplayManager : MonoBehaviour
 
             //add to list of displayedUI to make updating easier later
             displayedMemoryUI.Add(memoryUIObject);
-            //Debug.Log($"{memory} added to memory menu display");
         }
     }
 
@@ -66,5 +65,10 @@ public class MemoryDisplayManager : MonoBehaviour
     {
         memoryDataList.Remove(memoryName);
         RefreshUI();
+    }
+
+    public bool CheckHasMemory(string memoryName)
+    {
+        return memoryDataList.Contains(memoryName);
     }
 }

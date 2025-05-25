@@ -9,8 +9,15 @@ BabyBear: Are you new here?
 title: ElderlyGardener
 ---
 ElderlyGardener: yo
--> run command: give memory (secretly is community memory) - prompts memory menu
-    <<give_memory "Community Memory">>
+-> offer memory (checks for community memory)
+    <<if check_has_memory("Community Memory")>>
+        <<prompt_memory_selection "Community Memory">>
+        <<give_memory "Community Memory">>
+        You offered a Community Memory
+    <<else>>
+        You do not have the appropriate memory
+    <<endif>>
 -> run command: take memory (secretly is Joy memory)
     <<take_memory "Joy Memory">>
+    ElderlyGardener: another line
 ===

@@ -76,9 +76,4 @@ public class Dialogue : MonoBehaviour
         questStatus[npcName] = "Complete";
     }
 
-    /*
-     * how to:
-     * 1. send values to yarnspinner (probably more like retrieve values from c#)
-     * 2. run script based on value (variable?)
-     */
 }
