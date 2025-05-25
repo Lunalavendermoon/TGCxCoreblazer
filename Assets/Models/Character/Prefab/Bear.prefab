@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.44
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.39578614
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: m_LocalRotation.x
@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.9183427
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: m_LocalRotation.z
@@ -46,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 133.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -55,7 +55,7 @@ PrefabInstance:
     - target: {fileID: -2245623774801616189, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: db993e735c061a248bf19a0ec6404d87, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a6e6a6579fce24d905eff899fd83b3, type: 2}
     - target: {fileID: -1823322365421230674, guid: 129048fdb356b5d4a808d12e299cac32, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
