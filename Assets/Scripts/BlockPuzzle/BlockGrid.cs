@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -36,13 +37,13 @@ public class BlockGrid : MonoBehaviour
         }
     }
 
-    public Vector3 snapToGrid(Vector3 world) {
-        Vector3Int og = tilemap.WorldToCell(world);
-        return new Vector3(og.x, og.y);
+    public Vector3Int snapToGrid(Vector3 world) {
+        Vector3 og = world;
+        return new Vector3Int(Mathf.RoundToInt(og.x), Mathf.RoundToInt(og.y) - 1);
     }
 
     public Vector3Int worldToArray(Vector3 world) {
-        Vector3Int conv = tilemap.WorldToCell(world);
+        Vector3Int conv = snapToGrid(world);
         return new Vector3Int(yoffset - conv.y, conv.x - xoffset);
     }
 

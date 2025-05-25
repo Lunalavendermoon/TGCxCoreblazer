@@ -1,11 +1,13 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEditor.Tilemaps;
 
-public class Block : MonoBehaviour
+public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     BlockLevelManager levelManager;
-    BlockGrid grid;
-    new SpriteRenderer renderer;
+    new Image renderer;
 
     public int id {get; set;}
 
@@ -38,75 +40,67 @@ public class Block : MonoBehaviour
     private Vector3 screenPoint;
     private Vector3 offset;
 
-    public void initBlock(int id, BlockType type, BlockLevelManager levelManager, BlockGrid grid)
+    private RectTransform rectTransform;
+    private Canvas canvas;
+
+    public void initBlock(int id, BlockType type, BlockLevelManager levelManager, Canvas canvas)
     {
         // GetComponent<FlashingAnim>().SetAnimated(false);
+        rectTransform = GetComponent<RectTransform>();
+        this.canvas = canvas;
 
         this.id = id;
         isOnGrid = false;
         blockType = type;
         this.levelManager = levelManager;
-        this.grid = grid;
         resetPosition = transform.position;
 
-        renderer = GetComponent<SpriteRenderer>();
-        switch (type.name)
+        renderer = GetComponent<Image>();
+        renderer.sprite = spriteByName(type.name);
+
+        rectTransform.sizeDelta = new Vector2(type.width, type.height) * BlockLevelManager.pixelsPerUnit;
+
+        rectTransform.localScale = new Vector3(
+            rectTransform.localScale.x * (type.hflipped ? -1 : 1), rectTransform.localScale.y * (type.vflipped ? -1 : 1),
+            rectTransform.localScale.z);
+    }
+
+    public Sprite spriteByName(string name) {
+        switch (name)
         {
             case "bigSquare":
-                renderer.sprite = bigSquare;
-                break;
+                return bigSquare;
             case "smallSquare":
-                renderer.sprite = smallSquare;
-                break;
+                return smallSquare;
             case "bigTriangle":
-                renderer.sprite = bigTriangle;
-                break;
+                return bigTriangle;
             case "bigTriangle2":
-                renderer.sprite = bigTriangle2;
-                break;
+                return bigTriangle2;
             case "bigTriangle3":
-                renderer.sprite = bigTriangle3;
-                break;
+                return bigTriangle3;
             case "bigTriangle4":
-                renderer.sprite = bigTriangle4;
-                break;
+                return bigTriangle4;
             case "smallTriangle":
-                renderer.sprite = smallTriangle;
-                break;
+                return smallTriangle;
             case "smallTriangle2":
-                renderer.sprite = smallTriangle2;
-                break;
+                return smallTriangle2;
             case "smallTriangle3":
-                renderer.sprite = smallTriangle3;
-                break;
+                return smallTriangle3;
             case "smallTriangle4":
-                renderer.sprite = smallTriangle4;
-                break;
+                return smallTriangle4;
             case "bigCircle":
-                renderer.sprite = bigCircle;
-                break;
+                return bigCircle;
             case "quarterCircle":
-                renderer.sprite = quarterCircle;
-                break;
+                return quarterCircle;
             case "quarterCircle2":
-                renderer.sprite = quarterCircle2;
-                break;
+                return quarterCircle2;
             case "quarterCircle3":
-                renderer.sprite = quarterCircle3;
-                break;
+                return quarterCircle3;
             case "quarterCircle4":
-                renderer.sprite = quarterCircle4;
-                break;
+                return quarterCircle4;
             default:
-                renderer.sprite = bigSquare;
-                break;
+                return bigSquare;
         }
-
-        renderer.flipX = type.hflipped;
-        renderer.flipY = type.vflipped;
-
-        Vector2 S = renderer.sprite.bounds.size;
-        gameObject.GetComponent<BoxCollider2D>().size = S;
     }
 
     public void setEnabled(bool enabled)
@@ -114,7 +108,7 @@ public class Block : MonoBehaviour
         isEnabled = enabled;
     }
 
-    private void OnMouseDown()
+    public void OnBeginDrag(PointerEventData eventData)
     {
         if (!isEnabled)
         {
@@ -126,22 +120,20 @@ public class Block : MonoBehaviour
         }
         isDragging = true;
         levelManager.selectBlock(id);
-        
-        screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 
+        screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
 
+        transform.SetAsLastSibling(); // bring to front
     }
 
-    void OnMouseDrag()
+    public void OnDrag(PointerEventData eventData)
     {
-        Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-
-        Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
-        transform.position = curPosition;
+        // Move the UI element
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
-    private void OnMouseUp()
+    public void OnEndDrag(PointerEventData eventData)
     {
         if (!isEnabled)
         {
@@ -152,22 +144,23 @@ public class Block : MonoBehaviour
         Vector3 pos = getSpriteTopLeft();
         // Vector3 pos = transform.position;
 
-        if (grid.checkBlockPosition(pos, blockType))
+        if (levelManager.checkBlockPosition(pos, blockType))
         {
             makeOpaque();
 
             if (isOnGrid)
             {
-                grid.updateBlock(id, pos, blockType.name);
+                levelManager.updateBlock(id, pos, blockType.name);
             }
             else
             {
                 isOnGrid = true;
-                grid.addBlock(id, pos, blockType.name);
+                levelManager.addBlock(id, pos, blockType.name);
                 levelManager.playerAddBlock(id);
                 levelManager.deselectBlock();
             }
-            placeBlockAt(grid.snapToGrid(pos));
+            placeBlockAt(levelManager.snapToGrid(pos));
+            Debug.Log(rectTransform.anchoredPosition3D);
         }
         else
         {
@@ -176,13 +169,15 @@ public class Block : MonoBehaviour
         }
     }
 
-    public Vector3 getSpriteTopLeft() {
-        return GetComponent<Renderer>().transform.TransformPoint(new Vector3(renderer.sprite.bounds.min.x, renderer.sprite.bounds.max.y, 0));
+    public Vector3 getSpriteTopLeft()
+    {
+        return new Vector3(rectTransform.rect.xMin, rectTransform.rect.yMin);
+        // return GetComponent<Renderer>().transform.TransformPoint(new Vector3(renderer.sprite.bounds.min.x, renderer.sprite.bounds.max.y, 0));
     }
 
     void removeFromGrid() {
         isOnGrid = false;
-        grid.removeBlock(id);
+        levelManager.removeBlock(id);
         levelManager.playerRemoveBlock(id);
     }
 
@@ -208,17 +203,20 @@ public class Block : MonoBehaviour
         renderer.color = col;
     }
 
-    public void placeBlockAt(Vector3 position) {
+    public void placeBlockAt(Vector3 position)
+    {
         // AudioSFXManager.Instance.PlayAudio("thump");
-        Vector2 S = renderer.sprite.bounds.size;
-        transform.position = position + new Vector3(blockType.width / 2.0f, (blockType.height % 2) * (blockType.height / 2.0f));
+        // transform.position = position + new Vector3(blockType.width / 2.0f, (blockType.height % 2) * (blockType.height / 2.0f));
+        rectTransform.anchoredPosition3D = position;
     }
 
-    public void hintColor() {
+    public void hintColor()
+    {
         float H, S;
         Color.RGBToHSV(renderer.color, out H, out S, out _);
 
         renderer.color = Color.HSVToRGB(H, S, 1.5f);
         makeTransparent();
     }
+    
 }
