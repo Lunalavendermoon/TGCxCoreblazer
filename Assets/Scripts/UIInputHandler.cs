@@ -12,6 +12,7 @@ public class UIInputHandler : MonoBehaviour
     [SerializeField] DialogueRunner dialogueRunner;
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject memoryMenu;
+    [SerializeField] GameObject incompatibleMessage;
     GraphicRaycaster UI_raycaster;
 
     PointerEventData click_data;
@@ -79,10 +80,20 @@ public class UIInputHandler : MonoBehaviour
                         yield break;
                     }
                     //otherwise, show this memory is not compatible message
+                    else if (UI_element.name.Contains("Memory"))
+                    {
+                        StartCoroutine(ActivateIncompatibleMessage());
+                    }
                 }
             }
             yield return null; //don't return until next frame
         }
     }
 
+    public IEnumerator ActivateIncompatibleMessage()
+    {
+        incompatibleMessage.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        incompatibleMessage.SetActive(false);
+    }
 }

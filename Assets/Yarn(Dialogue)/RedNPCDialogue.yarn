@@ -3,6 +3,7 @@
 BabyBear: Are you new here?
 -> run command: take memory (secretly is Community memory)
     <<take_memory "Community Memory">>
+    You took a Community Memory
 -> leave
 ===
 
@@ -19,5 +20,6 @@ ElderlyGardener: yo
     <<endif>>
 -> run command: take memory (secretly is Joy memory)
     <<take_memory "Joy Memory">>
-    ElderlyGardener: another line
+    You took a Joy Memory
+-> leave
 ===
