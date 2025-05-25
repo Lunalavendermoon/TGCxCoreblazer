@@ -84,4 +84,9 @@ public class BlockType
     {
         return new BlockType("quarterCircle4", 1, 1);
     }
+
+    public string fullName()
+    {
+        return name + (hflipped ? "T" : "F") + (vflipped ? "T" : "F");
+    }
 }

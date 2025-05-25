@@ -24,32 +24,6 @@ public class HelpUIManager : MonoBehaviour
         // }
     }
 
-    public void startTutorialDay1() {
-        initializeStuff();
-        setStatus(true);
-        closeButton.SetActive(false);
-        startTutorialFromButton(1);
-    }
-
-    public void startTutorialDay3() {
-        initializeStuff();
-        setStatus(true);
-        closeButton.SetActive(false);
-        startTutorialFromButton(3);
-    }
-
-    public void startTutorialFromButton(int day) {
-        tutorialContent.SetActive(true);
-        blockLevelManager.setPopupStatus(true);
-        helpButton.GetComponent<HelpButton>().ButtonClickable(false);
-
-        if (day == 1 || day == 3) {
-            // dialogueManager.StartDialogueFromDay(day);
-        } else {
-            // dialogueManager.StartDialogueFromTutorial();
-        }
-    }
-
     public void hideHelpFromTutorial() {
         closeButton.SetActive(true);
         hideHelp();

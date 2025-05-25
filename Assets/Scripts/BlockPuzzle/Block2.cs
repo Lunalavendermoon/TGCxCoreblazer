@@ -35,7 +35,6 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     bool isEnabled = true;
     bool selected = false;
-    bool isDragging = false;
 
     private Vector3 screenPoint;
     private Vector3 offset;
@@ -118,7 +117,6 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         {
             removeFromGrid();
         }
-        isDragging = true;
         levelManager.selectBlock(id);
 
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
@@ -139,7 +137,6 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         {
             return;
         }
-        isDragging = false;
 
         Vector3 pos = getSpriteTopLeft();
 
@@ -151,13 +148,12 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
             if (isOnGrid)
             {
-                levelManager.updateBlock(id, snap, blockType.name);
+                levelManager.updateBlock(id, blockType, snap);
             }
             else
             {
                 isOnGrid = true;
-                levelManager.addBlock(id, snap, blockType.name);
-                levelManager.playerAddBlock(id);
+                levelManager.addBlock(blockType, id, snap);
                 levelManager.deselectBlock();
             }
             placeBlockAt(snap);
@@ -166,6 +162,11 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         {
             transform.position = resetPosition;
             makeOpaque();
+        }
+
+        if (levelManager.metRequirements())
+        {
+            // TODO exit da minigame
         }
     }
 
@@ -178,8 +179,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     void removeFromGrid() {
         isOnGrid = false;
-        levelManager.removeBlock(id);
-        levelManager.playerRemoveBlock(id);
+        levelManager.removeBlock(blockType, id);
     }
 
     void makeTransparent() {
@@ -207,9 +207,9 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     public void placeBlockAt(Vector3 position)
     {
         // AudioSFXManager.Instance.PlayAudio("thump");
-        Vector3 offset = new Vector3(3, -2, 0);
         rectTransform.anchoredPosition3D = new Vector3(position.x + blockType.width * BlockLevelManager.pixelsPerUnit / 2,
-                                                        position.y - blockType.height * BlockLevelManager.pixelsPerUnit / 2, 0) + offset;
+                                                        position.y - blockType.height * BlockLevelManager.pixelsPerUnit / 2, 0)
+                                                        + BlockLevelManager.blockOffset;
     }
 
     public void hintColor()

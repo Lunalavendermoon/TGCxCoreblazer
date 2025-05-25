@@ -2,10 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using System;
+using UnityEngine.Rendering.Universal.Internal;
 // using DG.Tweening;
 
 public class BlockLevelManager : MonoBehaviour
 {
+    public float hintTimer;
+    float timer = 0;
     public static int pixelsPerUnit = 60;
     public HelpUIManager helpUiManager;
     public BlockHint hintManager;
@@ -15,10 +18,16 @@ public class BlockLevelManager : MonoBehaviour
     public new Camera camera;
 
     Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
-
-    int selectedBlock = -1;
+    // IMPORTANT: positions will be offset according to blockOffset
+    // maps type of block (must use fullName to account for hflip/vflip) to list of all current positions on grid
+    // Vector is (x position, y position, ID)
+    Dictionary<string, List<Vector3Int>> blockLocations = new Dictionary<string, List<Vector3Int>>();
+    // TODO decide what to do w/ this guy
+    Dictionary<Vector3Int, string> solution = new Dictionary<Vector3Int, string>();
 
     bool popupIsOpen = false;
+
+    public static Vector3 blockOffset = new Vector3(3, -2, 0);
 
     void Start()
     {
@@ -29,7 +38,12 @@ public class BlockLevelManager : MonoBehaviour
     void initLevel(int day)
     {
         blocks.Clear();
+        blockLocations.Clear();
+        solution.Clear();
+        // TODO load new solution
+
         hintManager.initLevel();
+
         GameObject[] gos = GameObject.FindGameObjectsWithTag("PuzzleBlock");
         foreach(GameObject go in gos)
             Destroy(go);
@@ -83,10 +97,25 @@ public class BlockLevelManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            return;
+        }
+    }
+
     public void showHint()
     {
+        if (timer > 0)
+        {
+            return;
+        }
         Debug.Log("Show a hint");
-        // int id = getFirstMismatch();
+        timer = hintTimer;
+        int id = getFirstMismatch();
+        // TODO
         // hintManager.showBlock(id);
     }
 
@@ -131,28 +160,15 @@ public class BlockLevelManager : MonoBehaviour
         return block.GetComponent<Block2>();
     }
 
-    public void playerAddBlock(int id)
-    {
-        Block2 block = getBlock(id);
-        // TODO update stuff - check if player solution is correct, etc
-        updateUI();
-    }
-
-    public void playerRemoveBlock(int id)
-    {
-        Block2 block = getBlock(id);
-        // TODO
-        updateUI();
-    }
-
     void updateUI()
     {
         // TODO
     }
 
+// TODO: if there's no use for this we can delete it.
     public void selectBlock(int id)
     {
-        selectedBlock = id;
+        // selectedBlock = id;
         // blocks[id].GetComponent<Renderer>().sortingOrder = orderCount++;
         // // this will probably never happen but yknow, just in case lol
         // if (orderCount == 30000)
@@ -177,21 +193,14 @@ public class BlockLevelManager : MonoBehaviour
 
     public void deselectBlock()
     {
-        selectedBlock = -1;
+        // selectedBlock = -1;
     }
 
     public bool metRequirements()
     {
         // TODO
+        Debug.Log("Check if player has finished the puzzle");
         return false;
-    }
-
-    public void toNextLvl()
-    {
-        if (metRequirements())
-        {
-            // TODO
-        }
     }
 
     // horiz range: -40 to 440 -> -60 to 420
@@ -210,19 +219,56 @@ public class BlockLevelManager : MonoBehaviour
                 gridPos.y <= 240 && gridPos.y - blockType.height * pixelsPerUnit >= -300;
     }
 
-    public void updateBlock(int id, Vector3Int position, string blockType)
+    public void updateBlock(int id, BlockType type, Vector3Int newPos)
     {
-        removeBlock(id);
-        addBlock(id, position, blockType);
+        removeBlock(type, id);
+        addBlock(type, id, newPos);
     }
 
-    public void addBlock(int id, Vector3Int position, string blockType)
+    Vector3Int encodeBlockPos(int id, Vector3Int newPos)
     {
-        // TODO
+        return new Vector3Int(newPos.x, newPos.y, id);
     }
 
-    public void removeBlock(int id)
+    public void addBlock(BlockType type, int id, Vector3Int newPos)
     {
-        // TODO remove from list
+        Debug.Log("Block " + id + " with shape " + type + " placed at " + newPos);
+        string key = type.fullName();
+        if (blockLocations.ContainsKey(key))
+        {
+            for (int i = 0; i < blockLocations[key].Count; ++i)
+            {
+                if (blockLocations[key][i].z == id)
+                {
+                    blockLocations[key][i] = encodeBlockPos(id, newPos);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            List<Vector3Int> lst = new List<Vector3Int>
+            {
+                encodeBlockPos(id, newPos)
+            };
+            blockLocations.Add(key, lst);
+        }
+    }
+
+    public void removeBlock(BlockType type, int id)
+    {
+        Debug.Log("Block " + id + " with shape " + type + " removed from grid");
+        string key = type.fullName();
+        if (blockLocations.ContainsKey(key))
+        {
+            for (int i = 0; i < blockLocations[key].Count; ++i)
+            {
+                if (blockLocations[key][i].z == id)
+                {
+                    blockLocations[key].RemoveAt(i);
+                    return;
+                }
+            }
+        }
     }
 }
