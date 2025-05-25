@@ -17,6 +17,8 @@ public class BlockLevelManager : MonoBehaviour
 
     public new Camera camera;
 
+    public GameObject infoPopup;
+
     Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
     // IMPORTANT: positions will be offset according to blockOffset
     // maps type of block (must use fullName to account for hflip/vflip) to list of all current positions on grid
@@ -37,6 +39,8 @@ public class BlockLevelManager : MonoBehaviour
 
     void initLevel(int day)
     {
+        infoPopup.SetActive(false);
+
         blocks.Clear();
         blockLocations.Clear();
         solution.Clear();
@@ -45,7 +49,7 @@ public class BlockLevelManager : MonoBehaviour
         hintManager.initLevel();
 
         GameObject[] gos = GameObject.FindGameObjectsWithTag("PuzzleBlock");
-        foreach(GameObject go in gos)
+        foreach (GameObject go in gos)
             Destroy(go);
 
         // this.day = day;
@@ -121,7 +125,8 @@ public class BlockLevelManager : MonoBehaviour
 
     int getFirstMismatch()
     {
-        // TODO
+        // TODO scan solution and make sure all entries are in player's placement
+        // TODO do the same for player placement vs solution
         return -1;
     }
 
@@ -165,7 +170,7 @@ public class BlockLevelManager : MonoBehaviour
         // TODO
     }
 
-// TODO: if there's no use for this we can delete it.
+    // TODO: if there's no use for this we can delete it.
     public void selectBlock(int id)
     {
         // selectedBlock = id;
@@ -270,5 +275,10 @@ public class BlockLevelManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void toggleInfoPopup()
+    {
+        infoPopup.SetActive(!infoPopup.activeSelf);
     }
 }
