@@ -85,8 +85,9 @@ public class BlockLevelManager : MonoBehaviour
 
     public void showHint()
     {
-        int id = getFirstMismatch();
-        hintManager.showBlock(id);
+        Debug.Log("Show a hint");
+        // int id = getFirstMismatch();
+        // hintManager.showBlock(id);
     }
 
     int getFirstMismatch()
