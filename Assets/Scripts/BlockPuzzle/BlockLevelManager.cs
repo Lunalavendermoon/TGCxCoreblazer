@@ -6,31 +6,17 @@ using System;
 
 public class BlockLevelManager : MonoBehaviour
 {
-    public static float pixelsPerUnit = 75;
+    public static int pixelsPerUnit = 60;
     public HelpUIManager helpUiManager;
     public BlockHint hintManager;
     public GameObject blockPrefab;
     public Canvas canvas;
 
-    public BlockGrid grid;
-
     public new Camera camera;
-
-
-    public GameObject levelWarning;
-    public float warningTimer;
-    float timer;
 
     Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
 
     int selectedBlock = -1;
-    int orderCount = 1;
-
-    int size = 0;
-    int maxSize;
-
-    int[] nutrition = { 0, 0, 0 };
-    int[] maxNutrition;
 
     bool popupIsOpen = false;
 
@@ -42,6 +28,12 @@ public class BlockLevelManager : MonoBehaviour
 
     void initLevel(int day)
     {
+        blocks.Clear();
+        hintManager.initLevel();
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("PuzzleBlock");
+        foreach(GameObject go in gos)
+            Destroy(go);
+
         // this.day = day;
         // GameManager.LoadBlockData(day);
 
@@ -51,10 +43,6 @@ public class BlockLevelManager : MonoBehaviour
         // BlockType[] blocksToSpawn = GameManager.blockSpawnList;
 
         float ycarb = 25f;
-
-        grid.initGrid(
-            new Dictionary<int, Vector2>(), 8, 7, 0, 5, day
-        );
 
         // BLOCK ID MUST BE 1 OR GREATER
         // int id = 1;
@@ -97,8 +85,14 @@ public class BlockLevelManager : MonoBehaviour
 
     public void showHint()
     {
-        int id = grid.getFirstMismatch();
+        int id = getFirstMismatch();
         hintManager.showBlock(id);
+    }
+
+    int getFirstMismatch()
+    {
+        // TODO
+        return -1;
     }
 
     void spawnBlock(int id, BlockType type, int count, float yoffset, bool hflip, bool vflip)
@@ -124,9 +118,9 @@ public class BlockLevelManager : MonoBehaviour
         //     transforms = GameManager.blockPositionArray[id];
         // }
 
-        Vector3 hintPos = grid.arrayToWorld((int)transforms[3], (int)transforms[4]);
+        Vector3 hintPos = new Vector3((int)transforms[3], (int)transforms[4]);
         hintManager.initBlock(
-            id, type, hintPos, (bool)transforms[0], (bool)transforms[1], (int)transforms[2], this, grid
+            id, type, hintPos, this, canvas
         );
     }
 
@@ -185,60 +179,44 @@ public class BlockLevelManager : MonoBehaviour
         selectedBlock = -1;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (timer > 0.0f)
-        {
-            timer -= Time.deltaTime;
-        }
-        else
-        {
-            // levelWarning.SetActive(false);
-            // levelWarning.GetComponent<FlashingAnim>().SetAnimated(false);
-        }
-    }
-
     public bool metRequirements()
     {
-        for (int i = 0; i < 3; ++i)
-        {
-            if (nutrition[i] < maxNutrition[i])
-            {
-                return false;
-            }
-        }
-        return true;
+        // TODO
+        return false;
     }
 
     public void toNextLvl()
     {
-        if (!metRequirements())
+        if (metRequirements())
         {
-            levelWarning.SetActive(true);
-            // levelWarning.GetComponent<FlashingAnim>().SetAnimated(true);
-            // AudioSFXManager.Instance.PlayAudio("bad");
-            timer = warningTimer;
-            return;
+            // TODO
         }
-        // DOTween.KillAll();
-        // GameManager.StoreNutritionInfo(size, nutrition);
-        // ChangeScene.LoadNextSceneStatic();
+    }
+
+    // horiz range: -40 to 440 -> -60 to 420
+    // vert range: -360 to 240
+    // cell size: 60 x 60
+    public Vector3Int snapToGrid(Vector3 world, BlockType blockType)
+    {
+        return new Vector3Int(Mathf.RoundToInt(world.x / pixelsPerUnit) * pixelsPerUnit,
+                                Mathf.RoundToInt(world.y / pixelsPerUnit) * pixelsPerUnit + blockType.height * pixelsPerUnit);
     }
 
     public bool checkBlockPosition(Vector3 pos, BlockType blockType)
     {
-        // TODO
-        return true;
+        Vector3 gridPos = snapToGrid(pos, blockType);
+        Debug.Log(pos + " " + gridPos + " " + new Vector3(gridPos.x + blockType.width * pixelsPerUnit, gridPos.y - blockType.height * pixelsPerUnit));
+        return gridPos.x >= -60 && gridPos.x + blockType.width * pixelsPerUnit <= 420 &&
+                gridPos.y <= 240 && gridPos.y - blockType.height * pixelsPerUnit >= -300;
     }
 
-    public void updateBlock(int id, Vector3 position, string blockType)
+    public void updateBlock(int id, Vector3Int position, string blockType)
     {
         removeBlock(id);
         addBlock(id, position, blockType);
     }
 
-    public void addBlock(int id, Vector3 position, string blockType)
+    public void addBlock(int id, Vector3Int position, string blockType)
     {
         // TODO
     }
@@ -246,10 +224,5 @@ public class BlockLevelManager : MonoBehaviour
     public void removeBlock(int id)
     {
         // TODO remove from list
-    }
-
-    public Vector3Int snapToGrid(Vector3 world) {
-        Vector3 og = world;
-        return new Vector3Int(Mathf.RoundToInt(og.x), Mathf.RoundToInt(og.y) - 1);
     }
 }
