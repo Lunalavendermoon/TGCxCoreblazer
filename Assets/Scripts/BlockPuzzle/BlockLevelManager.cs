@@ -205,7 +205,6 @@ public class BlockLevelManager : MonoBehaviour
     public bool checkBlockPosition(Vector3 pos, BlockType blockType)
     {
         Vector3 gridPos = snapToGrid(pos, blockType);
-        Debug.Log(pos + " " + gridPos + " " + new Vector3(gridPos.x + blockType.width * pixelsPerUnit, gridPos.y - blockType.height * pixelsPerUnit));
         return gridPos.x >= -60 && gridPos.x + blockType.width * pixelsPerUnit <= 420 &&
                 gridPos.y <= 240 && gridPos.y - blockType.height * pixelsPerUnit >= -300;
     }
