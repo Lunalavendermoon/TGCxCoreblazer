@@ -1,13 +1,23 @@
-﻿title: RedNPC
+﻿title: BabyBear
 ---
-RedNPC: Wow! u picked the superior NPC, redNPC.
-NOW SCR
-
--> keep talking
+BabyBear: Are you new here?
+-> run command: take memory (secretly is Community memory)
+    <<take_memory "Community Memory">>
 -> leave
 ===
 
-title: BlueNPC
+title: ElderlyGardener
 ---
-BlueNPC: it's blue NPC
+ElderlyGardener: yo
+-> offer memory (checks for community memory)
+    <<if check_has_memory("Community Memory")>>
+        <<prompt_memory_selection "Community Memory">>
+        <<give_memory "Community Memory">>
+        You offered a Community Memory
+    <<else>>
+        You do not have the appropriate memory
+    <<endif>>
+-> run command: take memory (secretly is Joy memory)
+    <<take_memory "Joy Memory">>
+    ElderlyGardener: another line
 ===
