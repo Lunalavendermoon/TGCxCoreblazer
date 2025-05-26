@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using System;
 using UnityEngine.Rendering.Universal.Internal;
+using Unity.Multiplayer.Center.Common;
 // using DG.Tweening;
 
 public class BlockLevelManager : MonoBehaviour
@@ -22,31 +22,70 @@ public class BlockLevelManager : MonoBehaviour
     // maps type of block (must use fullName to account for hflip/vflip) to list of all current positions on grid
     // Vector is (x position, y position, ID)
     Dictionary<string, List<Vector3Int>> blockLocations = new Dictionary<string, List<Vector3Int>>();
-    // TODO decide what to do w/ this guy
-    Dictionary<Vector3Int, string> solution = new Dictionary<Vector3Int, string>();
+    // Same as blockLocations but without a z coordinate
+    Dictionary<string, List<Vector2Int>> solution = new Dictionary<string, List<Vector2Int>>();
 
     bool popupIsOpen = false;
 
-    public static Vector3 blockOffset = new Vector3(3, -2, 0);
+    public static Vector3Int blockOffset = new Vector3Int(3, -2, 0);
 
     void Start()
     {
         // TODO call from another manager?
-        initLevel(1);
+
+        // format: name of block, position of top left corner (row, col)
+        initLevel(new string[] {
+            "bigSquareFF,0,0",
+            "smallTriangleTF,0,0",
+            "smallTriangle2TT,0,0",
+            "bigCircleFF,0,0",
+            "quarterCircle4FF,0,0"
+        });
     }
 
-    void initLevel(int day)
+    void initLevel(string[] solutionArray)
     {
         blocks.Clear();
         blockLocations.Clear();
-        solution.Clear();
-        // TODO load new solution
-
         hintManager.initLevel();
 
         GameObject[] gos = GameObject.FindGameObjectsWithTag("PuzzleBlock");
         foreach(GameObject go in gos)
             Destroy(go);
+
+
+        int id = 0;
+        solution.Clear();
+        foreach (string blockSoln in solutionArray)
+        {
+            string[] components = blockSoln.Split(",");
+            Vector2Int pos = new Vector2Int(
+                -60 + int.Parse(components[2]) * pixelsPerUnit + blockOffset.x,
+                240 - (int.Parse(components[1]) * pixelsPerUnit) + blockOffset.y
+            );
+            if (solution.ContainsKey(components[0]))
+            {
+                solution[components[0]].Add(pos);
+            }
+            else
+            {
+                List<Vector2Int> lst = new List<Vector2Int>()
+                {
+                    pos
+                };
+                solution[components[0]] = lst;
+            }
+            string name = components[0].Substring(0, components[0].Length - 2);
+
+            spawnBlock(id+1, BlockType.stringToBlock(name), id,
+                charToBool(components[0][components[0].Length-2]), charToBool(components[0][components[0].Length-1]));
+            ++id;
+        }
+
+        bool charToBool(char b)
+        {
+            return b == 'T';
+        }
 
         // this.day = day;
         // GameManager.LoadBlockData(day);
@@ -55,24 +94,6 @@ public class BlockLevelManager : MonoBehaviour
         // maxNutrition = GameManager.blockMaxGroupSize;
 
         // BlockType[] blocksToSpawn = GameManager.blockSpawnList;
-
-        float ycarb = 25f;
-
-        // BLOCK ID MUST BE 1 OR GREATER
-        // int id = 1;
-        // foreach (BlockType b in blocksToSpawn) {
-        //     spawnBlock(id, b, id - 1, ycarb);
-        //     id++;
-        // }
-        spawnBlock(1, BlockType.bigSquare(), 0, ycarb, false, false);
-        spawnBlock(2, BlockType.bigSquare(), 1, ycarb, false, false);
-        spawnBlock(3, BlockType.smallSquare(), 2, ycarb, false, false);
-        spawnBlock(4, BlockType.smallTriangle(), 3, ycarb, false, false);
-        spawnBlock(5, BlockType.bigTriangle(), 4, ycarb, false, false);
-        spawnBlock(6, BlockType.bigCircle(), 5, ycarb, false, false);
-        spawnBlock(7, BlockType.quarterCircle2(), 6, ycarb, false, false);
-        spawnBlock(8, BlockType.bigTriangle(), 7, ycarb, true, false);
-        spawnBlock(9, BlockType.smallTriangle(), 8, ycarb, true, false);
 
         updateUI();
 
@@ -112,25 +133,37 @@ public class BlockLevelManager : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Show a hint");
         timer = hintTimer;
         int id = getFirstMismatch();
+        Debug.Log("Show a hint: First mismatched block ID is " + id);
         // TODO
         // hintManager.showBlock(id);
     }
 
     int getFirstMismatch()
     {
-        // TODO
+        foreach (KeyValuePair<string, List<Vector3Int>> kv in blockLocations)
+        {
+            foreach (Vector3Int pos in kv.Value)
+            {
+                Vector2Int lookup = new Vector2Int(pos.x, pos.y);
+                int id = pos.z;
+
+                if (!solution.ContainsKey(kv.Key) || !solution[kv.Key].Contains(lookup))
+                {
+                    return id;
+                }
+            }
+        }
         return -1;
     }
 
-    void spawnBlock(int id, BlockType type, int count, float yoffset, bool hflip, bool vflip)
+    void spawnBlock(int id, BlockType type, int count, bool hflip, bool vflip)
     {
         int x = count % 4;
         int y = count / 4;
 
-        Vector3 position = new Vector3(-60f + 12f * x, yoffset - 17f * y, 0);
+        Vector3 position = new Vector3(-60f + 12f * x, 25f - 17f * y, 0);
         Vector3 jitter = new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), 0);
 
         GameObject block = Instantiate(blockPrefab, position + jitter, Quaternion.identity, canvas.transform);
@@ -152,6 +185,8 @@ public class BlockLevelManager : MonoBehaviour
         hintManager.initBlock(
             id, type, hintPos, this, canvas
         );
+
+        addBlock(type, id, new Vector3Int(0,0,id));
     }
 
     Block2 getBlock(int id)
@@ -198,12 +233,10 @@ public class BlockLevelManager : MonoBehaviour
 
     public bool metRequirements()
     {
-        // TODO
-        Debug.Log("Check if player has finished the puzzle");
-        return false;
+        return getFirstMismatch() == -1;
     }
 
-    // horiz range: -40 to 440 -> -60 to 420
+    // horiz range: -60 to 420
     // vert range: -360 to 240
     // cell size: 60 x 60
     public Vector3Int snapToGrid(Vector3 world, BlockType blockType)
@@ -232,8 +265,8 @@ public class BlockLevelManager : MonoBehaviour
 
     public void addBlock(BlockType type, int id, Vector3Int newPos)
     {
-        Debug.Log("Block " + id + " with shape " + type + " placed at " + newPos);
         string key = type.fullName();
+        Debug.Log("Block " + id + " with shape " + key + " placed at " + newPos);
         if (blockLocations.ContainsKey(key))
         {
             for (int i = 0; i < blockLocations[key].Count; ++i)
@@ -257,15 +290,15 @@ public class BlockLevelManager : MonoBehaviour
 
     public void removeBlock(BlockType type, int id)
     {
-        Debug.Log("Block " + id + " with shape " + type + " removed from grid");
         string key = type.fullName();
+        Debug.Log("Block " + id + " with shape " + key + " removed from grid");
         if (blockLocations.ContainsKey(key))
         {
             for (int i = 0; i < blockLocations[key].Count; ++i)
             {
                 if (blockLocations[key][i].z == id)
                 {
-                    blockLocations[key].RemoveAt(i);
+                    blockLocations[key][i] = new Vector3Int(0,0,id);
                     return;
                 }
             }
