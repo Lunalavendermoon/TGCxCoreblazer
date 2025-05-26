@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BlockHint : MonoBehaviour
 {

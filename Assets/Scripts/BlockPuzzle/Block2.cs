@@ -144,7 +144,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         {
             makeOpaque();
 
-            Vector3Int snap = levelManager.snapToGrid(pos, blockType);
+            Vector3Int snap = levelManager.snapToGrid(pos, blockType) + BlockLevelManager.blockOffset;
 
             if (isOnGrid)
             {
@@ -166,6 +166,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
         if (levelManager.metRequirements())
         {
+            Debug.Log("Correct solution! Yippee!");
             // TODO exit da minigame
         }
     }
@@ -208,8 +209,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     {
         // AudioSFXManager.Instance.PlayAudio("thump");
         rectTransform.anchoredPosition3D = new Vector3(position.x + blockType.width * BlockLevelManager.pixelsPerUnit / 2,
-                                                        position.y - blockType.height * BlockLevelManager.pixelsPerUnit / 2, 0)
-                                                        + BlockLevelManager.blockOffset;
+                                                        position.y - blockType.height * BlockLevelManager.pixelsPerUnit / 2, 0);
     }
 
     public void hintColor()
