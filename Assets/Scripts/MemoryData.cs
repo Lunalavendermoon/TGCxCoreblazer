@@ -18,6 +18,7 @@ public class MemoryData : ScriptableObject
         {
             AllMemories.Add(m);
         }
+        MemoryList.Clear(); //reset player inventory on play
     }
     public static bool IsValidMemory(string memoryName)
     {

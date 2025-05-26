@@ -89,7 +89,12 @@ public class UIInputHandler : MonoBehaviour
                         Debug.Log($"\n MemoryType: {MemoryData.GetMemoryType(UI_element.name)}");
 
                         string memoryType = MemoryData.GetMemoryType(UI_element.name);
-
+                        Debug.Log($"{UI_element.name}'s type: {memoryType}");
+                        Debug.Log("Wanted types");
+                        foreach(string type in TypesToSelect)
+                        {
+                            Debug.Log(type);
+                        }
                         if (TypesToSelect.Contains(memoryType))
                         {
                             TypesToSelect.Remove(memoryType);

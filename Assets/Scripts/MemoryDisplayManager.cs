@@ -27,14 +27,14 @@ public class MemoryDisplayManager : MonoBehaviour
     public void RefreshUI()
     {
         //clear old UI
-        foreach(GameObject memoryUI in displayedMemoryUI)
+        foreach (GameObject memoryUI in displayedMemoryUI)
         {
             Destroy(memoryUI);
         }
         displayedMemoryUI.Clear();
 
         //update displayedUI - instantiate memoryPrefab, assign parent to panel
-        foreach(Memory memory in MemoryData.MemoryList)
+        foreach (Memory memory in MemoryData.MemoryList)
         {
             GameObject memoryUIObject = Instantiate(memoryObjectPrefab, contentPanel);
 
@@ -62,7 +62,7 @@ public class MemoryDisplayManager : MonoBehaviour
     public void TakeMemory(string npcName, string memoryName)
     {
         npcName = RemoveWhitespace(npcName);
-        if(MemoryData.IsValidMemory(memoryName))
+        if (MemoryData.IsValidMemory(memoryName))
         {
             MemoryData.AddMemory(memoryName);
             Debug.Log($"{memoryName} added to inventory");
@@ -89,14 +89,23 @@ public class MemoryDisplayManager : MonoBehaviour
         RefreshUI();
     }
 
+    //Dictionary<string, MemoryType> stringToType = new Dictionary<string, MemoryType>(){
+    //    {"Community", MemoryType.Community},
+    //    {"Joy", MemoryType.Community},
+    //    {"Love", MemoryType.Community},
+    //    {"Resilience", MemoryType.Community},
+    //    {"Wonder", MemoryType.Community},
+    //};
     public bool CheckHasMemoryType(string memoryType)
     {
-        Enum.TryParse(memoryType, out MemoryType type);
-        Debug.Log("parsed memory type: " + type + " wanted memory type: " + memoryType);
+        //Debug.Log("parsed memory type: " + type + " wanted memory type: " + memoryType);
+        //Debug.Log($"Looking for memory type: {memoryType}");
         foreach (Memory m in MemoryData.MemoryList)
         {
-            if (m.memoryType == type)
+            //Debug.Log($"have memory: {m.memoryName} of type {m.memoryType.ToString()}");
+            if (m.memoryType.ToString() == memoryType)
             {
+                //Debug.Log($"desired type found: {m.memoryName} is {memoryType}");
                 return true;
             }
         }

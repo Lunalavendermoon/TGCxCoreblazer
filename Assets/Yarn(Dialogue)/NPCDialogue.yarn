@@ -49,7 +49,7 @@ title: Adventurer
 title: ElderlyGardener
 ---
 <<set $npcName = "Elderly Gardener">>
-<<set $acceptedMemoryType1 = "Community Memory">> //FIX: should actually be wonder memory, i just made it community for testing
+<<set $acceptedMemoryType1 = "Community">> //FIX: should actually be wonder memory, i just made it community for testing
 <<set $memoryToReceive = "The Grove">>
 <<set $memoryToTake = "The Bloom">>
 {$npcName}: ...It used to feel like magic, didn’t it? Seeds turning into something more.
@@ -78,8 +78,8 @@ title: ElderlyGardener
 title: Sapling
 ---
 <<set $npcName = "Sapling">>
-<<set $acceptedMemoryType1 = "Community Memory">>
-<<set $acceptedMemoryType2 = "Joy Memory">>
+<<set $acceptedMemoryType1 = "Community">>
+<<set $acceptedMemoryType2 = "Joy">>
 Test
 -> select 2 memories
     <<if check_has_memory_type($acceptedMemoryType1) && check_has_memory_type($acceptedMemoryType2)>>
