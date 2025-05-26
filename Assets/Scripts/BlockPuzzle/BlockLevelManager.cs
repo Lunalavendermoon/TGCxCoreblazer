@@ -29,6 +29,8 @@ public class BlockLevelManager : MonoBehaviour
 
     public static Vector3Int blockOffset = new Vector3Int(3, -2, 0);
 
+    int hintedBlock = -1;
+
     void Start()
     {
         // TODO call from another manager?
@@ -78,7 +80,8 @@ public class BlockLevelManager : MonoBehaviour
             string name = components[0].Substring(0, components[0].Length - 2);
 
             spawnBlock(id+1, BlockType.stringToBlock(name), id,
-                charToBool(components[0][components[0].Length-2]), charToBool(components[0][components[0].Length-1]));
+                charToBool(components[0][components[0].Length-2]), charToBool(components[0][components[0].Length-1]),
+                new Vector3Int(pos.x, pos.y, 0));
             ++id;
         }
 
@@ -125,6 +128,11 @@ public class BlockLevelManager : MonoBehaviour
             timer -= Time.deltaTime;
             return;
         }
+        if (hintedBlock != -1)
+        {
+            hintManager.hideBlock(hintedBlock);
+            hintedBlock = -1;
+        }
     }
 
     public void showHint()
@@ -135,9 +143,8 @@ public class BlockLevelManager : MonoBehaviour
         }
         timer = hintTimer;
         int id = getFirstMismatch();
-        Debug.Log("Show a hint: First mismatched block ID is " + id);
-        // TODO
-        // hintManager.showBlock(id);
+        hintedBlock = id;
+        hintManager.showBlock(id);
     }
 
     int getFirstMismatch()
@@ -158,7 +165,7 @@ public class BlockLevelManager : MonoBehaviour
         return -1;
     }
 
-    void spawnBlock(int id, BlockType type, int count, bool hflip, bool vflip)
+    void spawnBlock(int id, BlockType type, int count, bool hflip, bool vflip, Vector3Int hintPos)
     {
         int x = count % 4;
         int y = count / 4;
@@ -181,7 +188,6 @@ public class BlockLevelManager : MonoBehaviour
         //     transforms = GameManager.blockPositionArray[id];
         // }
 
-        Vector3 hintPos = new Vector3((int)transforms[3], (int)transforms[4]);
         hintManager.initBlock(
             id, type, hintPos, this, canvas
         );
@@ -266,7 +272,7 @@ public class BlockLevelManager : MonoBehaviour
     public void addBlock(BlockType type, int id, Vector3Int newPos)
     {
         string key = type.fullName();
-        Debug.Log("Block " + id + " with shape " + key + " placed at " + newPos);
+        // Debug.Log("Block " + id + " with shape " + key + " placed at " + newPos);
         if (blockLocations.ContainsKey(key))
         {
             for (int i = 0; i < blockLocations[key].Count; ++i)
@@ -291,7 +297,7 @@ public class BlockLevelManager : MonoBehaviour
     public void removeBlock(BlockType type, int id)
     {
         string key = type.fullName();
-        Debug.Log("Block " + id + " with shape " + key + " removed from grid");
+        // Debug.Log("Block " + id + " with shape " + key + " removed from grid");
         if (blockLocations.ContainsKey(key))
         {
             for (int i = 0; i < blockLocations[key].Count; ++i)
