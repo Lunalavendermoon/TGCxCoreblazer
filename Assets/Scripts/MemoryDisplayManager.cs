@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -14,13 +15,10 @@ public class MemoryDisplayManager : MonoBehaviour
     [SerializeField] Transform contentPanel; //parent UI to hold memory objects
     [SerializeField] GameObject memoryMenu;
     [SerializeField] DialogueManager dialogueManagerScript;
-
-    List<string> memoryDataList;
     List<GameObject> displayedMemoryUI;
 
     private void Start()
     {
-        memoryDataList = MemoryData.MemoryList;
         displayedMemoryUI = new List<GameObject>();
 
         dialogueRunner.AddCommandHandler<string, string>("take_memory", TakeMemory);
@@ -39,7 +37,7 @@ public class MemoryDisplayManager : MonoBehaviour
         displayedMemoryUI.Clear();
 
         //update displayedUI - instantiate memoryPrefab, assign parent to panel
-        foreach(string memory in memoryDataList)
+        foreach(Memory memory in MemoryData.MemoryList)
         {
             GameObject memoryUIObject = Instantiate(memoryObjectPrefab, contentPanel);
 
@@ -48,11 +46,10 @@ public class MemoryDisplayManager : MonoBehaviour
             Image memoryImage = memoryUIObject.transform.Find("MemoryImage").GetComponent<Image>();
 
             //update TMP title text, description text
-            Dictionary<string, string> memoryInfo = MemoryData.GetMemoryInfo(memory);
-            memoryUIObject.name = memory; //GameObject name - used to see if memory exists?
-            memoryImage.sprite = Resources.Load<Sprite>("CursedScreenshot");
-            nameText.text = memory;
-            descriptionText.text = memoryInfo["description"];
+            memoryUIObject.name = memory.memoryName; //GameObject name - used to see if memory exists?
+            memoryImage.sprite = memory.memoryImage;
+            nameText.text = memory.memoryName;
+            descriptionText.text = memory.memoryDesc;
 
             //add to list of displayedUI to make updating easier later
             displayedMemoryUI.Add(memoryUIObject);
@@ -70,7 +67,7 @@ public class MemoryDisplayManager : MonoBehaviour
         npcName = RemoveWhitespace(npcName);
         if(MemoryData.IsValidMemory(memoryName))
         {
-            memoryDataList.Add(memoryName);
+            MemoryData.AddMemory(memoryName);
             Debug.Log($"{memoryName} added to inventory");
             dialogueManagerScript.SetQuestComplete(npcName);
             RefreshUI();
@@ -88,7 +85,7 @@ public class MemoryDisplayManager : MonoBehaviour
     public void GiveMemory(string npcName, string memoryName)
     {
         npcName = RemoveWhitespace(npcName);
-        memoryDataList.Remove(memoryName);
+        MemoryData.RemoveMemory(memoryName);
         Debug.Log($"{memoryName} removed from inventory");
         //dialogueManagerScript.SetQuestComplete(npcName);
         //don't mark complete until both memories given
@@ -97,9 +94,11 @@ public class MemoryDisplayManager : MonoBehaviour
 
     public bool CheckHasMemoryType(string memoryType)
     {
-        foreach(string memoryName in memoryDataList)
+        Enum.TryParse(memoryType, out MemoryType type);
+        Debug.Log("parsed memory type: " + type + " wanted memory type: " + memoryType);
+        foreach (Memory m in MemoryData.MemoryList)
         {
-            if (MemoryData.GetMemoryType(memoryName) == memoryType)
+            if (m.memoryType == type)
             {
                 return true;
             }

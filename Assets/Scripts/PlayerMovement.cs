@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
         inputActions = new PlayerInputActions();
     }
 
+    void Start()
+    {
+        memoryData.Convert();
+    }
     private void OnEnable()
     {
         inputActions.Player.Enable(); //start listening for input
