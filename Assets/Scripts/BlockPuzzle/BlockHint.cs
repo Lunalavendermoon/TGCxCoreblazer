@@ -7,12 +7,7 @@ using UnityEngine.UI;
 
 public class BlockHint : MonoBehaviour
 {
-    public float hintTimer;
-
-    public GameObject helpButton;
     public BlockLevelManager levelManager;
-
-    float timer = 0;
 
     public GameObject blockPrefab;
 
@@ -51,34 +46,18 @@ public class BlockHint : MonoBehaviour
         blocks.Add(id, block);
     }
 
-    void Update()
-    {
-        if (timer > 0.0f) {
-            timer -= Time.deltaTime;
-            return;
-        }
-        if (curId != 0) {
-            blocks[curId].SetActive(false);
-            // GameObject obj = blocks[curId];
-            // obj.GetComponent<FlashingAnim>().SetAnimated(false);
-            // helpButton.GetComponent<HelpButton>().ButtonClickable(true);
-            curId = 0;
-        }
-    }
-
 
     public void showBlock(int id)
     {
-        if (id == -1)
-        {
-            return;
-        }
-        timer = hintTimer;
-        helpButton.GetComponent<HelpButton>().ButtonClickable(false);
         curId = id;
         blocks[curId].SetActive(true);
         GameObject obj = blocks[curId];
         obj.transform.SetAsLastSibling(); // bring to front
         // TODO flashing animation on obj?
+    }
+
+    public void hideBlock(int id)
+    {
+        // TODO
     }
 }
