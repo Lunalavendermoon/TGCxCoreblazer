@@ -127,6 +127,10 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isEnabled)
+        {
+            return;
+        }
         // Move the UI element
         rectTransform.anchoredPosition3D += new Vector3(eventData.delta.x, eventData.delta.y, 0) / canvas.scaleFactor;
     }
