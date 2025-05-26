@@ -26,6 +26,25 @@ title: BabyBear
 -> leave
 ===
 
+title: Adventurer
+---
+<<set $npcName = "Adventurer">>
+<<set $acceptedMemoryType1 = "None">> //accepted by NPC
+<<set $memoryToTake = "The Fellowship">> //for player to take
+{$npcName}: Are you new here?
+{$npcName}: I haven’t seen you around.
+{$npcName}: Do you want to go on an adventure together?
+{$npcName}: It’s quite cold now…but we can still have a lot of fun!
+{$npcName}: Like playing in the snow together?
+
+-> [Take memory: The Fellowship]
+    <<take_memory "{$npcName}" "{$memoryToTake}">>
+    {$npcName}: I remember that I…I? What did I do?
+    {$npcName}: What did I feel?
+    {$npcName}: I’m…I’m tired…
+-> leave
+===
+
 //example: offer 1 memory
 title: ElderlyGardener
 ---
