@@ -22,7 +22,6 @@ public class MemoryDisplayManager : MonoBehaviour
     {
         memoryDataList = MemoryData.MemoryList;
         displayedMemoryUI = new List<GameObject>();
-
         dialogueRunner.AddCommandHandler<string, string>("take_memory", TakeMemory);
         dialogueRunner.AddFunction<string, bool>("check_has_memory_type", CheckHasMemoryType); //param: string, return: boolean
     }
@@ -32,13 +31,10 @@ public class MemoryDisplayManager : MonoBehaviour
         //clear old UI
         foreach(GameObject memoryUI in displayedMemoryUI)
         {
-            //destroy every corresponding gameObject
             Destroy(memoryUI);
         }
-        //clear displayedMemoryUI list
         displayedMemoryUI.Clear();
 
-        //update displayedUI - instantiate memoryPrefab, assign parent to panel
         foreach(string memory in memoryDataList)
         {
             GameObject memoryUIObject = Instantiate(memoryObjectPrefab, contentPanel);
@@ -54,7 +50,7 @@ public class MemoryDisplayManager : MonoBehaviour
             nameText.text = memory;
             descriptionText.text = memoryInfo["description"];
 
-            //add to list of displayedUI to make updating easier later
+            //add to list of displayedUI to destroy later
             displayedMemoryUI.Add(memoryUIObject);
         }
     }

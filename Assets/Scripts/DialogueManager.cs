@@ -66,6 +66,7 @@ public class DialogueManager : MonoBehaviour
         if (!questStatus.ContainsKey(npcName))
         {
             questStatus.Add(npcName, "Incomplete");
+            dialogueRunner.StartDialogue($"{npcName}");
         }
         else if (questStatus[npcName] == "Incomplete")
         {
