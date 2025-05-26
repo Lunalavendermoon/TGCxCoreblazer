@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Yarn.Unity;
 
-public class Dialogue : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
 
     [SerializeField] DialogueRunner dialogueRunner;
@@ -14,8 +14,10 @@ public class Dialogue : MonoBehaviour
     // Possible values: "Incomplete", "Completed"
     Dictionary<string, string> questStatus = new Dictionary<string, string>
     {
-        {"BabyBear", "Incomplete"},
-        {"ElderlyGardener", "Incomplete"}
+        //no longer need to manually enter values, game will fill in automatically
+        //{"BabyBear", "Incomplete"},
+        //{"ElderlyGardener", "Incomplete"},
+        //{"Sapling", "Incomplete"}
     };
 
     void Awake()
@@ -61,7 +63,11 @@ public class Dialogue : MonoBehaviour
 
     public void RunQuest(string npcName)
     {
-        if (questStatus[npcName] == "Incomplete")
+        if (!questStatus.ContainsKey(npcName))
+        {
+            questStatus.Add(npcName, "Incomplete");
+        }
+        else if (questStatus[npcName] == "Incomplete")
         {
             dialogueRunner.StartDialogue($"{npcName}");
         }
@@ -74,6 +80,7 @@ public class Dialogue : MonoBehaviour
     public void SetQuestComplete(string npcName)
     {
         questStatus[npcName] = "Complete";
+        Debug.Log($"{npcName} quest marked complete");
     }
 
 }

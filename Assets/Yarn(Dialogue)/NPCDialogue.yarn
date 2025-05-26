@@ -1,0 +1,71 @@
+﻿title: VariableSetup
+---
+<<declare $npcName = "None">>
+<<declare $acceptedMemoryType1 = "None">> //accepted by NPC
+<<declare $acceptedMemoryType2 = "None">> //accepted by NPC
+<<declare $memoryToReceive = "None">> //reward for choosing to give, sometimes
+<<declare $memoryToTake = "None">> //for player to take
+===
+
+title: BabyBear
+---
+<<set $npcName = "Baby Bear">>
+<<set $acceptedMemoryType1 = "None">> //accepted by NPC
+<<set $memoryToTake = "The Fellowship">> //for player to take
+{$npcName}: Are you new here?
+{$npcName}: I haven’t seen you around.
+{$npcName}: Do you want to go on an adventure together?
+{$npcName}: It’s quite cold now…but we can still have a lot of fun!
+{$npcName}: Like playing in the snow together?
+
+-> [Take memory: The Fellowship]
+    <<take_memory "{$npcName}" "{$memoryToTake}">>
+    {$npcName}: I remember that I…I? What did I do?
+    {$npcName}: What did I feel?
+    {$npcName}: I’m…I’m tired…
+-> leave
+===
+
+//example: offer 1 memory
+title: ElderlyGardener
+---
+<<set $npcName = "Elderly Gardener">>
+<<set $acceptedMemoryType1 = "Community Memory">> //FIX: should actually be wonder memory, i just made it community for testing
+<<set $memoryToReceive = "The Grove">>
+<<set $memoryToTake = "The Bloom">>
+{$npcName}: ...It used to feel like magic, didn’t it? Seeds turning into something more.
+{$npcName}: I remember the shapes. The motions. But not why.
+{$npcName}: Why did I ever plant anything at all?
+-> [Offer wonder memory] (wants {$acceptedMemoryType1}) //just for debugging
+    <<if check_has_memory_type($acceptedMemoryType1)>>
+        <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}">>
+        {$npcName}: Oh... oh, I see now.
+        {$npcName}: The miracle of life…it’s incredible. How something so small and fragile grows into something powerful.
+        {$npcName}: Thank you. I remember now. Children bringing water. Friends trading cuttings. We built something... together.
+        <<take_memory "{$npcName}" "{$memoryToReceive}">>
+    <<else>>
+        You do not have the appropriate memory
+    <<endif>>
+-> [Take Memory: The Bloom]
+    <<take_memory "{$npcName}" "{$memoryToTake}">>
+    {$npcName}: Oh…
+    {$npcName}: The soil is… quiet now.
+    {$npcName}: No warmth, no bloom, no reason.
+    {$npcName}: Why… why would anyone grow anything…
+    {$npcName}: In a world like this?
+-> leave
+===
+
+title: Sapling
+---
+<<set $npcName = "Sapling">>
+<<set $acceptedMemoryType1 = "Community Memory">>
+<<set $acceptedMemoryType2 = "Joy Memory">>
+Test
+-> select 2 memories
+    <<if check_has_memory_type($acceptedMemoryType1) && check_has_memory_type($acceptedMemoryType2)>>
+        <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}" "{$acceptedMemoryType2}">>
+    <<else>>
+        You do not have the appropriate memory
+    <<endif>>
+===

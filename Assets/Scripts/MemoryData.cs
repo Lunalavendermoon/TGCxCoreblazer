@@ -5,33 +5,49 @@ using UnityEngine;
 public class MemoryData : ScriptableObject
 {
 
-    Dictionary<string, Dictionary<string, string>> MemoryInfo = new Dictionary<string, Dictionary<string, string>>()
+    static Dictionary<string, Dictionary<string, string>> MemoryInfo = new Dictionary<string, Dictionary<string, string>>()
     {
-        {"Community Memory", new Dictionary<string, string>
+        //{"", new Dictionary<string, string>
+        //    {
+        //        {"type", "" },
+        //        {"description", ""}
+        //    }
+        //},
+        {"The Fellowship", new Dictionary<string, string>
             {
-                {"type", "Community" },
-                {"description", "a description for Community memory"}
+                {"type", "Community Memory" },
+                {"description", "Through meadows and frost, the little bear bounded ahead. A rabbit, fox, and turtle followed, drawn together by adventure."}
             }
         },
-        {"Joy Memory", new Dictionary<string, string>
+        {"The Grove", new Dictionary<string, string>
             {
-                {"type", "Joy" },
-                {"description", "a description for joy memory"}
+                {"type", "Community Memory" },
+                {"description", "In the hush of morning light, hands reached across rows of earth, sharing tools, laughter, and the silent rhythm of planting side by side."}
             }
         },
-        {"Love Memory", new Dictionary<string, string>
+        {"The Bloom", new Dictionary<string, string>
             {
-                {"title", "Love" },
-                {"description", "another description for love memory"}
+                {"type", "Joy Memory" },
+                {"description", "With soil-stained fingers, the gardener watched green push through earth — joy found not in the harvest, but in the act of tending.\r\n"}
             }
-        }
+        },
     };
 
     [SerializeField]
     public static List<string> MemoryList = new List<string>();
 
-    public Dictionary<string, string> GetMemoryInfo(string memoryName)
+    public static bool IsValidMemory(string memoryName)
+    {
+        return MemoryInfo.ContainsKey(memoryName);
+    }
+
+    public static Dictionary<string, string> GetMemoryInfo(string memoryName)
     {
         return MemoryInfo[memoryName];
+    }
+
+    public static string GetMemoryType(string memoryName)
+    {
+        return MemoryInfo[memoryName]["type"];
     }
 }

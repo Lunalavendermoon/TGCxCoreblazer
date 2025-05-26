@@ -10,9 +10,12 @@ using Yarn.Unity;
 public class UIInputHandler : MonoBehaviour
 {
     [SerializeField] DialogueRunner dialogueRunner;
+    [SerializeField] DialogueManager dialogueManagerScript;
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject memoryMenu;
     [SerializeField] GameObject incompatibleMessage;
+    [SerializeField] GameObject secondMemoryMessage;
+    [SerializeField] MemoryDisplayManager memoryDisplayManager;
     GraphicRaycaster UI_raycaster;
 
     PointerEventData click_data;
@@ -28,7 +31,7 @@ public class UIInputHandler : MonoBehaviour
 
     private void Start()
     {
-        dialogueRunner.AddCommandHandler<string>("prompt_memory_selection", PromptMemorySelection);
+        dialogueRunner.AddCommandHandler<string, string, string>("prompt_memory_selection", PromptMemorySelection);
     }
 
     void Update()
@@ -53,14 +56,23 @@ public class UIInputHandler : MonoBehaviour
         }
 
     }
-    public IEnumerator PromptMemorySelection(string targetMemoryName)
+    public IEnumerator PromptMemorySelection(string npcName, string targetMemoryType1, string targetMemoryType2 = "None")
     {
         memoryMenu.SetActive(true);
+
+        List<string> TypesToSelect = new List<string>();
+        bool selectMultipleMemories = false; //used to determine if popup to select a memory should be shown
+
+        TypesToSelect.Add(targetMemoryType1);
+        if (targetMemoryType2 != "None")
+        {
+            TypesToSelect.Add(targetMemoryType2);
+            selectMultipleMemories = true;
+        }
 
         //Repeat until correct UI element is clicked
         while (true)
         {
-            // Wait for left mouse click
             if (Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 click_results.Clear();
@@ -71,18 +83,31 @@ public class UIInputHandler : MonoBehaviour
                 foreach (RaycastResult result in click_results)
                 {
                     GameObject UI_element = result.gameObject;
-                    Debug.Log("Clicked on: " + UI_element.name);
 
-                    if (UI_element.name == targetMemoryName)
+                    if (MemoryData.IsValidMemory(UI_element.name))
                     {
-                        Debug.Log("Target UI clicked!");
-                        memoryMenu.SetActive(false);
-                        yield break;
-                    }
-                    //otherwise, show this memory is not compatible message
-                    else if (UI_element.name.Contains("Memory"))
-                    {
-                        StartCoroutine(ActivateIncompatibleMessage());
+                        Debug.Log($"\n MemoryType: {MemoryData.GetMemoryType(UI_element.name)}");
+
+                        string memoryType = MemoryData.GetMemoryType(UI_element.name);
+
+                        if (TypesToSelect.Contains(memoryType))
+                        {
+                            TypesToSelect.Remove(memoryType);
+                            memoryDisplayManager.GiveMemory(npcName, UI_element.name);
+
+                            //success message after selecting 1
+                            if (selectMultipleMemories = true && TypesToSelect.Count == 1) StartCoroutine(ActivateMessage(secondMemoryMessage));
+                            else if (TypesToSelect.Count == 0)
+                            {
+                                memoryMenu.SetActive(false);
+                                dialogueManagerScript.SetQuestComplete(npcName); //mark completed
+                                yield break;
+                            }
+                        }
+                        else //otherwise, show this memory is not compatible message
+                        {
+                            StartCoroutine(ActivateMessage(incompatibleMessage));
+                        }
                     }
                 }
             }
@@ -90,10 +115,12 @@ public class UIInputHandler : MonoBehaviour
         }
     }
 
-    public IEnumerator ActivateIncompatibleMessage()
+    public IEnumerator ActivateMessage(GameObject messageWindow)
     {
-        incompatibleMessage.SetActive(true);
+        messageWindow.SetActive(true);
         yield return new WaitForSeconds(2f);
-        incompatibleMessage.SetActive(false);
+        messageWindow.SetActive(false);
     }
 }
+
+
