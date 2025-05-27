@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] MemoryData memoryData;
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpForce;
+    [SerializeField] float rotationSpeed;
 
     private float moveX;
     private float moveY;
@@ -38,11 +39,23 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        moveX = inputActions.Player.Move.ReadValue<Vector2>().x;
-        moveY = inputActions.Player.Move.ReadValue<Vector2>().y;
-        transform.position += new Vector3(moveX, 0f, moveY) * (moveSpeed - weight_max14 / 2) * Time.deltaTime;
+        moveX = inputActions.Player.Move.ReadValue<Vector2>().x; //in Vector3 - (x, 0, 0)
+        moveY = inputActions.Player.Move.ReadValue<Vector2>().y; //in Vector 3 - (0, 0, z/y)
+        
+        //movement
         weight_max14 = MemoryData.MemoryList.Count;
+        transform.position += new Vector3(moveX, 0f, moveY) * (moveSpeed - weight_max14 / 2) * Time.deltaTime;
         //for physics based movement: rb.AddForce(new Vector3(moveX, 0f, moveY) * 2f * moveSpeed * Time.deltaTime, ForceMode.VelocityChange);
+
+        //rotation
+        Vector3 direction = new Vector3(moveX, 0f, moveY).normalized;
+        float magnitude = new Vector3(moveX, 0f, moveY).magnitude;
+        if(magnitude > 0f)
+        {
+            Quaternion current = transform.rotation;
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = Quaternion.Slerp(current, rotation, Time.deltaTime * rotationSpeed);
+        }
     }
 
     private void OnCollisionStay(Collision collision)

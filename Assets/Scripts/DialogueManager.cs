@@ -6,7 +6,7 @@ using Yarn.Unity;
 
 public class DialogueManager : MonoBehaviour
 {
-
+    //test to see how long my load time is
     [SerializeField] DialogueRunner dialogueRunner;
     [SerializeField] Camera mainCamera;
     PlayerInputActions playerInputActions;
