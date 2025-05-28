@@ -10,11 +10,13 @@ public class MemoryDisplayManager : MonoBehaviour
 {
 
     [SerializeField] DialogueRunner dialogueRunner;
-    [SerializeField] MemoryData memoryData; //memory inventory ScriptableObject
+    //[SerializeField] MemoryData memoryData;
     [SerializeField] GameObject memoryObjectPrefab; //Memory object UI prefab
     [SerializeField] Transform contentPanel; //parent UI to hold memory objects
     [SerializeField] GameObject memoryMenu;
     [SerializeField] DialogueManager dialogueManagerScript;
+    //[SerializeField] UIInputHandler uiInputHandlerScript;
+    [SerializeField] GameObject memoryGainedUI;
     List<GameObject> displayedMemoryUI;
 
     private void Start()
@@ -67,6 +69,19 @@ public class MemoryDisplayManager : MonoBehaviour
             MemoryData.AddMemory(memoryName);
             Debug.Log($"{memoryName} added to inventory");
             dialogueManagerScript.SetQuestComplete(npcName);
+
+            //display and update memory gained UI
+            //uiInputHandlerScript.ShowMemoryGained(memoryName);
+            TextMeshProUGUI nameText = memoryGainedUI.transform.Find("MemoryName").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI descriptionText = memoryGainedUI.transform.Find("MemoryDesc").GetComponent<TextMeshProUGUI>();
+            Image memoryImage = memoryGainedUI.transform.Find("MemoryImage").GetComponent<Image>();
+
+            Memory memoryInfo = MemoryData.FindMemory(memoryName);
+            nameText.text = memoryInfo.memoryName;
+            descriptionText.text = memoryInfo.memoryDesc;
+            memoryImage.sprite = memoryInfo.memoryImage;
+            memoryGainedUI.SetActive(true);
+
             RefreshUI();
         }
         else

@@ -22,8 +22,10 @@ public class MemoryData : ScriptableObject
     }
     public static bool IsValidMemory(string memoryName)
     {
+        Debug.Log("Checking: " + memoryName);
         foreach (Memory m in AllMemories)
         {
+            Debug.Log(m.memoryName);
             if (memoryName == m.memoryName)
             {
                 return true;
@@ -35,7 +37,7 @@ public class MemoryData : ScriptableObject
     public static void AddMemory(string memoryName) => MemoryList.Add(FindMemory(memoryName));
     public static void RemoveMemory(string memoryName) => MemoryList.Remove(FindMemory(memoryName));
 
-    private static Memory FindMemory(string memoryName)
+    public static Memory FindMemory(string memoryName)
     {
         int i = 0;
         while (AllMemories[i].memoryName != memoryName)

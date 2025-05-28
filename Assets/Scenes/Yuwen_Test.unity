@@ -1069,6 +1069,7 @@ MonoBehaviour:
   moveSpeed: 7
   jumpForce: 7
   rotationSpeed: 12
+  dialogueRunner: {fileID: 930433913}
 --- !u!114 &871416332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1140,6 +1141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueRunner: {fileID: 930433913}
   mainCamera: {fileID: 1173062342}
+  playerController: {fileID: 871416331}
 --- !u!1 &922236027 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9078442560890639579, guid: 52571f68872914e24837210513edea1d, type: 3}

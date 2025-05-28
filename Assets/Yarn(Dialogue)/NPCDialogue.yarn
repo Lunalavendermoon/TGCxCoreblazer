@@ -146,6 +146,7 @@ title: Sapling
 <<set $npcName = "Sapling">>
 <<set $acceptedMemoryType1 = "Resilience">>
 <<set $acceptedMemoryType2 = "Wonder">>
+<<set $memoryToTake = "The Reach">>
 {$npcName}: Is there something... above? Is it real?
 {$npcName}: But there hasn’t been anything so far.
 {$npcName}: Just darkness and nothingness.

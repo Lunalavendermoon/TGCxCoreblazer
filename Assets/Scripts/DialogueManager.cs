@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
     //test to see how long my load time is
     [SerializeField] DialogueRunner dialogueRunner;
     [SerializeField] Camera mainCamera;
+    [SerializeField] PlayerMovement playerController;
     PlayerInputActions playerInputActions;
 
     // Possible values: "Incomplete", "Completed"
@@ -53,6 +54,7 @@ public class DialogueManager : MonoBehaviour
             //NPC clicked must have tag hasDialogue
             if (Physics.Raycast(ray, out objectHit) && objectHit.collider.gameObject.CompareTag("hasDialogue"))
             {
+                playerController.faceNPC(objectHit.collider.gameObject);
                 string npcName = objectHit.collider.gameObject.name;
                 //Debug.Log("Clicked: " + npcName);
                 //dialogueRunner.StartDialogue($"{npcName}");

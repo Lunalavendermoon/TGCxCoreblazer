@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -16,6 +17,7 @@ public class UIInputHandler : MonoBehaviour
     [SerializeField] GameObject incompatibleMessage;
     [SerializeField] GameObject secondMemoryMessage;
     [SerializeField] MemoryDisplayManager memoryDisplayManager;
+    [SerializeField] GameObject memoryGainedUI;
     GraphicRaycaster UI_raycaster;
 
     PointerEventData click_data;
@@ -46,11 +48,16 @@ public class UIInputHandler : MonoBehaviour
             foreach(RaycastResult result in click_results)
             {
                 GameObject UI_element = result.gameObject;
+                //Debug.Log(UI_element.name);
 
                 // toggle menu
                 if (UI_element.name == "MemoryMenuButton")
                 {
                     memoryMenu.SetActive(!memoryMenu.activeSelf);
+                }
+                if (UI_element.name == "MemoryGainedBackground")
+                {
+                    memoryGainedUI.SetActive(false);
                 }
             }
         }
@@ -126,6 +133,39 @@ public class UIInputHandler : MonoBehaviour
         yield return new WaitForSeconds(2f);
         messageWindow.SetActive(false);
     }
+
+    //public void ShowMemoryGained(string memoryName)
+    //{
+    //    Debug.Log("show memory gained called");
+    //    memoryGainedUI.SetActive(true);
+
+    //    StartCoroutine(waitForClick("MemoryGainedBackground"));
+    //}
+
+    //public IEnumerator waitForClick(string UIName)
+    //{
+    //    while (true)
+    //    {
+    //        if (Mouse.current.leftButton.wasReleasedThisFrame)
+    //        {
+    //            click_results.Clear();
+    //            click_data.position = Mouse.current.position.ReadValue();
+
+    //            UI_raycaster.Raycast(click_data, click_results);
+
+    //            foreach (RaycastResult result in click_results)
+    //            {
+    //                GameObject UI_element = result.gameObject;
+    //                if (UI_element.name == UIName)
+    //                {
+    //                    memoryGainedUI.SetActive(false);
+    //                    yield break;
+    //                }
+    //            }
+    //        }
+    //        yield return null;
+    //    }
+    //}
 }
 
 
