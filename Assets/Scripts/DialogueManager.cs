@@ -54,7 +54,7 @@ public class DialogueManager : MonoBehaviour
             //NPC clicked must have tag hasDialogue
             if (Physics.Raycast(ray, out objectHit) && objectHit.collider.gameObject.CompareTag("hasDialogue"))
             {
-                playerController.faceNPC(objectHit.collider.gameObject);
+                playerController.faceNPC(objectHit.collider.gameObject.transform);
                 string npcName = objectHit.collider.gameObject.name;
                 //Debug.Log("Clicked: " + npcName);
                 //dialogueRunner.StartDialogue($"{npcName}");

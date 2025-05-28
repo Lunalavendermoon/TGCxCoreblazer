@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float rotationSpeed;
     [SerializeField] DialogueRunner dialogueRunner; //for detecting if dialogue is running
+    //[SerializeField] Transform npcPosition;
 
     private float moveX;
     private float moveY;
@@ -59,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
             if (magnitude > 0f)
             {
                 Quaternion current = transform.rotation;
+                //Quaternion rotation = Quaternion.LookRotation(npcPosition.transform.position - transform.position);
                 Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
                 transform.rotation = Quaternion.Slerp(current, rotation, Time.deltaTime * rotationSpeed);
             }
@@ -87,12 +90,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void faceNPC(GameObject npcPosition)
+    public void faceNPC(Transform npcPosition)
     {
-        Debug.Log(npcPosition.transform.position);
-        Quaternion current = transform.rotation;
-        Vector3 targetDirection = npcPosition.transform.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(targetDirection.normalized, Vector3.up);
-        transform.rotation = Quaternion.Slerp(current, rotation, Time.deltaTime * rotationSpeed);
+        //transform.LookAt(npcPosition.transform); //snappy rotate to face if u like that better :>
+        StartCoroutine(rotateOverTime(npcPosition));
+    }
+
+    public IEnumerator rotateOverTime(Transform npcPosition)
+    {
+        float startTime = Time.time;
+        float duration = 2.0f;
+        while(Time.time - startTime < duration)
+        {
+            Quaternion current = transform.rotation;
+            Quaternion rotation = Quaternion.LookRotation(npcPosition.position - transform.position);
+            transform.rotation = Quaternion.Slerp(current, rotation, (Time.time - startTime)/duration); //gives fraction of rotation complete
+            yield return null;
+        }
+        yield break;
     }
 }
