@@ -10,7 +10,6 @@ public class BlockLevelManager : MonoBehaviour
     public float hintTimer;
     float timer = 0;
     public static int pixelsPerUnit = 60;
-    public HelpUIManager helpUiManager;
     public BlockHint hintManager;
     public GameObject blockPrefab;
     public Canvas canvas;
@@ -90,21 +89,7 @@ public class BlockLevelManager : MonoBehaviour
             return b == 'T';
         }
 
-        // this.day = day;
-        // GameManager.LoadBlockData(day);
-
-        // maxSize = GameManager.blockMaxSize;
-        // maxNutrition = GameManager.blockMaxGroupSize;
-
-        // BlockType[] blocksToSpawn = GameManager.blockSpawnList;
-
         updateUI();
-
-        // if (day == 1) {
-        //     helpUiManager.startTutorialDay1();
-        // } else if (day == 3) {
-        //     helpUiManager.startTutorialDay3();
-        // }
     }
 
     public void setPopupStatus(bool status)
