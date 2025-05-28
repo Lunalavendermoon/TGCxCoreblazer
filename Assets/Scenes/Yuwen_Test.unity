@@ -1047,6 +1047,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1784591096}
   - {fileID: 1145675794}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1067,7 +1068,7 @@ MonoBehaviour:
   memoryData: {fileID: 11400000, guid: 89a2b040282e5ed468d603e4b3fb2432, type: 2}
   moveSpeed: 7
   jumpForce: 7
-  rotationSpeed: 5
+  rotationSpeed: 12
 --- !u!114 &871416332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,7 +1341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1145675794
 Transform:
   m_ObjectHideFlags: 0
@@ -3459,7 +3460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &1784591093
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3505,8 +3506,7 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3544,14 +3544,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784591092}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 2, y: 1.75, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 98547309}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 871416330}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &1838912872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6253758178151209362, guid: 081eb502ceb7a184ebf0616c999814ab, type: 3}
@@ -3932,7 +3932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2039178397722858867, guid: 3e28a35e9ce5a92418076b1286b567bb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3956,4 +3956,3 @@ SceneRoots:
   - {fileID: 1156276218}
   - {fileID: 1477144240}
   - {fileID: 442243439}
-  - {fileID: 1784591096}
