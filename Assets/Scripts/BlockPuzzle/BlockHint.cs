@@ -7,8 +7,6 @@ public class BlockHint : MonoBehaviour
 
     public GameObject blockPrefab;
 
-    int curId = 0;
-
     Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
 
     void Start()
@@ -25,11 +23,9 @@ public class BlockHint : MonoBehaviour
     public void initBlock(int id, BlockType type, Vector3 position, BlockLevelManager script, Canvas canvas)
     {
         GameObject block = Instantiate(blockPrefab, position, Quaternion.identity, canvas.transform);
-        Vector3 blockpos = block.GetComponent<RectTransform>().anchoredPosition3D;
-        blockpos.z = 0f;
-        block.GetComponent<RectTransform>().anchoredPosition3D = blockpos;
 
         block.GetComponent<Block2>().initBlock(id, type, script, canvas);
+        block.GetComponent<Block2>().placeBlockAt(position);
 
         block.GetComponent<Block2>().hintColor();
 
@@ -45,15 +41,15 @@ public class BlockHint : MonoBehaviour
 
     public void showBlock(int id)
     {
-        curId = id;
-        blocks[curId].SetActive(true);
-        GameObject obj = blocks[curId];
+        blocks[id].SetActive(true);
+        GameObject obj = blocks[id];
         obj.transform.SetAsLastSibling(); // bring to front
         // TODO flashing animation on obj?
     }
 
     public void hideBlock(int id)
     {
-        // TODO
+        blocks[id].SetActive(false);
+        // TODO deactivate flashing animation?
     }
 }

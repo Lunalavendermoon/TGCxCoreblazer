@@ -30,18 +30,20 @@ title: Adventurer
 ---
 <<set $npcName = "Adventurer">>
 <<set $acceptedMemoryType1 = "None">> //accepted by NPC
-<<set $memoryToTake = "The Fellowship">> //for player to take
-{$npcName}: Are you new here?
-{$npcName}: I haven’t seen you around.
-{$npcName}: Do you want to go on an adventure together?
-{$npcName}: It’s quite cold now…but we can still have a lot of fun!
-{$npcName}: Like playing in the snow together?
+<<set $memoryToTake = "The Ascent">> //for player to take
+{$npcName}: Just gathering wood.
+{$npcName}: Even now, there’s a way to keep going.
+{$npcName}: That’s what my mentor always said.
+{$npcName}: Need a hand?
 
--> [Take memory: The Fellowship]
+-> [Take memory: The Ascent]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
-    {$npcName}: I remember that I…I? What did I do?
-    {$npcName}: What did I feel?
-    {$npcName}: I’m…I’m tired…
+    {$npcName}: W-wait...
+    {$npcName}: What did you do?
+    {$npcName}: Why does everything feel... heavy?
+    {$npcName}: Why are we out here... all alone?
+    {$npcName}: It’s cold…I just want to…
+    {$npcName}: Never wake up again.
 -> leave
 ===
 
@@ -74,17 +76,120 @@ title: ElderlyGardener
     {$npcName}: In a world like this?
 -> leave
 ===
+title: Bird
+---
+<<set $npcName = "Bird">>
+<<set $acceptedMemoryType1 = "Community">>
+<<set $memoryToReceive = "The Nest">>
+<<set $memoryToTake = "The Solo">>
+{$npcName}: I’m sad.
+{$npcName}: Why was I born with these feathers?
+{$npcName}: My colors — they always stared. I stopped calling back.
+{$npcName}: Is there truly a point to call out to others anymore?
+-> [Offer wonder memory] (wants {$acceptedMemoryType1}) //just for debugging
+    <<if check_has_memory_type($acceptedMemoryType1)>>
+        <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}">>
+        {$npcName}: Maybe... maybe I didn’t have to match.
+        {$npcName}: Maybe they were always calling — I just stopped listening.
+        {$npcName}: Hey...hello.
+        Other Bird: Hi! Where did you go?
+        Other bird 2: Yeah! We were looking for you!
+        {$npcName}: Oh- really?
+        Other Bird: Yeah! Come, join us.
+        {$npcName}: Thank you so much.
+        {$npcName}: Take this. It's from someone who never fit in... but was never left behind.
+        <<take_memory "{$npcName}" "{$memoryToReceive}">>
+    <<else>>
+        You do not have the appropriate memory
+    <<endif>>
+-> [Take Memory: The Solo]
+    <<take_memory "{$npcName}" "{$memoryToTake}">>
+    {$npcName}: Where did they go?
+    {$npcName}: I called out once… twice…
+    {$npcName}: No one came.
+    {$npcName}: Maybe they were never there.
+    {$npcName}: Maybe I was never meant to be.
+-> leave
+===
+title: Robot
+---
+<<set $npcName = "Robot">>
+<<set $acceptedMemoryType1 = "Love">> 
+<<set $memoryToReceive = "The Lunch">>
+<<set $memoryToTake = "The Lunch">>
+{$npcName}: ...Signal incomplete. Awaiting return.
+{$npcName}: Status: waiting. Purpose: unknown.
+-> [Offer wonder memory] (wants {$acceptedMemoryType1}) //just for debugging
+    <<if check_has_memory_type($acceptedMemoryType1)>>
+        <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}">>
+        {$npcName}: ...They laughed when I made the sandwich wrong.
+        {$npcName}: But it wasn’t a mean laugh. A teasing kind of laugh.
+        {$npcName}: Then they taught me how to make it properly.
+        {$npcName}: I was not built to feel. But I remember the warmth.
+        {$npcName}: Identifying emotion… I was happy. May you carry it forward.
+        <<take_memory "{$npcName}" "{$memoryToReceive}">>
+    <<else>>
+        You do not have the appropriate memory
+    <<endif>>
+-> [Take Memory: The Lunch]
+    <<take_memory "{$npcName}" "{$memoryToTake}">>
+    {$npcName}: Memory error.
+    {$npcName}: Core link… severed.
+    {$npcName}: Connection: lost.
+    {$npcName}: Heartbeat: simulated.
+    {$npcName}: But no one ever…cared to return.
+-> leave
+===
 
 title: Sapling
 ---
 <<set $npcName = "Sapling">>
-<<set $acceptedMemoryType1 = "Community">>
-<<set $acceptedMemoryType2 = "Joy">>
-Test
+<<set $acceptedMemoryType1 = "Resilience">>
+<<set $acceptedMemoryType2 = "Wonder">>
+{$npcName}: Is there something... above? Is it real?
+{$npcName}: But there hasn’t been anything so far.
+{$npcName}: Just darkness and nothingness.
 -> select 2 memories
     <<if check_has_memory_type($acceptedMemoryType1) && check_has_memory_type($acceptedMemoryType2)>>
         <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}" "{$acceptedMemoryType2}">>
+        {$npcName}: ...So even the dark can birth dreams.
+        {$npcName}: I’ll reach. Even if I don’t know what’s waiting.
+        {$npcName}: Maybe...just maybe I’ll see the light.
     <<else>>
         You do not have the appropriate memory
     <<endif>>
+-> [Take Memory: The Reach]
+    <<take_memory "{$npcName}" "{$memoryToTake}">>
+    {$npcName}: No more questions.
+    {$npcName}: No more light.
+    {$npcName}: Nothing waits above.
+    {$npcName}: Only stillness.
+-> leave
+===
+title: Storyteller
+---
+<<set $npcName = "Storyteller">>
+<<set $acceptedMemoryType1 = "Community">>
+<<set $acceptedMemoryType2 = "Joy">>
+{$npcName}: Once, I shared tales from dawn to dusk.
+{$npcName}: But now? The wind doesn’t carry my voice like it used to… It only takes.
+{$npcName}: And I've forgotten how to give.
+-> select 2 memories
+    <<if check_has_memory_type($acceptedMemoryType1) && check_has_memory_type($acceptedMemoryType2)>>
+        <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}" "{$acceptedMemoryType2}">>
+        {$npcName}: That laugh... that sound! It’s like sunshine for the soul.
+        {$npcName}: I remember now. It was never about the stories — it was about how they made people feel.
+        {$npcName}: Thank you, wanderer. You’ve returned more than laughter.
+        {$npcName}: I shall spread my stories across the lands once again!
+        {$npcName}: I’ll remember you, my savior!
+    <<else>>
+        You do not have the appropriate memory
+    <<endif>>
+-> [Take Memory: The World]
+    <<take_memory "{$npcName}" "{$memoryToTake}">>
+    {$npcName}: The words...
+    {$npcName}: They don’t come.
+    {$npcName}: Only silence.
+    {$npcName}: And silence has no stories.
+-> leave
 ===

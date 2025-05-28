@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 1719107321}
-  blockPrefab: {fileID: 5951903547527135768, guid: 448029d4b3ca94f62a2c2463e473e1d9, type: 3}
+  blockPrefab: {fileID: 5951903547527135768, guid: 999d3e46b99024edb82debd31329b267, type: 3}
 --- !u!1 &798787322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,7 +1256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35eea02c7dcba4882937334c063765d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hintTimer: 1
+  hintTimer: 3
   helpUiManager: {fileID: 1161892257}
   hintManager: {fileID: 756877912}
   blockPrefab: {fileID: 5951903547527135768, guid: 448029d4b3ca94f62a2c2463e473e1d9, type: 3}

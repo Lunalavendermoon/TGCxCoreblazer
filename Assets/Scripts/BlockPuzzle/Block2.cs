@@ -127,6 +127,10 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isEnabled)
+        {
+            return;
+        }
         // Move the UI element
         rectTransform.anchoredPosition3D += new Vector3(eventData.delta.x, eventData.delta.y, 0) / canvas.scaleFactor;
     }
@@ -214,10 +218,11 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void hintColor()
     {
-        float H, S;
-        Color.RGBToHSV(renderer.color, out H, out S, out _);
+        // TODO
+        // float H, S;
+        // Color.RGBToHSV(renderer.color, out H, out S, out _);
 
-        renderer.color = Color.HSVToRGB(H, S, 1.5f);
-        makeTransparent();
+        // renderer.color = Color.HSVToRGB(H, S, 1.5f);
+        // makeTransparent();
     }
 }
