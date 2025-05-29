@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   memoryName: The Bloom
   memoryType: 3
-  memoryDesc: 
-  memoryImage: {fileID: 0}
+  memoryDesc: "With soil-stained fingers, the gardener watched green push through
+    earth \u2014 joy found not in the harvest, but in the act of tending."
+  memoryImage: {fileID: 21300000, guid: c3144aa4900a0264681c6418cc2b6bc9, type: 3}

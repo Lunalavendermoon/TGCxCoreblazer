@@ -93,17 +93,19 @@ public class PlayerMovement : MonoBehaviour
     public void faceNPC(Transform npcPosition)
     {
         //transform.LookAt(npcPosition.transform); //snappy rotate to face if u like that better :>
-        StartCoroutine(rotateOverTime(npcPosition));
+        StartCoroutine(rotateOverTime(npcPosition.position));
     }
 
-    public IEnumerator rotateOverTime(Transform npcPosition)
+    public IEnumerator rotateOverTime(Vector3 npcPosition)
     {
         float startTime = Time.time;
         float duration = 2.0f;
         while(Time.time - startTime < duration)
         {
             Quaternion current = transform.rotation;
-            Quaternion rotation = Quaternion.LookRotation(npcPosition.position - transform.position);
+            Vector3 npcPosLevelWithPlayer = new Vector3(npcPosition.x, transform.position.y, npcPosition.z);
+            //so that player doesn't start looking into the sky or into the ground LMFAO
+            Quaternion rotation = Quaternion.LookRotation(npcPosLevelWithPlayer - transform.position);
             transform.rotation = Quaternion.Slerp(current, rotation, (Time.time - startTime)/duration); //gives fraction of rotation complete
             yield return null;
         }

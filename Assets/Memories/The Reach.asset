@@ -16,4 +16,4 @@ MonoBehaviour:
   memoryType: 3
   memoryDesc: In a shadowed corner, the sapling grew hoping that light would find
     it, and that it would not grow alone.
-  memoryImage: {fileID: 0}
+  memoryImage: {fileID: 21300000, guid: 676aa22c49d1e6a46badf55fd119844c, type: 3}
