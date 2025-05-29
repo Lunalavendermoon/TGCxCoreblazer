@@ -7,17 +7,14 @@ public class BlockHint : MonoBehaviour
 
     public GameObject blockPrefab;
 
+    public GameObject hintPopup;
+
     Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
-
-    void Start()
-    {
-        // hintText = hintTextObject.GetComponent<TextMeshProUGUI>();
-        // hintText.text = "";
-    }
-
+    
     public void initLevel()
     {
         blocks.Clear();
+        hintPopup.SetActive(false);
     }
 
     public void initBlock(int id, BlockType type, Vector3 position, BlockLevelManager script, Canvas canvas)
@@ -51,5 +48,10 @@ public class BlockHint : MonoBehaviour
     {
         blocks[id].SetActive(false);
         // TODO deactivate flashing animation?
+    }
+
+    public void toggleHintPopup()
+    {
+        hintPopup.SetActive(!hintPopup.activeSelf);
     }
 }
