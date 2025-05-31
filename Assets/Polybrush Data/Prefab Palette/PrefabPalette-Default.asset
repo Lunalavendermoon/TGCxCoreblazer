@@ -36,8 +36,8 @@ MonoBehaviour:
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1.469484, y: 1.2347419, z: 1.2347425}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
+      m_UniformScale: {x: 1.3461568, y: 4.6794896}
+      m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 1
       m_ZRotationBool: 0
@@ -45,3 +45,67 @@ MonoBehaviour:
       m_YScaleBool: 1
       m_ZScaleBool: 1
     name: bushes
+  - gameObject: {fileID: 1623550287110000554, guid: 50ef193e1cc6d984ba76a592dc69f5ce, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.4871785, y: 0.6153878}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 1
+      m_YScaleBool: 1
+      m_ZScaleBool: 1
+    name: styledFlower
+  - gameObject: {fileID: 4782472190288484864, guid: eccca54e78e0a1240a86ba3678aeb996, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.6153846, y: 0.87179667}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 1
+      m_YScaleBool: 1
+      m_ZScaleBool: 1
+    name: styledFlower 1
+  - gameObject: {fileID: 2906197961307337367, guid: c657b6b06a46419408d597b5a176ea26, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 70.98594, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.7051289, y: 1.602566}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 1
+      m_YScaleBool: 1
+      m_ZScaleBool: 1
+    name: grass
+  - gameObject: {fileID: 2582049901742647169, guid: 12b2e4a06b55bd24cb3bdc5e9155f0e5, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0, y: 1}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 1
+      m_YScaleBool: 1
+      m_ZScaleBool: 1
+    name: Road
