@@ -194,3 +194,7 @@ title: Storyteller
     {$npcName}: And silence has no stories.
 -> leave
 ===
+title: Cube
+---
+<<obtain_memory "The Reach">>
+===

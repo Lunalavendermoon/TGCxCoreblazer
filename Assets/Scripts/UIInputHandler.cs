@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +24,9 @@ public class UIInputHandler : MonoBehaviour
     PointerEventData click_data;
     List<RaycastResult> click_results;
 
+    private float memoryTime = 0.1f;
+    private float timer = 0f;
+
     void Awake()
     {
         click_data = new PointerEventData(EventSystem.current);
@@ -45,7 +49,7 @@ public class UIInputHandler : MonoBehaviour
 
             UI_raycaster.Raycast(click_data, click_results);
 
-            foreach(RaycastResult result in click_results)
+            foreach (RaycastResult result in click_results)
             {
                 GameObject UI_element = result.gameObject;
                 //Debug.Log(UI_element.name);
@@ -55,14 +59,24 @@ public class UIInputHandler : MonoBehaviour
                 {
                     memoryMenu.SetActive(!memoryMenu.activeSelf);
                 }
-                if (UI_element.name == "MemoryGainedBackground")
+                if (UI_element.name == "MemoryGainedBackground" && timer <= 0)
                 {
                     memoryGainedUI.SetActive(false);
                 }
             }
         }
-
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
     }
+
+    public void ShowMemoryGainedUI()
+    {
+        timer = memoryTime;
+        memoryGainedUI.SetActive(true);
+    }
+
     public IEnumerator PromptMemorySelection(string npcName, string targetMemoryType1, string targetMemoryType2 = "None")
     {
         memoryMenu.SetActive(true);
@@ -98,7 +112,7 @@ public class UIInputHandler : MonoBehaviour
                         string memoryType = MemoryData.GetMemoryType(UI_element.name);
                         Debug.Log($"{UI_element.name}'s type: {memoryType}");
                         Debug.Log("Wanted types");
-                        foreach(string type in TypesToSelect)
+                        foreach (string type in TypesToSelect)
                         {
                             Debug.Log(type);
                         }

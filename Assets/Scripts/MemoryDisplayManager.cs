@@ -15,7 +15,7 @@ public class MemoryDisplayManager : MonoBehaviour
     [SerializeField] Transform contentPanel; //parent UI to hold memory objects
     [SerializeField] GameObject memoryMenu;
     [SerializeField] DialogueManager dialogueManagerScript;
-    //[SerializeField] UIInputHandler uiInputHandlerScript;
+    [SerializeField] UIInputHandler uiInputHandlerScript;
     [SerializeField] GameObject memoryGainedUI;
     List<GameObject> displayedMemoryUI;
 
@@ -24,6 +24,7 @@ public class MemoryDisplayManager : MonoBehaviour
         displayedMemoryUI = new List<GameObject>();
         dialogueRunner.AddCommandHandler<string, string>("take_memory", TakeMemory);
         dialogueRunner.AddFunction<string, bool>("check_has_memory_type", CheckHasMemoryType); //param: string, return: boolean
+        dialogueRunner.AddCommandHandler<string>("obtain_memory", ObtainMemory);
     }
 
     public void RefreshUI()
@@ -80,7 +81,7 @@ public class MemoryDisplayManager : MonoBehaviour
             nameText.text = memoryInfo.memoryName;
             descriptionText.text = memoryInfo.memoryDesc;
             memoryImage.sprite = memoryInfo.memoryImage;
-            memoryGainedUI.SetActive(true);
+            uiInputHandlerScript.ShowMemoryGainedUI();
 
             RefreshUI();
         }
@@ -92,6 +93,24 @@ public class MemoryDisplayManager : MonoBehaviour
                 $"(MemoryData.cs), and that the spelling in your YarnSpinner script matches " +
                 $"it.");
         }
+    }
+
+    public void ObtainMemory(string memoryName) {
+        MemoryData.AddMemory(memoryName);
+        Debug.Log($"{memoryName} added to inventory");
+
+        //display and update memory gained UI
+        TextMeshProUGUI nameText = memoryGainedUI.transform.Find("MemoryName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI descriptionText = memoryGainedUI.transform.Find("MemoryDesc").GetComponent<TextMeshProUGUI>();
+        Image memoryImage = memoryGainedUI.transform.Find("MemoryImage").GetComponent<Image>();
+
+        Memory memoryInfo = MemoryData.FindMemory(memoryName);
+        nameText.text = memoryInfo.memoryName;
+        descriptionText.text = memoryInfo.memoryDesc;
+        memoryImage.sprite = memoryInfo.memoryImage;
+        uiInputHandlerScript.ShowMemoryGainedUI();
+
+        RefreshUI();
     }
 
     public void GiveMemory(string npcName, string memoryName)

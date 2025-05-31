@@ -21,6 +21,9 @@ public class DialogueManager : MonoBehaviour
         //{"Sapling", "Incomplete"}
     };
 
+    // for completed interactions with environment objects
+    HashSet<string> completedInteractions = new HashSet<string>();
+
     void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -51,14 +54,27 @@ public class DialogueManager : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit objectHit;
 
-            //NPC clicked must have tag hasDialogue
-            if (Physics.Raycast(ray, out objectHit) && objectHit.collider.gameObject.CompareTag("hasDialogue"))
+            if (Physics.Raycast(ray, out objectHit))
             {
-                playerController.faceNPC(objectHit.collider.gameObject.transform);
-                string npcName = objectHit.collider.gameObject.name;
-                //Debug.Log("Clicked: " + npcName);
-                //dialogueRunner.StartDialogue($"{npcName}");
-                RunQuest(npcName);
+                //NPC clicked must have tag hasDialogue
+                if (objectHit.collider.gameObject.CompareTag("hasDialogue"))
+                {
+                    playerController.faceNPC(objectHit.collider.gameObject.transform);
+                    string npcName = objectHit.collider.gameObject.name;
+                    //Debug.Log("Clicked: " + npcName);
+                    //dialogueRunner.StartDialogue($"{npcName}");
+                    RunQuest(npcName);
+                }
+                else if (objectHit.collider.gameObject.CompareTag("givesMemory"))
+                {
+                    string objName = objectHit.collider.gameObject.name;
+                    if (!completedInteractions.Contains(objName))
+                    {
+                        completedInteractions.Add(objName);
+                        objectHit.collider.gameObject.transform.parent.GetComponent<IndicatorShow>().MemoryUnavailable();
+                        dialogueRunner.StartDialogue($"{objName}");
+                    }
+                }
             }
         }
     }
