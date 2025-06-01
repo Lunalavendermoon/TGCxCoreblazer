@@ -42,6 +42,8 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     private RectTransform rectTransform;
     private Canvas canvas;
 
+    private bool isDragging = false;
+
     public void initBlock(int id, BlockType type, BlockLevelManager levelManager, Canvas canvas)
     {
         // GetComponent<FlashingAnim>().SetAnimated(false);
@@ -62,6 +64,8 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         rectTransform.localScale = new Vector3(
             rectTransform.localScale.x * (type.hflipped ? -1 : 1), rectTransform.localScale.y * (type.vflipped ? -1 : 1),
             rectTransform.localScale.z);
+
+        renderer.alphaHitTestMinimumThreshold = 0.1f; // Only respond to pixels with alpha > 0.1
     }
 
     public Sprite spriteByName(string name) {
@@ -107,12 +111,21 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         isEnabled = enabled;
     }
 
+    private bool IsPointerOnVisiblePixel(PointerEventData eventData)
+    {
+        return RectTransformUtility.RectangleContainsScreenPoint(rectTransform, eventData.position, eventData.pressEventCamera);
+        // Note: alphaHitTestMinimumThreshold is automatically respected by Unity's EventSystem
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!isEnabled)
+        if (!isEnabled || !IsPointerOnVisiblePixel(eventData))
         {
             return;
         }
+
+        isDragging = true;
+
         if (isOnGrid)
         {
             removeFromGrid();
@@ -127,7 +140,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!isEnabled)
+        if (!isEnabled || !isDragging)
         {
             return;
         }
@@ -137,10 +150,12 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!isEnabled)
+        if (!isEnabled || !isDragging)
         {
             return;
         }
+
+        isDragging = false;
 
         Vector3 pos = getSpriteTopLeft();
 
