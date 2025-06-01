@@ -40,7 +40,7 @@ public class BlockLevelManager : MonoBehaviour
             "smallTriangleTF,0,0",
             "smallTriangle2TT,0,0",
             "bigCircleFF,0,0",
-            "quarterCircle4FF,0,0"
+            "bigTriangle4TF,0,0"
         });
     }
 

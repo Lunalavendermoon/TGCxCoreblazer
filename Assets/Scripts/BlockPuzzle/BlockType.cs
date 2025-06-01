@@ -47,16 +47,16 @@ public class BlockType
                 return new BlockType("smallTriangle3", 1, 1);
             case "smallTriangle4":
                 return new BlockType("smallTriangle4", 1, 1);
-            case "bigCircle":
-                return new BlockType("bigCircle", 2, 2);
-            case "quarterCircle":
-                return new BlockType("quarterCircle", 1, 1);
-            case "quarterCircle2":
-                return new BlockType("quarterCircle2", 1, 1);
-            case "quarterCircle3":
-                return new BlockType("quarterCircle3", 1, 1);
-            case "quarterCircle4":
-                return new BlockType("quarterCircle4", 1, 1);
+            // case "bigCircle":
+            //     return new BlockType("bigCircle", 2, 2);
+            // case "quarterCircle":
+            //     return new BlockType("quarterCircle", 1, 1);
+            // case "quarterCircle2":
+            //     return new BlockType("quarterCircle2", 1, 1);
+            // case "quarterCircle3":
+            //     return new BlockType("quarterCircle3", 1, 1);
+            // case "quarterCircle4":
+            //     return new BlockType("quarterCircle4", 1, 1);
             default:
                 return new BlockType("bigSquare", 2, 2);
         }

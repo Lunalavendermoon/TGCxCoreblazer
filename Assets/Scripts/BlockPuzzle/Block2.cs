@@ -18,20 +18,15 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     Vector3 resetPosition;
 
     public Sprite bigSquare;
-    public Sprite smallSquare;
     public Sprite bigTriangle;
     public Sprite bigTriangle2;
     public Sprite bigTriangle3;
     public Sprite bigTriangle4;
-    public Sprite smallTriangle;
-    public Sprite smallTriangle2;
-    public Sprite smallTriangle3;
-    public Sprite smallTriangle4;
     public Sprite bigCircle;
-    public Sprite quarterCircle;
-    public Sprite quarterCircle2;
-    public Sprite quarterCircle3;
-    public Sprite quarterCircle4;
+    // public Sprite quarterCircle;
+    // public Sprite quarterCircle2;
+    // public Sprite quarterCircle3;
+    // public Sprite quarterCircle4;
 
     bool isEnabled = true;
     bool selected = false;
@@ -74,7 +69,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             case "bigSquare":
                 return bigSquare;
             case "smallSquare":
-                return smallSquare;
+                return bigSquare;
             case "bigTriangle":
                 return bigTriangle;
             case "bigTriangle2":
@@ -84,23 +79,23 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             case "bigTriangle4":
                 return bigTriangle4;
             case "smallTriangle":
-                return smallTriangle;
+                return bigTriangle;
             case "smallTriangle2":
-                return smallTriangle2;
+                return bigTriangle2;
             case "smallTriangle3":
-                return smallTriangle3;
+                return bigTriangle3;
             case "smallTriangle4":
-                return smallTriangle4;
-            case "bigCircle":
-                return bigCircle;
-            case "quarterCircle":
-                return quarterCircle;
-            case "quarterCircle2":
-                return quarterCircle2;
-            case "quarterCircle3":
-                return quarterCircle3;
-            case "quarterCircle4":
-                return quarterCircle4;
+                return bigTriangle4;
+            // case "bigCircle":
+            //     return bigCircle;
+            // case "quarterCircle":
+            //     return quarterCircle;
+            // case "quarterCircle2":
+            //     return quarterCircle2;
+            // case "quarterCircle3":
+            //     return quarterCircle3;
+            // case "quarterCircle4":
+            //     return quarterCircle4;
             default:
                 return bigSquare;
         }
