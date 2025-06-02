@@ -23,7 +23,7 @@ public class RespawnScript : MonoBehaviour
         foreach(Transform respawn in respawnsFolder.transform)
         {
             respawnPositions.Add(respawn);
-            Debug.Log(respawn.gameObject.name);
+            //Debug.Log(respawn.gameObject.name);
         }
         
         if(respawnModifierCheckpoints.Count != respawnPositions.Count)
