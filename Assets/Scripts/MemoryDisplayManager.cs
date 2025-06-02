@@ -95,7 +95,8 @@ public class MemoryDisplayManager : MonoBehaviour
         }
     }
 
-    public void ObtainMemory(string memoryName) {
+    public void ObtainMemory(string memoryName)
+    {
         MemoryData.AddMemory(memoryName);
         Debug.Log($"{memoryName} added to inventory");
 

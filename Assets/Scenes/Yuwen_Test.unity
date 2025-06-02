@@ -903,6 +903,7 @@ GameObject:
   - component: {fileID: 693192113}
   - component: {fileID: 693192112}
   - component: {fileID: 693192111}
+  - component: {fileID: 693192115}
   m_Layer: 0
   m_Name: BabyBear
   m_TagString: hasDialogue
@@ -1001,6 +1002,20 @@ Transform:
   - {fileID: 1838912872}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &693192115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693192110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3f5813071fe47809c88427b1936eea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleEffect: {fileID: 1860626432766813225, guid: 105f4a5d993bb41c19ccad9cce67823a, type: 3}
+  dedgeMaterial: {fileID: 2100000, guid: 3278b4050221b934fa4b0fffabf49497, type: 2}
 --- !u!1 &722781517
 GameObject:
   m_ObjectHideFlags: 0

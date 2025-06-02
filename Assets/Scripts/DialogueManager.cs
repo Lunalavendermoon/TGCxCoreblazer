@@ -24,10 +24,18 @@ public class DialogueManager : MonoBehaviour
     // for completed interactions with environment objects
     HashSet<string> completedInteractions = new HashSet<string>();
 
+    // private NPCFadeAndDisappear npcFadeScript;
+    private NPCParticles npcFadeScript;
+
     void Awake()
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.StartDialogue.Enable();
+    }
+
+    void Start()
+    {
+        dialogueRunner.AddCommandHandler("fade_npc", FadeNPC);
     }
 
     public void OnDisable()
@@ -63,6 +71,7 @@ public class DialogueManager : MonoBehaviour
                     string npcName = objectHit.collider.gameObject.name;
                     //Debug.Log("Clicked: " + npcName);
                     //dialogueRunner.StartDialogue($"{npcName}");
+                    npcFadeScript = objectHit.collider.gameObject.GetComponent<NPCParticles>();
                     RunQuest(npcName);
                 }
                 else if (objectHit.collider.gameObject.CompareTag("givesMemory"))
@@ -102,4 +111,11 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"{npcName} quest marked complete");
     }
 
+    public void FadeNPC()
+    {
+        if (npcFadeScript != null)
+        {
+            npcFadeScript.StartFade();
+        }
+    }
 }
