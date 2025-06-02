@@ -75,6 +75,7 @@ public class UIInputHandler : MonoBehaviour
     {
         timer = memoryTime;
         memoryGainedUI.SetActive(true);
+        AudioManager.Instance.PlaySFX("echoding");
     }
 
     public IEnumerator PromptMemorySelection(string npcName, string targetMemoryType1, string targetMemoryType2 = "None")

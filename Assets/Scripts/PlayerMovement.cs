@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private float moveX;
     private float moveY;
     private bool isGrounded;
+    private bool jumpSound;
 
     private PlayerInputActions inputActions;
 
@@ -86,15 +87,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if(collision.gameObject.CompareTag("GroundSurface"))
+        if (collision.gameObject.CompareTag("GroundSurface"))
         {
             isGrounded = true;
+            if (jumpSound)
+            {
+                AudioManager.Instance.PlaySFX("tap");
+                jumpSound = false;
+            }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         isGrounded = false;
+        jumpSound = true;
     }
 
     private void OnJump()
