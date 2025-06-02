@@ -1,6 +1,4 @@
 using System.Collections;
-using UnityEditor;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Yarn.Unity;
@@ -15,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float rotationSpeed;
     [SerializeField] DialogueRunner dialogueRunner; //for detecting if dialogue is running
+    [SerializeField] RespawnScript respawnScript;
     //[SerializeField] Transform npcPosition;
 
     private float moveX;
@@ -66,6 +65,23 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(current, rotation, Time.deltaTime * rotationSpeed);
             }
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        respawnScript.updateCheckpoint(collision.gameObject.name);
+
+        //LayerMask checkPointModifier = LayerMask.GetMask("CheckpointModifier"); //gets bitwise representation of that layer
+        /*
+         * & - is BITWISE and operator - checks if there is overlap between bits
+         * 1 << gameObject.layer - converts layer to bitwise representation
+         */
+        //if ((1 << collision.gameObject.layer & checkPointModifier) != 0)
+        //{
+        //    //Debug.Log("touched checkpoint modifier");
+        //    respawnScript.updateCheckpoint(collision.gameObject.name);
+        //}
     }
 
     private void OnCollisionStay(Collision collision)
