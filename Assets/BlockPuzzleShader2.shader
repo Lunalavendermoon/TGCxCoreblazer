@@ -7,7 +7,7 @@ Shader "Unlit/BlockPuzzleShader2"
     }
     SubShader
     {
-        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
+        Tags { "Queue" = "Transparent+100" "RenderType" = "Transparent" }
         LOD 100
 
         Blend One One
@@ -47,8 +47,10 @@ Shader "Unlit/BlockPuzzleShader2"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 tex = tex2D(_MainTex, i.uv);
-                return tex * _Color;
+                fixed4 col = tex2D(_MainTex, i.uv);
+                col.rgb *= col.a;       // premultiplied alpha
+                col.a = saturate(pow(col.a, 0.8));
+                return col;
             }
             ENDCG
         }
