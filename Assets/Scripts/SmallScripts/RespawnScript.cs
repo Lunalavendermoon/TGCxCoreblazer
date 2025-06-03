@@ -4,6 +4,7 @@ public class RespawnScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] GameObject respawnsFolder;
+    [SerializeField] UIInputHandler uiInputHandlerScript;
     private List<Transform> respawnPositions;
     private int currentCheckPoint;
 
@@ -52,8 +53,9 @@ public class RespawnScript : MonoBehaviour
             if (collidedCheckpointNum > currentCheckPoint)
             {
                 currentCheckPoint = collidedCheckpointNum;
+                uiInputHandlerScript.ShowNewSpawnPointUI();
             }
-            Debug.Log(currentCheckPoint);
+            //Debug.Log(currentCheckPoint);
         }
         else
         {
