@@ -19,7 +19,7 @@ public class BlockPuzzleManager : MonoBehaviour
     void Start()
     {
         // TODO connect to main game
-        loadLevel("child");
+        loadLevel("sapling");
     }
 
     public void loadLevel(string nm)
@@ -73,11 +73,82 @@ public class BlockPuzzleManager : MonoBehaviour
                     "smallTriangle4FF,0,0"
                 };
             case "robot":
-                // return robot;
+                // TODO what's the soln
+                return new string[] {
+                    "smallSquareFF,0,0",
+                    "smallSquareFF,0,0",
+                    "smallTriangle3FF,0,0",
+                    "bigSquareFF,0,0",
+                    "bigSquareFF,0,0",
+                    "bigSquareFF,0,0",
+                    "bigSquareFF,0,0",
+                    "smallTriangle4FF,0,0",
+                    "smallTriangleFF,0,0"
+                };
             case "sapling":
-                // return (lvlCount == 0) ? sapling1 : sapling2;
+                if (lvlCount == 0)
+                {
+                    // TODO what's the soln
+                    return new string[] {
+                        "bigSquareFF,0,0",
+                        "bigTriangle4FF,0,0",
+                        "bigTriangleFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "smallSquareFF,0,0"
+                    };
+                }
+                else
+                {
+                    // TODO what's the soln
+                    return new string[] {
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "smallSquareFF,0,0",
+                        "smallSquareFF,0,0",
+                        "smallTriangleFF,0,0",
+                        "bigTriangleFF,0,0",
+                        "bigTriangle3FF,0,0",
+                        "bigTriangle4FF,0,0"
+                    };
+                }
             case "storyteller":
-                // return (lvlCount == 0) ? storyteller1 : storyteller2;
+                if (lvlCount == 0)
+                {
+                    // TODO what's the soln
+                    return new string[] {
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigTriangleFF,0,0",
+                        "bigTriangle2FF,0,0",
+                        "bigTriangle3FF,0,0",
+                        "bigTriangle4FF,0,0",
+                        "smallSquareFF,0,0",
+                        "smallSquareFF,0,0"
+                    };
+                }
+                else
+                {
+                    // TODO what's the soln
+                    return new string[] {
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "bigSquareFF,0,0",
+                        "smallSquareFF,0,0",
+                        "smallTriangle,0,0",
+                        "bigTriangle,0,0",
+                        "bigTriangle2,0,0",
+                        "bigTriangle2,0,0",
+                        "bigTriangle3,0,0",
+                        "bigTriangle4,0,0"
+                    };
+                }
             default:
                 return new string[] { };
         }
@@ -113,6 +184,7 @@ public class BlockPuzzleManager : MonoBehaviour
         }
         else
         {
+            lvlCount = 0;
             Debug.Log("Return to main game");
             // TODO return to main game
         }

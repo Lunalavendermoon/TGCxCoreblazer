@@ -15,6 +15,7 @@ using System.Linq;
 
 public class BlockLevelManager : MonoBehaviour
 {
+    public BlockPuzzleManager bossman;
     public float hintTimer;
     float timer = 0;
     public static int pixelsPerUnit = 60;
@@ -40,25 +41,19 @@ public class BlockLevelManager : MonoBehaviour
 
     string hintedBlock = null;
 
+    public void endLevel()
+    {
+        bossman.endLevel();
+    }
+
     public void initLevel(string[] solutionArray, Sprite solutionsrc)
     {
-        // shuffle the blocks :3
-        // TODO idk if we need this lol but it's a cool feature
-        // it might break some code, i haven't tested it yet.
-        // for (int t = 0; t < solutionArray.Length; t++)
-        // {
-        //     string tmp = solutionArray[t];
-        //     int r = Random.Range(t, solutionArray.Length);
-        //     solutionArray[t] = solutionArray[r];
-        //     solutionArray[r] = tmp;
-        // }
-
         blocks.Clear();
         blockLocations.Clear();
         hintManager.initLevel();
 
         GameObject[] gos = GameObject.FindGameObjectsWithTag("PuzzleBlock");
-        foreach(GameObject go in gos)
+        foreach (GameObject go in gos)
             Destroy(go);
 
         solutionImg.sprite = solutionsrc;
@@ -86,8 +81,8 @@ public class BlockLevelManager : MonoBehaviour
             }
             string name = components[0].Substring(0, components[0].Length - 2);
 
-            spawnBlock(id+1, BlockType.stringToBlock(name), id,
-                charToBool(components[0][components[0].Length-2]), charToBool(components[0][components[0].Length-1]),
+            spawnBlock(id + 1, BlockType.stringToBlock(name), id,
+                charToBool(components[0][components[0].Length - 2]), charToBool(components[0][components[0].Length - 1]),
                 new Vector3Int(pos.x, pos.y, 0));
             ++id;
         }

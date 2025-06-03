@@ -480,10 +480,6 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 798787324}
-    - target: {fileID: 3524458610239302552, guid: 936a7eb843c3742e5af125e022995213, type: 3}
-      propertyPath: hintTimer
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5620324123686836244, guid: 936a7eb843c3742e5af125e022995213, type: 3}
       propertyPath: m_sharedMaterial
       value: 

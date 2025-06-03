@@ -179,7 +179,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         if (levelManager.metRequirements())
         {
             Debug.Log("Correct solution! Yippee!");
-            // TODO exit da minigame
+            levelManager.endLevel();
         }
     }
 
