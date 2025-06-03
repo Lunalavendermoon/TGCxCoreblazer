@@ -943,11 +943,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: c4fca23f-2366-4caf-82b3-1851f32ee1d9
+  cloudProjectId: 024bd440-5806-4c2d-9544-d5cd4320fc64
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: TGCxCoreblazer
-  organizationId: aluo380
+  organizationId: naranepajjamaa
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

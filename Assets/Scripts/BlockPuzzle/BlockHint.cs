@@ -9,45 +9,39 @@ public class BlockHint : MonoBehaviour
 
     public GameObject hintPopup;
 
-    Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
-    
     public void initLevel()
     {
-        blocks.Clear();
         hintPopup.SetActive(false);
+        DeleteHints();
     }
 
-    public void initBlock(int id, BlockType type, Vector3 position, BlockLevelManager script, Canvas canvas)
+    void DeleteHints()
+    {
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("PuzzleBlockHint");
+        foreach(GameObject go in gos)
+            Destroy(go);
+    }
+
+    public void showBlock(BlockType type, Vector3 position, BlockLevelManager script, Canvas canvas)
     {
         GameObject block = Instantiate(blockPrefab, position, Quaternion.identity, canvas.transform);
+        // Vector3 blockpos = block.GetComponent<RectTransform>().anchoredPosition3D;
+        // blockpos.z = 0f;
+        // block.GetComponent<RectTransform>().anchoredPosition3D = blockpos;
 
-        block.GetComponent<Block2>().initBlock(id, type, script, canvas);
+        block.GetComponent<Block2>().initBlock(100, type, script, canvas);
+        // block.GetComponent<Block2>().placeBlockAt(position);
         block.GetComponent<Block2>().placeBlockAt(position);
 
         block.GetComponent<Block2>().hintColor();
 
         // shouldn't be draggable
         block.GetComponent<Block2>().setEnabled(false);
-
-        // hide for now
-        block.SetActive(false);
-
-        blocks.Add(id, block);
     }
 
-
-    public void showBlock(int id)
+    public void hideBlock()
     {
-        blocks[id].SetActive(true);
-        GameObject obj = blocks[id];
-        obj.transform.SetAsLastSibling(); // bring to front
-        // TODO flashing animation on obj?
-    }
-
-    public void hideBlock(int id)
-    {
-        blocks[id].SetActive(false);
-        // TODO deactivate flashing animation?
+        DeleteHints();
     }
 
     public void toggleHintPopup()

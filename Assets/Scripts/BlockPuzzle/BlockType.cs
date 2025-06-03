@@ -58,7 +58,7 @@ public class BlockType
             // case "quarterCircle4":
             //     return new BlockType("quarterCircle4", 1, 1);
             default:
-                return new BlockType("bigSquare", 2, 2);
+                throw new System.Exception("Wrong block type bruh: " + name);
         }
     }
 }

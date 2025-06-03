@@ -1,12 +1,21 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.Rendering.Universal.Internal;
 using Unity.Multiplayer.Center.Common;
+using UnityEngine.Rendering.PostProcessing;
+using System;
+using UnityEngine.InputSystem;
+using Unity.Collections;
+using Polybrush;
+using System.Collections.Specialized;
+using System.Linq;
 // using DG.Tweening;
 
 public class BlockLevelManager : MonoBehaviour
 {
+    public BlockPuzzleManager bossman;
     public float hintTimer;
     float timer = 0;
     public static int pixelsPerUnit = 60;
@@ -15,6 +24,8 @@ public class BlockLevelManager : MonoBehaviour
     public Canvas canvas;
 
     public new Camera camera;
+
+    public Image solutionImg;
 
     Dictionary<int, GameObject> blocks = new Dictionary<int, GameObject>();
     // IMPORTANT: positions will be offset according to blockOffset
@@ -28,54 +39,24 @@ public class BlockLevelManager : MonoBehaviour
 
     public static Vector3Int blockOffset = new Vector3Int(3, -2, 0);
 
-    int hintedBlock = -1;
+    string hintedBlock = null;
 
-    void Start()
+    public void endLevel()
     {
-        // TODO call from another manager?
-
-        // format: name of block, position of top left corner (row, col)
-        initLevel(new string[] {
-            "bigSquareFF,0,0",
-            "smallTriangleTF,0,0",
-            "smallTriangle2TT,0,0",
-            "smallSquareFF,0,0",
-            "smallSquareFF,0,0",
-            "smallTriangleFF,0,0",
-            "smallTriangle2FF,0,0",
-            "smallTriangle3FF,0,0",
-            "smallTriangle4FF,0,0",
-            "smallTriangleTF,0,0",
-            "smallTriangle2TF,0,0",
-            "smallTriangle3TF,0,0",
-            "smallTriangle4TF,0,0",
-            "bigTriangleTF,0,0",
-            "bigTriangle2TF,0,0",
-            "bigTriangle3TF,0,0",
-            "bigTriangle4TF,0,0",
-            "bigSquareFF,0,0",
-            "bigSquareFF,0,0",
-            "bigTriangleFF,0,0",
-            "bigTriangle2FF,0,0",
-            "bigTriangle3FF,0,0",
-            "bigTriangle4FF,0,0",
-            "bigTriangleTF,0,0",
-            "bigTriangle2TF,0,0",
-            "bigTriangle3TF,0,0",
-            "bigTriangle4TF,0,0",
-        });
+        bossman.endLevel();
     }
 
-    void initLevel(string[] solutionArray)
+    public void initLevel(string[] solutionArray, Sprite solutionsrc)
     {
         blocks.Clear();
         blockLocations.Clear();
         hintManager.initLevel();
 
         GameObject[] gos = GameObject.FindGameObjectsWithTag("PuzzleBlock");
-        foreach(GameObject go in gos)
+        foreach (GameObject go in gos)
             Destroy(go);
 
+        solutionImg.sprite = solutionsrc;
 
         int id = 0;
         solution.Clear();
@@ -100,18 +81,16 @@ public class BlockLevelManager : MonoBehaviour
             }
             string name = components[0].Substring(0, components[0].Length - 2);
 
-            spawnBlock(id+1, BlockType.stringToBlock(name), id,
-                charToBool(components[0][components[0].Length-2]), charToBool(components[0][components[0].Length-1]),
+            spawnBlock(id + 1, BlockType.stringToBlock(name), id,
+                charToBool(components[0][components[0].Length - 2]), charToBool(components[0][components[0].Length - 1]),
                 new Vector3Int(pos.x, pos.y, 0));
             ++id;
         }
+    }
 
-        bool charToBool(char b)
-        {
-            return b == 'T';
-        }
-
-        updateUI();
+    bool charToBool(char b)
+    {
+        return b == 'T';
     }
 
     public void setPopupStatus(bool status)
@@ -121,7 +100,6 @@ public class BlockLevelManager : MonoBehaviour
             return;
         }
         popupIsOpen = status;
-        deselectBlock();
         foreach (var block in blocks.Values)
         {
             block.GetComponent<Block2>().setEnabled(!status);
@@ -135,10 +113,10 @@ public class BlockLevelManager : MonoBehaviour
             timer -= Time.deltaTime;
             return;
         }
-        if (hintedBlock != -1)
+        if (hintedBlock != null)
         {
-            hintManager.hideBlock(hintedBlock);
-            hintedBlock = -1;
+            hintManager.hideBlock();
+            hintedBlock = null;
         }
     }
 
@@ -149,27 +127,84 @@ public class BlockLevelManager : MonoBehaviour
             return;
         }
         timer = hintTimer;
-        int id = getFirstMismatch();
-        hintedBlock = id;
-        hintManager.showBlock(id);
+        KeyValuePair<string, Vector2Int> id = getFirstMismatch();
+        hintedBlock = id.Key;
+
+        BlockType hintType = BlockType.stringToBlock(id.Key.Substring(0, id.Key.Length - 2));
+        hintType.hflipped = charToBool(id.Key[id.Key.Length - 2]);
+        hintType.vflipped = charToBool(id.Key[id.Key.Length - 1]);
+
+        hintManager.showBlock(
+            hintType,
+            new Vector3Int(
+                id.Value.x, id.Value.y, 0
+                // -60 + id.Value.x * pixelsPerUnit + blockOffset.x,
+                // 240 - (id.Value.y * pixelsPerUnit) + blockOffset.y,
+                // 0
+            ),
+            this, canvas
+        );
     }
 
-    int getFirstMismatch()
+    private static int Vector3IntCmp(Vector3Int a, Vector3Int b)
     {
-        foreach (KeyValuePair<string, List<Vector3Int>> kv in blockLocations)
+        if (a.x == b.x)
         {
-            foreach (Vector3Int pos in kv.Value)
+            if (a.y == b.y)
             {
-                Vector2Int lookup = new Vector2Int(pos.x, pos.y);
-                int id = pos.z;
+                return b.z - a.z;
+            }
+            return b.y - a.y;
+        }
+        return b.x - a.x;
+    }
 
-                if (!solution.ContainsKey(kv.Key) || !solution[kv.Key].Contains(lookup))
+    private static int Vector2IntCmp(Vector2Int a, Vector2Int b)
+    {
+        if (a.x == b.x)
+        {
+            return b.y - a.y;
+        }
+        return b.x - a.x;
+    }
+
+    KeyValuePair<string, Vector2Int> getFirstMismatch()
+    {
+        foreach (string key in blockLocations.Keys)
+        {
+            blockLocations[key].Sort(Vector3IntCmp);
+        }
+
+        foreach (string key in solution.Keys)
+        {
+            solution[key].Sort(Vector2IntCmp);
+        }
+
+        foreach (var kv in solution.Reverse())
+        {
+            string key = kv.Key;
+            if (!blockLocations.ContainsKey(key))
+            {
+                return new KeyValuePair<string, Vector2Int>(key, solution[key][0]);
+            }
+            int i = 0;
+            int j = 0;
+            while (i < blockLocations[key].Count && j < solution[key].Count)
+            {
+                Vector3 v1 = blockLocations[key][i];
+                Vector2 v2 = solution[key][j];
+                if (v1.x != v2.x || v1.y != v2.y)
                 {
-                    return id;
+                    return new KeyValuePair<string, Vector2Int>(key, solution[key][j]);
                 }
+                ++i; ++j;
+            }
+            if (i < j)
+            {
+                return new KeyValuePair<string, Vector2Int>(key, solution[key][j]);
             }
         }
-        return -1;
+        return new KeyValuePair<string, Vector2Int>(null, Vector2Int.zero);
     }
 
     void spawnBlock(int id, BlockType type, int count, bool hflip, bool vflip, Vector3Int hintPos)
@@ -190,63 +225,12 @@ public class BlockLevelManager : MonoBehaviour
         block.GetComponent<Block2>().initBlock(id, type, this, canvas);
         blocks.Add(id, block);
 
-        object[] transforms = new object[] { false, false, 0, 0, 0 };
-        // if (GameManager.blockPositionArray.ContainsKey(id)) {
-        //     transforms = GameManager.blockPositionArray[id];
-        // }
-
-        hintManager.initBlock(
-            id, type, hintPos, this, canvas
-        );
-
-        addBlock(type, id, new Vector3Int(0,0,id));
-    }
-
-    Block2 getBlock(int id)
-    {
-        GameObject block = blocks[id];
-        return block.GetComponent<Block2>();
-    }
-
-    void updateUI()
-    {
-        // TODO
-    }
-
-// TODO: if there's no use for this we can delete it.
-    public void selectBlock(int id)
-    {
-        // selectedBlock = id;
-        // blocks[id].GetComponent<Renderer>().sortingOrder = orderCount++;
-        // // this will probably never happen but yknow, just in case lol
-        // if (orderCount == 30000)
-        // {
-        //     int minOrder = orderCount + 1, maxOrder = 0;
-        //     foreach (var value in blocks.Values)
-        //     {
-        //         if (value.GetComponent<Renderer>().sortingOrder == 0)
-        //         {
-        //             continue;
-        //         }
-        //         minOrder = Math.Min(value.GetComponent<Renderer>().sortingOrder, minOrder);
-        //     }
-        //     foreach (var value in blocks.Values)
-        //     {
-        //         value.GetComponent<Renderer>().sortingOrder = minOrder;
-        //         maxOrder = Math.Max(value.GetComponent<Renderer>().sortingOrder, maxOrder);
-        //     }
-        //     orderCount = maxOrder + 1;
-        // }
-    }
-
-    public void deselectBlock()
-    {
-        // selectedBlock = -1;
+        addBlock(type, id, new Vector3Int(-1000000, -1000000, id));
     }
 
     public bool metRequirements()
     {
-        return getFirstMismatch() == -1;
+        return getFirstMismatch().Key == null;
     }
 
     // horiz range: -60 to 420
@@ -279,7 +263,6 @@ public class BlockLevelManager : MonoBehaviour
     public void addBlock(BlockType type, int id, Vector3Int newPos)
     {
         string key = type.fullName();
-        // Debug.Log("Block " + id + " with shape " + key + " placed at " + newPos);
         if (blockLocations.ContainsKey(key))
         {
             for (int i = 0; i < blockLocations[key].Count; ++i)
@@ -287,9 +270,10 @@ public class BlockLevelManager : MonoBehaviour
                 if (blockLocations[key][i].z == id)
                 {
                     blockLocations[key][i] = encodeBlockPos(id, newPos);
-                    break;
+                    return;
                 }
             }
+            blockLocations[key].Add(encodeBlockPos(id, newPos));
         }
         else
         {
@@ -304,7 +288,6 @@ public class BlockLevelManager : MonoBehaviour
     public void removeBlock(BlockType type, int id)
     {
         string key = type.fullName();
-        // Debug.Log("Block " + id + " with shape " + key + " removed from grid");
         if (blockLocations.ContainsKey(key))
         {
             for (int i = 0; i < blockLocations[key].Count; ++i)

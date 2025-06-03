@@ -22,7 +22,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     public Sprite bigTriangle2;
     public Sprite bigTriangle3;
     public Sprite bigTriangle4;
-    public Sprite bigCircle;
+    // public Sprite bigCircle;
     // public Sprite quarterCircle;
     // public Sprite quarterCircle2;
     // public Sprite quarterCircle3;
@@ -125,7 +125,6 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         {
             removeFromGrid();
         }
-        levelManager.selectBlock(id);
 
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
@@ -168,7 +167,6 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             {
                 isOnGrid = true;
                 levelManager.addBlock(blockType, id, snap);
-                levelManager.deselectBlock();
             }
             placeBlockAt(snap);
         }
@@ -181,7 +179,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         if (levelManager.metRequirements())
         {
             Debug.Log("Correct solution! Yippee!");
-            // TODO exit da minigame
+            levelManager.endLevel();
         }
     }
 
