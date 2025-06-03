@@ -37,9 +37,8 @@ public class RespawnScript : MonoBehaviour
         }
     }
 
-    /*
-     * note: index of respawn positions in respawnPositions corresponds to checkpoint number
-     */
+
+    //note: index of respawn positions in respawnPositions corresponds to checkpoint number
     private void OnCollisionEnter(Collision collision)
     {
         GameObject player = collision.gameObject;
@@ -60,7 +59,7 @@ public class RespawnScript : MonoBehaviour
         }
         else
         {
-            Debug.Log(gameObjectName + "'s checkpoint number not found in respawnModifierCheckpoints");
+            //Debug.Log(gameObjectName + "'s checkpoint number not found in respawnModifierCheckpoints");
         }
     }
 }

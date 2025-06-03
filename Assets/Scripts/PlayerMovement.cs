@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
         respawnScript.updateCheckpoint(collision.gameObject.name);
 
         //LayerMask checkPointModifier = LayerMask.GetMask("CheckpointModifier"); //gets bitwise representation of that layer
@@ -104,20 +104,6 @@ public class PlayerMovement : MonoBehaviour
         //    respawnScript.updateCheckpoint(collision.gameObject.name);
         //}
     }
-
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("GroundSurface"))
-    //    {
-    //        isGrounded = true;
-    //    }
-    //}
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    isGrounded = false;
-    //    jumpSound = true;
-    //}
 
     private void OnJump()
     {
