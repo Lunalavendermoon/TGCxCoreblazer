@@ -48,7 +48,7 @@ title: Adventurer
 -> leave
 ===
 
-title: Child
+title: LittleGirl
 ---
 <<set $npcName = "Little Girl">>
 <<set $acceptedMemoryType1 = "Resilience">> //FIX: should actually be wonder memory, i just made it community for testing

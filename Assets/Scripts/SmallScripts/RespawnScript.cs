@@ -14,6 +14,7 @@ public class RespawnScript : MonoBehaviour
     {
         respawnModifierCheckpoints = new Dictionary<string, int>()
         {
+            {"Start", 0},
             {"Island1", 1},
             {"Parkour1", 2},
             {"Island2", 3},

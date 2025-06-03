@@ -22,10 +22,10 @@ public class MemoryData : ScriptableObject
     }
     public static bool IsValidMemory(string memoryName)
     {
-        Debug.Log("Checking: " + memoryName);
+        //Debug.Log("Checking: " + memoryName);
         foreach (Memory m in AllMemories)
         {
-            Debug.Log(m.memoryName);
+            //Debug.Log(m.memoryName);
             if (memoryName == m.memoryName)
             {
                 return true;

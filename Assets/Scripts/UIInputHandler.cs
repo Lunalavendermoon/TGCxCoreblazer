@@ -115,15 +115,15 @@ public class UIInputHandler : MonoBehaviour
 
                     if (MemoryData.IsValidMemory(UI_element.name))
                     {
-                        Debug.Log($"\n MemoryType: {MemoryData.GetMemoryType(UI_element.name)}");
+                        //Debug.Log($"\n MemoryType: {MemoryData.GetMemoryType(UI_element.name)}");
 
                         string memoryType = MemoryData.GetMemoryType(UI_element.name);
-                        Debug.Log($"{UI_element.name}'s type: {memoryType}");
-                        Debug.Log("Wanted types");
-                        foreach (string type in TypesToSelect)
-                        {
-                            Debug.Log(type);
-                        }
+                        //Debug.Log($"{UI_element.name}'s type: {memoryType}");
+                        //Debug.Log("Wanted types");
+                        //foreach (string type in TypesToSelect)
+                        //{
+                        //    Debug.Log(type);
+                        //}
                         if (TypesToSelect.Contains(memoryType))
                         {
                             TypesToSelect.Remove(memoryType);
@@ -152,10 +152,10 @@ public class UIInputHandler : MonoBehaviour
     public IEnumerator ActivateMessage(GameObject messageWindow)
     {
         messageWindow.SetActive(true);
-        Debug.Log(messageWindow.name + " shown");
+        //Debug.Log(messageWindow.name + " shown");
         yield return new WaitForSeconds(2f);
         messageWindow.SetActive(false);
-        Debug.Log(messageWindow.name + " hidden");
+        //Debug.Log(messageWindow.name + " hidden");
     }
 
     //public void ShowMemoryGained(string memoryName)
