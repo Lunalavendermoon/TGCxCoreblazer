@@ -9,8 +9,6 @@ public class BlockHint : MonoBehaviour
 
     public GameObject hintPopup;
 
-    Canvas canvas;
-
     public void initLevel()
     {
         hintPopup.SetActive(false);

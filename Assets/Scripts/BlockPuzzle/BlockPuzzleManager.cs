@@ -19,7 +19,7 @@ public class BlockPuzzleManager : MonoBehaviour
     void Start()
     {
         // TODO connect to main game
-        loadLevel("bird");
+        loadLevel("child");
     }
 
     public void loadLevel(string nm)

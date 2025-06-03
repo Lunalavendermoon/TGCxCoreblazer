@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 using Unity.Collections;
 using Polybrush;
 using System.Collections.Specialized;
+using System.Linq;
 // using DG.Tweening;
 
 public class BlockLevelManager : MonoBehaviour
@@ -184,8 +185,9 @@ public class BlockLevelManager : MonoBehaviour
             solution[key].Sort(Vector2IntCmp);
         }
 
-        foreach (string key in solution.Keys)
+        foreach (var kv in solution.Reverse())
         {
+            string key = kv.Key;
             if (!blockLocations.ContainsKey(key))
             {
                 return new KeyValuePair<string, Vector2Int>(key, solution[key][0]);
