@@ -144,6 +144,7 @@ public class MemoryDisplayManager : MonoBehaviour
                 return true;
             }
         }
+        AudioManager.Instance.PlaySFX("negative");
         return false;
     }
 }

@@ -19,6 +19,7 @@ public class UIInputHandler : MonoBehaviour
     [SerializeField] GameObject secondMemoryMessage;
     [SerializeField] MemoryDisplayManager memoryDisplayManager;
     [SerializeField] GameObject memoryGainedUI;
+    [SerializeField] GameObject newSpawnPointUI;
     GraphicRaycaster UI_raycaster;
 
     PointerEventData click_data;
@@ -75,6 +76,13 @@ public class UIInputHandler : MonoBehaviour
     {
         timer = memoryTime;
         memoryGainedUI.SetActive(true);
+        AudioManager.Instance.PlaySFX("echoding");
+    }
+
+    public void ShowNewSpawnPointUI()
+    {
+        //Debug.Log("new spawn ui shown");
+        StartCoroutine(ActivateMessage(newSpawnPointUI));
     }
 
     public IEnumerator PromptMemorySelection(string npcName, string targetMemoryType1, string targetMemoryType2 = "None")
@@ -144,8 +152,10 @@ public class UIInputHandler : MonoBehaviour
     public IEnumerator ActivateMessage(GameObject messageWindow)
     {
         messageWindow.SetActive(true);
+        Debug.Log(messageWindow.name + " shown");
         yield return new WaitForSeconds(2f);
         messageWindow.SetActive(false);
+        Debug.Log(messageWindow.name + " hidden");
     }
 
     //public void ShowMemoryGained(string memoryName)

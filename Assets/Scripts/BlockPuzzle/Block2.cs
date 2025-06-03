@@ -2,7 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEditor.Tilemaps;
+//using UnityEditor.Tilemaps;
 
 public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {

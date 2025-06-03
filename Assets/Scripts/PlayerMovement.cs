@@ -1,6 +1,4 @@
 using System.Collections;
-using UnityEditor;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Yarn.Unity;
@@ -15,11 +13,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float rotationSpeed;
     [SerializeField] DialogueRunner dialogueRunner; //for detecting if dialogue is running
-    //[SerializeField] Transform npcPosition;
+    [SerializeField] RespawnScript respawnScript;
+    [SerializeField] float max_distance_from_ground;
 
     private float moveX;
     private float moveY;
     private bool isGrounded;
+    private bool jumpSound;
+    private bool jumpCooldownFinished;
 
     private PlayerInputActions inputActions;
 
@@ -31,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         memoryData.Convert();
+        jumpCooldownFinished = true;
     }
     private void OnEnable()
     {
@@ -55,8 +57,21 @@ public class PlayerMovement : MonoBehaviour
             transform.position += new Vector3(moveX, 0f, moveY) * (moveSpeed - weight_max14 / 2) * Time.deltaTime;
             //for physics based movement: rb.AddForce(new Vector3(moveX, 0f, moveY) * 2f * moveSpeed * Time.deltaTime, ForceMode.VelocityChange);
 
-            //rotation
-            Vector3 direction = new Vector3(moveX, 0f, moveY).normalized;
+            Debug.DrawRay(transform.position, -transform.up * 10f, Color.red);
+            //ground check
+            if(Physics.Raycast(transform.position, -transform.up, out RaycastHit hits, max_distance_from_ground))
+            {
+                isGrounded = true; //if not far from ground
+                jumpSound = true;
+            }
+            else
+            {
+                isGrounded = false;
+                jumpSound = false;
+            }
+
+                //rotation
+                Vector3 direction = new Vector3(moveX, 0f, moveY).normalized;
             float magnitude = new Vector3(moveX, 0f, moveY).magnitude;
             if (magnitude > 0f)
             {
@@ -66,31 +81,60 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(current, rotation, Time.deltaTime * rotationSpeed);
             }
         }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("GroundSurface"))
+        else
         {
-            isGrounded = true;
+            isGrounded = false;
+            jumpSound = false;
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        isGrounded = false;
+        Debug.Log(collision.gameObject.name);
+        respawnScript.updateCheckpoint(collision.gameObject.name);
+
+        //LayerMask checkPointModifier = LayerMask.GetMask("CheckpointModifier"); //gets bitwise representation of that layer
+        /*
+         * & - is BITWISE and operator - checks if there is overlap between bits
+         * 1 << gameObject.layer - converts layer to bitwise representation
+         */
+        //if ((1 << collision.gameObject.layer & checkPointModifier) != 0)
+        //{
+        //    //Debug.Log("touched checkpoint modifier");
+        //    respawnScript.updateCheckpoint(collision.gameObject.name);
+        //}
     }
+
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("GroundSurface"))
+    //    {
+    //        isGrounded = true;
+    //    }
+    //}
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    isGrounded = false;
+    //    jumpSound = true;
+    //}
 
     private void OnJump()
     {
-        if (isGrounded)
+        if (isGrounded && jumpCooldownFinished)
         {
-            rb.AddForce(Vector3.up * (jumpForce - weight_max14/4), ForceMode.Impulse);
+            StartCoroutine(runJumpCooldown());
             isGrounded = false;
+            rb.AddForce(Vector3.up * (jumpForce - weight_max14/4), ForceMode.Impulse);
+            if (jumpSound)
+            {
+                AudioManager.Instance.PlaySFX("tap");
+                jumpSound = false;
+            }
         }
     }
 
-    public void faceNPC(Transform npcPosition)
+public void faceNPC(Transform npcPosition)
     {
         //transform.LookAt(npcPosition.transform); //snappy rotate to face if u like that better :>
         StartCoroutine(rotateOverTime(npcPosition.position));
@@ -110,5 +154,12 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         yield break;
+    }
+
+    private IEnumerator runJumpCooldown()
+    {
+        jumpCooldownFinished = false;
+        yield return new WaitForSeconds(0.1f);
+        jumpCooldownFinished = true;
     }
 }
