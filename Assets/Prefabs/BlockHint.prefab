@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3021208517610520712}
   m_Layer: 0
   m_Name: BlockHint
-  m_TagString: PuzzleBlock
+  m_TagString: PuzzleBlockHint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89,17 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bigSquare: {fileID: 21300000, guid: cd5b871d4b0924e37b0c6277b1e0bd48, type: 3}
-  smallSquare: {fileID: 21300000, guid: 5b09ee0fc15e0450cb532de7f0d0dcce, type: 3}
   bigTriangle: {fileID: 21300000, guid: ced1c8c3b7c8c4c5bb2105a2cc58684b, type: 3}
   bigTriangle2: {fileID: 21300000, guid: 84a03c4a6074a4b98a9f7710985a90a6, type: 3}
   bigTriangle3: {fileID: 21300000, guid: 9c4a7f866fd524b0fac91a5d95882572, type: 3}
   bigTriangle4: {fileID: 21300000, guid: 377c88487fd9b49c0adff8f48844215a, type: 3}
-  smallTriangle: {fileID: 21300000, guid: 0329ceaddf968487886588e59c642fe5, type: 3}
-  smallTriangle2: {fileID: 21300000, guid: 76a657417410d43c58b130258d1f1185, type: 3}
-  smallTriangle3: {fileID: 21300000, guid: ce32b85a2e00e4da4bcdcf4f053e9517, type: 3}
-  smallTriangle4: {fileID: 21300000, guid: af34c4fb4b4084dd1b5f51a0ebe5c43d, type: 3}
   bigCircle: {fileID: -2413806693520163455, guid: e8e282adcceb44bd1a1f7d84450867e4, type: 3}
-  quarterCircle: {fileID: 21300000, guid: cc36b7dbc10614813b7f3d3fcb205a76, type: 3}
-  quarterCircle2: {fileID: 21300000, guid: 245ecf2e4ce1146f59a36827e083f5d7, type: 3}
-  quarterCircle3: {fileID: 21300000, guid: 59495acbfeb0a46bdbcc4f343c013d24, type: 3}
-  quarterCircle4: {fileID: 21300000, guid: 34ee9ff12f7df4769b5d96285a2ebf07, type: 3}
