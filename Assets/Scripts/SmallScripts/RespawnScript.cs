@@ -45,7 +45,9 @@ public class RespawnScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         GameObject player = collision.gameObject;
-        player.transform.position = respawnPositions[currentCheckPoint].position;
+        Vector3 checkpointPosition = respawnPositions[currentCheckPoint].position;
+        Vector3 respawnPosition = new Vector3(checkpointPosition.x, checkpointPosition.y, checkpointPosition.z - 0.2f);
+        player.transform.position = respawnPosition;
     }
 
     public void updateCheckpoint(string gameObjectName)

@@ -16,8 +16,14 @@ public class IslandManager : MonoBehaviour
     [SerializeField] GameObject Island2Platforms;
     [SerializeField] GameObject Island3Platforms;
 
+    [SerializeField] GameObject playerCamera;
+    [SerializeField] GameObject Platform1Camera;
+    [SerializeField] GameObject Platform2Camera;
+    [SerializeField] GameObject Platform3Camera;
+
     private List<QuestList> allQuestsList;
     private List<GameObject> allPlatformsList;
+    private List<GameObject> allCamerasList;
     private HashSet<string> completedQuests;
     [SerializeField] int islandNumber;
     private float startingDistance;
@@ -40,6 +46,14 @@ public class IslandManager : MonoBehaviour
             Island1Platforms,
             Island2Platforms,
             Island3Platforms,
+        };
+
+        allCamerasList = new List<GameObject>()
+        {
+            playerCamera,
+            Platform1Camera,
+            Platform2Camera,
+            Platform3Camera
         };
 
         foreach(GameObject platformsParent in allPlatformsList)
@@ -76,6 +90,8 @@ public class IslandManager : MonoBehaviour
 
     private IEnumerator startPlatformRisingAnimation(GameObject platformParent)
     {
+        allCamerasList[islandNumber].SetActive(true);
+        playerCamera.SetActive(false);
         AudioManager.Instance.PlaySFX("rock");
         foreach (Transform child in platformParent.transform)
         {
@@ -83,6 +99,9 @@ public class IslandManager : MonoBehaviour
             StartCoroutine(moveVertically(child.gameObject, startingDistance, 2f));
             yield return new WaitForSeconds(0.25f);
         }
+        StartCoroutine(delayExecution(4f));
+        playerCamera.SetActive(true);
+        allCamerasList[islandNumber].SetActive(false);
     }
 
     private IEnumerator moveVertically(GameObject propToMove, float distanceY, float duration)
@@ -96,6 +115,11 @@ public class IslandManager : MonoBehaviour
             yield return null;
         }
         yield break;
+    }
+
+    private IEnumerator delayExecution(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 
     public int countCompleteQuests(List<string> questsToCheck)

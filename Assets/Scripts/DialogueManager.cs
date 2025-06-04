@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] DialogueRunner dialogueRunner;
     [SerializeField] Camera mainCamera;
     [SerializeField] PlayerMovement playerController;
+    //[SerializeField] Movement2 playerController;
     [SerializeField] IslandManager islandManagerScript;
     PlayerInputActions playerInputActions;
 
@@ -45,14 +46,31 @@ public class DialogueManager : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit objectHit;
 
-            if (Physics.Raycast(ray, out objectHit))
+            int ignoreLayerNumber = LayerMask.NameToLayer("IgnoreForDialogue");
+            int ignoreLayerMask = ~(1 << ignoreLayerNumber);
+
+            if (Physics.Raycast(ray, out objectHit, Mathf.Infinity, ignoreLayerMask))
             {
                 if (objectHit.collider.gameObject.CompareTag("hasDialogue"))
                 {
-                    playerController.faceNPC(objectHit.collider.gameObject.transform);
-                    string npcName = objectHit.collider.gameObject.name;
-                    npcFadeScript = objectHit.collider.gameObject.GetComponent<NPCParticles>();
-                    RunQuest(npcName);
+                    //special case
+                    if (objectHit.collider.gameObject.name == "LittleGirl")
+                    {
+                        if(completedQuests.Contains("BabyBear") && completedQuests.Contains("Adventurer"))
+                        {
+                            playerController.faceNPC(objectHit.collider.gameObject.transform);
+                            string npcName = objectHit.collider.gameObject.name;
+                            npcFadeScript = objectHit.collider.gameObject.GetComponent<NPCParticles>();
+                            RunQuest(npcName);
+                        }
+                    }
+                    else //regular - always triggers dialogue
+                    {
+                        playerController.faceNPC(objectHit.collider.gameObject.transform);
+                        string npcName = objectHit.collider.gameObject.name;
+                        npcFadeScript = objectHit.collider.gameObject.GetComponent<NPCParticles>();
+                        RunQuest(npcName);
+                    }
                 }
                 else if (objectHit.collider.gameObject.CompareTag("givesMemory"))
                 {

@@ -194,6 +194,7 @@ title: Storyteller
 <<set $npcName = "Storyteller">>
 <<set $acceptedMemoryType1 = "Community">>
 <<set $acceptedMemoryType2 = "Joy">>
+<<set $memoryToTake = "The World">>
 {$npcName}: Once, I shared tales from dawn to dusk.
 {$npcName}: But now? The wind doesn’t carry my voice like it used to… It only takes.
 {$npcName}: And I've forgotten how to give.

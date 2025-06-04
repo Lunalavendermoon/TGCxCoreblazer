@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Yarn.Unity;
+using Unity.Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] DialogueRunner dialogueRunner; //for detecting if dialogue is running
     [SerializeField] RespawnScript respawnScript;
     [SerializeField] float max_distance_from_ground;
+    //[SerializeField] CinemachineCamera playerCamera;
 
     private float moveX;
     private float moveY;
@@ -93,18 +95,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(collision.gameObject.name);
         respawnScript.updateCheckpoint(collision.gameObject.name);
-
-        //LayerMask checkPointModifier = LayerMask.GetMask("CheckpointModifier"); //gets bitwise representation of that layer
-        /*
-         * & - is BITWISE and operator - checks if there is overlap between bits
-         * 1 << gameObject.layer - converts layer to bitwise representation
-         */
-        //if ((1 << collision.gameObject.layer & checkPointModifier) != 0)
+        //if(collision.gameObject.name.Contains("Parkour"))
         //{
-        //    //Debug.Log("touched checkpoint modifier");
-        //    respawnScript.updateCheckpoint(collision.gameObject.name);
+        //    var followSettings = playerCamera.GetCinemachineComponent<CinemachineTransposer>();
         //}
     }
 

@@ -20,6 +20,7 @@ public class UIInputHandler : MonoBehaviour
     [SerializeField] MemoryDisplayManager memoryDisplayManager;
     [SerializeField] GameObject memoryGainedUI;
     [SerializeField] GameObject newSpawnPointUI;
+    [SerializeField] GameObject dialogueUI;
     GraphicRaycaster UI_raycaster;
 
     PointerEventData click_data;
@@ -27,6 +28,7 @@ public class UIInputHandler : MonoBehaviour
 
     private float memoryTime = 0.1f;
     private float timer = 0f;
+    bool disableMemoryMenuToggle = false;
 
     void Awake()
     {
@@ -56,13 +58,14 @@ public class UIInputHandler : MonoBehaviour
                 //Debug.Log(UI_element.name);
 
                 // toggle menu
-                if (UI_element.name == "MemoryMenuButton")
+                if (UI_element.name == "MemoryMenuButton" && !disableMemoryMenuToggle)
                 {
                     memoryMenu.SetActive(!memoryMenu.activeSelf);
                 }
                 if (UI_element.name == "MemoryGainedBackground" && timer <= 0)
                 {
                     memoryGainedUI.SetActive(false);
+                    dialogueUI.SetActive(true);
                 }
             }
         }
@@ -76,6 +79,7 @@ public class UIInputHandler : MonoBehaviour
     {
         timer = memoryTime;
         memoryGainedUI.SetActive(true);
+        dialogueUI.SetActive(false);
         AudioManager.Instance.PlaySFX("echoding");
     }
 
@@ -88,6 +92,7 @@ public class UIInputHandler : MonoBehaviour
     public IEnumerator PromptMemorySelection(string npcName, string targetMemoryType1, string targetMemoryType2 = "None")
     {
         memoryMenu.SetActive(true);
+        disableMemoryMenuToggle = true;
 
         List<string> TypesToSelect = new List<string>();
         bool selectMultipleMemories = false; //used to determine if popup to select a memory should be shown
@@ -136,6 +141,7 @@ public class UIInputHandler : MonoBehaviour
                             else if (TypesToSelect.Count == 0)
                             {
                                 memoryMenu.SetActive(false);
+                                disableMemoryMenuToggle = false;
                                 dialogueManagerScript.SetQuestComplete(npcName); //mark completed
                                 yield break;
                             }
