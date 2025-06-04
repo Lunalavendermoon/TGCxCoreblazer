@@ -51,9 +51,9 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _1st_ShadeColor: {r: 0.7058824, g: 0.61473733, b: 0.39607844, a: 1}
-    - _2nd_ShadeColor: {r: 0.63529414, g: 0.5557455, b: 0.39607844, a: 1}
-    - _BaseColor: {r: 0.8050314, g: 0.75270724, b: 0.58985007, a: 1}
-    - _Color: {r: 0.8050313, g: 0.75270724, b: 0.58985, a: 1}
+    - _1st_ShadeColor: {r: 0.9622642, g: 0.76090837, b: 0.32378066, a: 1}
+    - _2nd_ShadeColor: {r: 0.8930817, g: 0.6242529, b: 0.4240733, a: 1}
+    - _BaseColor: {r: 0.9245283, g: 0.7997596, b: 0.6192594, a: 1}
+    - _Color: {r: 0.9245283, g: 0.7997596, b: 0.6192594, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
