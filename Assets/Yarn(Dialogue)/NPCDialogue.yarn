@@ -232,7 +232,5 @@ And now, you will gather them.
 Piece by piece, you will make me whole.
 Go, Weaver. 
 Collect what remains.
-<<fade_out_text>>
-<<wait 2>>
-<<special_format false>>
+<<play_cutscene>>
 ===

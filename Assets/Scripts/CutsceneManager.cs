@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Video;
 using Yarn.Unity;
 
 public class CutsceneManager : MonoBehaviour
@@ -9,20 +10,31 @@ public class CutsceneManager : MonoBehaviour
     public DialogueRunner dialogueRunner;
     public TextMeshProUGUI dialogue;
     public float fadeDuration = 0.5f;
+    public GameObject startingCutscene;
+    private VideoPlayer starting;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        starting = startingCutscene.GetComponent<VideoPlayer>();
         SpecialFormat(true);
         dialogueRunner.AddCommandHandler<bool>("special_format", SpecialFormat);
         dialogueRunner.AddCommandHandler("fade_out_text", FadeOut);
+        dialogueRunner.AddCommandHandler("play_cutscene", PlayCutsene);
+        starting.loopPointReached += OnVideoEnd;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayCutsene()
     {
-
+        BG.SetActive(false);
+        startingCutscene.SetActive(true);
+        starting.Play();
     }
 
+    void OnVideoEnd(VideoPlayer vp)
+    {
+        SpecialFormat(false);
+        vp.gameObject.SetActive(false);
+    }
     public void SpecialFormat(bool special)
     {
         if (special)
