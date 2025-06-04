@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f541b542705e7fa459ae1fec18964669, type: 3}
   m_Name: Island3Quests
   m_EditorClassIdentifier: 
-  questList: []
+  questList:
+  - Robot
+  - Sapling
+  - Storyteller

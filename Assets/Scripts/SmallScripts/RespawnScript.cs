@@ -6,7 +6,7 @@ public class RespawnScript : MonoBehaviour
     [SerializeField] GameObject respawnsFolder;
     [SerializeField] UIInputHandler uiInputHandlerScript;
     private List<Transform> respawnPositions;
-    private int currentCheckPoint;
+    [SerializeField] int currentCheckPoint;
 
     Dictionary<string, int> respawnModifierCheckpoints;
 
@@ -18,10 +18,13 @@ public class RespawnScript : MonoBehaviour
             {"Island1", 1},
             {"Parkour1", 2},
             {"Island2", 3},
+            {"Parkour2", 4},
+            {"Island3", 5},
+            {"Parkour3", 6}
         };
 
         respawnPositions = new List<Transform>();
-        currentCheckPoint = 1; //set to 0 later
+        currentCheckPoint = 0; //set to 0 later
         foreach(Transform respawn in respawnsFolder.transform)
         {
             respawnPositions.Add(respawn);
@@ -60,6 +63,18 @@ public class RespawnScript : MonoBehaviour
         else
         {
             //Debug.Log(gameObjectName + "'s checkpoint number not found in respawnModifierCheckpoints");
+        }
+    }
+
+    public void handleCameraZoom(string gameObjectName)
+    {
+        if(gameObjectName.Contains("Parkour"))
+        {
+            //zoom out follow offset to 0, 10, -10
+        }
+        else
+        {
+            //follow offset 0, 5, -5
         }
     }
 }

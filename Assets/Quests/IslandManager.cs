@@ -19,13 +19,13 @@ public class IslandManager : MonoBehaviour
     private List<QuestList> allQuestsList;
     private List<GameObject> allPlatformsList;
     private HashSet<string> completedQuests;
-    private int islandNumber;
+    [SerializeField] int islandNumber;
     private float startingDistance;
 
     void Start()
     {
         completedQuests = dialogueManagerScript.completedQuests;
-        islandNumber = 1;
+        //islandNumber = 1;
         startingDistance = 10f;
 
         allQuestsList = new List<QuestList>() {
