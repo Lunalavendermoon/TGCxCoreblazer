@@ -115,7 +115,7 @@ PrefabInstance:
     - target: {fileID: 2958262986520364888, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 5179762519201760082, guid: 385fe80e70e9e4421a8181793c0db20e, type: 2}
+      objectReference: {fileID: 4797440855209378543, guid: 385fe80e70e9e4421a8181793c0db20e, type: 2}
     - target: {fileID: 2958262986520364888, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
@@ -163,7 +163,7 @@ PrefabInstance:
     - target: {fileID: 2958262987206614838, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 5179762519201760082, guid: 385fe80e70e9e4421a8181793c0db20e, type: 2}
+      objectReference: {fileID: 4797440855209378543, guid: 385fe80e70e9e4421a8181793c0db20e, type: 2}
     - target: {fileID: 2958262987206614838, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
@@ -220,13 +220,29 @@ PrefabInstance:
       propertyPath: lastLineText
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8020628925107869960, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: optionViewPrefab
+      value: 
+      objectReference: {fileID: 2576261519635394347, guid: 4649438211e6c874d9f3d67c5e905600, type: 3}
+    - target: {fileID: 8020628925107869966, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -400
+      objectReference: {fileID: 0}
     - target: {fileID: 8020628925107869966, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8020628925107869968, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020628925107869968, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020628925107869968, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_Padding.m_Bottom
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8020628925184811235, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_Pivot.x
@@ -312,6 +328,18 @@ PrefabInstance:
       propertyPath: yarnProject
       value: 
       objectReference: {fileID: 7545569452688597077, guid: 5568ba5619714423c967452f73657201, type: 3}
+    - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: onNodeStart.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: onNodeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: onNodeStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6877739291720518964, guid: 52571f68872914e24837210513edea1d, type: 3}
     m_RemovedGameObjects:

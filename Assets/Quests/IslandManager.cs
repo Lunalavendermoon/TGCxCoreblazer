@@ -76,6 +76,7 @@ public class IslandManager : MonoBehaviour
 
     private IEnumerator startPlatformRisingAnimation(GameObject platformParent)
     {
+        AudioManager.Instance.PlaySFX("rock");
         foreach (Transform child in platformParent.transform)
         {
             Debug.Log("moving " + child);

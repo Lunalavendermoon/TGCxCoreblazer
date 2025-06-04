@@ -59,15 +59,19 @@ public class PlayerMovement : MonoBehaviour
 
             Debug.DrawRay(transform.position, -transform.up * 10f, Color.red);
             //ground check
-            if(Physics.Raycast(transform.position, -transform.up, out RaycastHit hits, max_distance_from_ground))
+            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hits, max_distance_from_ground))
             {
                 isGrounded = true; //if not far from ground
-                jumpSound = true;
+                if (jumpSound)
+                {
+                    AudioManager.Instance.PlaySFX("tap");
+                    jumpSound = false;
+                }
             }
             else
             {
                 isGrounded = false;
-                jumpSound = false;
+                jumpSound = true;
             }
 
                 //rotation
@@ -84,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isGrounded = false;
-            jumpSound = false;
         }
     }
 
@@ -112,15 +115,10 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(runJumpCooldown());
             isGrounded = false;
             rb.AddForce(Vector3.up * (jumpForce - weight_max14/4), ForceMode.Impulse);
-            if (jumpSound)
-            {
-                AudioManager.Instance.PlaySFX("tap");
-                jumpSound = false;
-            }
         }
     }
 
-public void faceNPC(Transform npcPosition)
+    public void faceNPC(Transform npcPosition)
     {
         //transform.LookAt(npcPosition.transform); //snappy rotate to face if u like that better :>
         StartCoroutine(rotateOverTime(npcPosition.position));

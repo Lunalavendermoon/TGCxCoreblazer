@@ -18,13 +18,14 @@ title: BabyBear
 {$npcName}: It’s quite cold now…but we can still have a lot of fun!
 {$npcName}: Like playing in the snow together?
 
--> [Take memory: The Fellowship]
+-> [Take memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: I remember that I…I? What did I do?
     {$npcName}: What did I feel?
     {$npcName}: I’m…I’m tired…
     <<fade_npc>>
 -> leave
+-> 3rd option for test
 ===
 
 title: Adventurer
@@ -37,7 +38,7 @@ title: Adventurer
 {$npcName}: That’s what my mentor always said.
 {$npcName}: Need a hand?
 
--> [Take memory: The Ascent]
+-> [Take memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: W-wait...
     {$npcName}: What did you do?
@@ -51,20 +52,20 @@ title: Adventurer
 title: LittleGirl
 ---
 <<set $npcName = "Little Girl">>
-<<set $acceptedMemoryType1 = "Resilience">> //FIX: should actually be wonder memory, i just made it community for testing
+<<set $acceptedMemoryType1 = "Resilience">>
 {$npcName}: I told her I’d wait right here. If I move, she might not find me again.
 {$npcName}: Everyone else left. I don’t want to forget.
--> [Take memory: some memory name]
+-> [Take memory]
     {$npcName}: I won’t let you have it. It’s the only memory I have left.
--> [Offer Resilience memory]
-    <<if check_has_memory_type($acceptedMemoryType1)>>
-        <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}">>
-        {$npcName}: ...She wouldn’t want me to be alone, would she?
-        {$npcName}: She always said flowers help things grow... even when you're sad.
-        {$npcName}: I remember in that field over there…there should be flowers.
-    <<else>>
-        You do not have the appropriate memory
-    <<endif>>
+    -> [Offer Resilience memory]
+        <<if check_has_memory_type($acceptedMemoryType1)>>
+            <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}">>
+            {$npcName}: ...She wouldn’t want me to be alone, would she?
+            {$npcName}: She always said flowers help things grow... even when you're sad.
+            {$npcName}: I remember in that field over there…there should be flowers.
+        <<else>>
+            You do not have the appropriate memory
+        <<endif>>
 -> Leave
 ===
 
@@ -72,7 +73,7 @@ title: LittleGirl
 title: ElderlyGardener
 ---
 <<set $npcName = "Elderly Gardener">>
-<<set $acceptedMemoryType1 = "Community">> //FIX: should actually be wonder memory, i just made it community for testing
+<<set $acceptedMemoryType1 = "Wonder">>
 <<set $memoryToReceive = "The Grove">>
 <<set $memoryToTake = "The Bloom">>
 {$npcName}: ...It used to feel like magic, didn’t it? Seeds turning into something more.
@@ -88,7 +89,7 @@ title: ElderlyGardener
     <<else>>
         You do not have the appropriate memory
     <<endif>>
--> [Take Memory: The Bloom]
+-> [Take Memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: Oh…
     {$npcName}: The soil is… quiet now.
@@ -123,7 +124,7 @@ title: Bird
     <<else>>
         You do not have the appropriate memory
     <<endif>>
--> [Take Memory: The Solo]
+-> [Take Memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: Where did they go?
     {$npcName}: I called out once… twice…
@@ -152,7 +153,7 @@ title: Robot
     <<else>>
         You do not have the appropriate memory
     <<endif>>
--> [Take Memory: The Lunch]
+-> [Take Memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: Memory error.
     {$npcName}: Core link… severed.
@@ -180,7 +181,7 @@ title: Sapling
     <<else>>
         You do not have the appropriate memory
     <<endif>>
--> [Take Memory: The Reach]
+-> [Take Memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: No more questions.
     {$npcName}: No more light.
@@ -207,7 +208,7 @@ title: Storyteller
     <<else>>
         You do not have the appropriate memory
     <<endif>>
--> [Take Memory: The World]
+-> [Take Memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: The words...
     {$npcName}: They don’t come.
@@ -218,4 +219,19 @@ title: Storyteller
 title: Cube
 ---
 <<obtain_memory "The Reach">>
+===
+title: Start
+---
+<<set $npcName = "Little Girl">>
+<<set $acceptedMemoryType1 = "Resilience">> //FIX: should actually be wonder memory, i just made it community for testing
+What are memories?
+Fragments of time. 
+Echoes of joy, sorrow, love… loss.
+And now, you will gather them. 
+Piece by piece, you will make me whole.
+Go, Weaver. 
+Collect what remains.
+<<fade_out_text>>
+<<wait 2>>
+<<special_format false>>
 ===

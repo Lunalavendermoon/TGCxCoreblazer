@@ -118,6 +118,7 @@ public class UIInputHandler : MonoBehaviour
                         //Debug.Log($"\n MemoryType: {MemoryData.GetMemoryType(UI_element.name)}");
 
                         string memoryType = MemoryData.GetMemoryType(UI_element.name);
+
                         //Debug.Log($"{UI_element.name}'s type: {memoryType}");
                         //Debug.Log("Wanted types");
                         //foreach (string type in TypesToSelect)
@@ -126,6 +127,7 @@ public class UIInputHandler : MonoBehaviour
                         //}
                         if (TypesToSelect.Contains(memoryType))
                         {
+                            AudioManager.Instance.PlaySFX("memorygained");
                             TypesToSelect.Remove(memoryType);
                             memoryDisplayManager.GiveMemory(npcName, UI_element.name);
 
@@ -140,6 +142,7 @@ public class UIInputHandler : MonoBehaviour
                         }
                         else //otherwise, show this memory is not compatible message
                         {
+                            AudioManager.Instance.PlaySFX("negative");
                             StartCoroutine(ActivateMessage(incompatibleMessage));
                         }
                     }
