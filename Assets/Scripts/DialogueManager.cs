@@ -31,7 +31,7 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        dialogueRunner.AddCommandHandler("fade_npc", FadeNPC);
+        dialogueRunner.AddCommandHandler<string>("start_fade", FadeNPC);
     }
 
     public void OnDisable()
@@ -114,11 +114,12 @@ public class DialogueManager : MonoBehaviour
         return sWhitespace.Replace(input, "");
     }
 
-    public void FadeNPC()
+    public void FadeNPC(string npc)
     {
-        if (npcFadeScript != null)
+        GameObject obj = GameObject.Find(npc);
+        if (obj != null)
         {
-            npcFadeScript.StartFade();
+            obj.GetComponent<NPCParticles>().StartFade(npc);
         }
     }
 }

@@ -26,7 +26,6 @@ public class IndicatorShow : MonoBehaviour
                     if (hit.collider.gameObject == memoryIndicator)
                     {
                         Debug.Log("Target sprite clicked!");
-                        MemoryData.MemoryList.Add(memoryToGive);
                         MemoryUnavailable();
                         mdm.ObtainMemory(memoryToGive.memoryName);
                     }

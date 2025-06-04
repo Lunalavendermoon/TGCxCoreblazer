@@ -2,18 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 
 public class NPCParticles : MonoBehaviour
 {
     public ParticleSystem particleEffect;
-
     float krillTimer = 0.5f;
-
-    public void StartFade()
+    public void StartFade(string npc)
     {
+        if (gameObject.name == npc ){
         // Instantiate the particle effect at the object's position
         Instantiate(particleEffect, transform.position, Quaternion.identity);
-        StartCoroutine(FadeOut());
+        AudioManager.Instance.PlaySFX("die");
+        StartCoroutine(FadeOut());}
     }
 
     private IEnumerator FadeOut()

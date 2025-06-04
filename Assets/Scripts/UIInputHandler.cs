@@ -26,7 +26,7 @@ public class UIInputHandler : MonoBehaviour
     PointerEventData click_data;
     List<RaycastResult> click_results;
 
-    private float memoryTime = 0.1f;
+    private float memoryTime = 1f;
     private float timer = 0f;
     bool disableMemoryMenuToggle = false;
 

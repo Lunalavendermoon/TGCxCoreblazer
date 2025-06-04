@@ -23,7 +23,7 @@ title: BabyBear
     {$npcName}: I remember that I…I? What did I do?
     {$npcName}: What did I feel?
     {$npcName}: I’m…I’m tired…
-    <<fade_npc>>
+    <<start_fade "BabyBear">>
 -> leave
 -> 3rd option for test
 ===
@@ -46,6 +46,7 @@ title: Adventurer
     {$npcName}: Why are we out here... all alone?
     {$npcName}: It’s cold…I just want to…
     {$npcName}: Never wake up again.
+    <<start_fade "Adventurer">>
 -> leave
 ===
 
