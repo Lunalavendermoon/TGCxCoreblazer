@@ -24,6 +24,7 @@ public class BlockHint : MonoBehaviour
 
     public void showBlock(BlockType type, Vector3 position, BlockLevelManager script, Canvas canvas)
     {
+        AudioManager.Instance.PlaySFX("wetding");
         GameObject block = Instantiate(blockPrefab, position, Quaternion.identity, canvas.transform);
         // Vector3 blockpos = block.GetComponent<RectTransform>().anchoredPosition3D;
         // blockpos.z = 0f;

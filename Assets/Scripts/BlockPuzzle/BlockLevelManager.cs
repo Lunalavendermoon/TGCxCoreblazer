@@ -238,6 +238,7 @@ public class BlockLevelManager : MonoBehaviour
     // cell size: 60 x 60
     public Vector3Int snapToGrid(Vector3 world, BlockType blockType)
     {
+        AudioManager.Instance.PlaySFX("click");
         return new Vector3Int(Mathf.RoundToInt(world.x / pixelsPerUnit) * pixelsPerUnit,
                                 Mathf.RoundToInt(world.y / pixelsPerUnit) * pixelsPerUnit + blockType.height * pixelsPerUnit);
     }
@@ -294,6 +295,7 @@ public class BlockLevelManager : MonoBehaviour
             {
                 if (blockLocations[key][i].z == id)
                 {
+                    AudioManager.Instance.PlaySFX("click");
                     blockLocations[key][i] = new Vector3Int(0,0,id);
                     return;
                 }

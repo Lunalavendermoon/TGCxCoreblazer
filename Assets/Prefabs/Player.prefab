@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 3529425278133304742}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -280,6 +280,8 @@ MonoBehaviour:
   jumpForce: 7
   rotationSpeed: 12
   dialogueRunner: {fileID: 0}
+  respawnScript: {fileID: 0}
+  max_distance_from_ground: 0
 --- !u!54 &3999225895124866427
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -322,6 +324,7 @@ MonoBehaviour:
   dialogueRunner: {fileID: 0}
   mainCamera: {fileID: 0}
   playerController: {fileID: 1985400156545806016}
+  islandManagerScript: {fileID: 0}
 --- !u!1 &9081208235575086603
 GameObject:
   m_ObjectHideFlags: 0

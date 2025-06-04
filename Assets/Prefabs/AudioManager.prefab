@@ -86,18 +86,23 @@ MonoBehaviour:
     volume: 1
     pitchMin: 1
     pitchMax: 1
-  - clipName: negativeding
+  - clipName: negative
     clip: {fileID: 8300000, guid: 9fa276f0aacb27b418bf3693167b0cdc, type: 3}
     volume: 1
     pitchMin: 1
     pitchMax: 1
   - clipName: tap
-    clip: {fileID: 8300000, guid: e12a8bfceb47d434d9056362b26460e4, type: 3}
+    clip: {fileID: 8300000, guid: ead31b36b232174468af8f9212465661, type: 3}
     volume: 1
     pitchMin: 1
     pitchMax: 1
   - clipName: wetding
     clip: {fileID: 8300000, guid: 4332fffd7db91f94aa9f6c956b1df7e5, type: 3}
+    volume: 1
+    pitchMin: 1
+    pitchMax: 1
+  - clipName: rock
+    clip: {fileID: 8300000, guid: 82c5ea24342f5d54989b06c728bc93dc, type: 3}
     volume: 1
     pitchMin: 1
     pitchMax: 1
