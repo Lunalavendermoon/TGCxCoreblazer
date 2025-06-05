@@ -1,15 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using TMPro;
-using UnityEngine.Rendering.Universal.Internal;
-using Unity.Multiplayer.Center.Common;
-using UnityEngine.Rendering.PostProcessing;
 using System;
-using UnityEngine.InputSystem;
-using Unity.Collections;
-using Polybrush;
-using System.Collections.Specialized;
 using System.Linq;
 // using DG.Tweening;
 
@@ -82,8 +74,7 @@ public class BlockLevelManager : MonoBehaviour
             string name = components[0].Substring(0, components[0].Length - 2);
 
             spawnBlock(id + 1, BlockType.stringToBlock(name), id,
-                charToBool(components[0][components[0].Length - 2]), charToBool(components[0][components[0].Length - 1]),
-                new Vector3Int(pos.x, pos.y, 0));
+                charToBool(components[0][components[0].Length - 2]), charToBool(components[0][components[0].Length - 1]));
             ++id;
         }
     }
@@ -207,23 +198,25 @@ public class BlockLevelManager : MonoBehaviour
         return new KeyValuePair<string, Vector2Int>(null, Vector2Int.zero);
     }
 
-    void spawnBlock(int id, BlockType type, int count, bool hflip, bool vflip, Vector3Int hintPos)
+    void spawnBlock(int id, BlockType type, int count, bool hflip, bool vflip)
     {
         int x = count % 4;
         int y = count / 4;
 
-        Vector3 position = new Vector3(-60f + 12f * x, 25f - 17f * y, 0);
-        Vector3 jitter = new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), 0);
+        Vector3 position = new Vector3(-600f + 125f * x, 250f - 170f * y, 0);
+        Vector3 jitter = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f), 0);
 
-        GameObject block = Instantiate(blockPrefab, position + jitter, Quaternion.identity, canvas.transform);
-        Vector3 blockpos = block.GetComponent<RectTransform>().anchoredPosition3D;
-        blockpos.z = 0f;
-        block.GetComponent<RectTransform>().anchoredPosition3D = blockpos;
+        GameObject block = Instantiate(blockPrefab, position, Quaternion.identity, canvas.transform);
+        // Vector3 blockpos = block.GetComponent<RectTransform>().anchoredPosition3D;
+        // blockpos.z = 0f;
+        // block.GetComponent<RectTransform>().anchoredPosition3D = blockpos;
 
         type.hflipped = hflip;
         type.vflipped = vflip;
         block.GetComponent<Block2>().initBlock(id, type, this, canvas);
         blocks.Add(id, block);
+
+        block.GetComponent<Block2>().placeBlockAt(position + jitter);
 
         addBlock(type, id, new Vector3Int(-1000000, -1000000, id));
     }

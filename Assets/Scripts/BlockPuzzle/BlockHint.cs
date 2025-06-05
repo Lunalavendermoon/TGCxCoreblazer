@@ -26,15 +26,9 @@ public class BlockHint : MonoBehaviour
     {
         AudioManager.Instance.PlaySFX("wetding");
         GameObject block = Instantiate(blockPrefab, position, Quaternion.identity, canvas.transform);
-        // Vector3 blockpos = block.GetComponent<RectTransform>().anchoredPosition3D;
-        // blockpos.z = 0f;
-        // block.GetComponent<RectTransform>().anchoredPosition3D = blockpos;
 
         block.GetComponent<Block2>().initBlock(100, type, script, canvas);
-        // block.GetComponent<Block2>().placeBlockAt(position);
         block.GetComponent<Block2>().placeBlockAt(position);
-
-        block.GetComponent<Block2>().hintColor();
 
         // shouldn't be draggable
         block.GetComponent<Block2>().setEnabled(false);

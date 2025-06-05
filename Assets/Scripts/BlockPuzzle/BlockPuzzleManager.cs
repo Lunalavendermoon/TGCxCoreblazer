@@ -3,24 +3,19 @@ using UnityEngine;
 public class BlockPuzzleManager : MonoBehaviour
 {
     public BlockLevelManager levelManager;
+    public UIInputHandler bossmansBossman;
 
-    [SerializeField] public Sprite bird;
-    public Sprite child;
-    public Sprite gardener;
-    public Sprite robot;
-    public Sprite sapling1;
-    public Sprite sapling2;
-    public Sprite storyteller1;
-    public Sprite storyteller2;
+    public Sprite Bird;
+    public Sprite LittleGirl;
+    public Sprite ElderlyGardener;
+    public Sprite Robot;
+    public Sprite Sapling1;
+    public Sprite Sapling2;
+    public Sprite Storyteller1;
+    public Sprite Storyteller2;
 
     private int lvlCount = 0;
     private string level;
-
-    void Start()
-    {
-        // TODO connect to main game
-        loadLevel("sapling");
-    }
 
     public void loadLevel(string nm)
     {
@@ -32,7 +27,7 @@ public class BlockPuzzleManager : MonoBehaviour
     {
         switch (level)
         {
-            case "bird":
+            case "Bird":
                 return new string[] {
                     "smallTriangleFF,2,2",
                     "smallTriangleFF,2,3",
@@ -43,7 +38,7 @@ public class BlockPuzzleManager : MonoBehaviour
                     "bigSquareFF,3,2",
                     "bigSquareFF,3,3",
                 };
-            case "child":
+            case "Little Girl":
                 return new string[] {
                     "smallTriangleFF,2,2",
                     "smallTriangleTF,2,4",
@@ -56,7 +51,7 @@ public class BlockPuzzleManager : MonoBehaviour
                     "smallSquareFF,5,2",
                     "smallSquareFF,6,2"
                 };
-            case "gardener":
+            case "Elderly Gardener":
                 return new string[] {
                     // TODO what's the solution
                     "smallSquareFF,1,2",
@@ -72,7 +67,7 @@ public class BlockPuzzleManager : MonoBehaviour
                     "smallTriangleFF,0,0",
                     "smallTriangle4FF,0,0"
                 };
-            case "robot":
+            case "Robot":
                 // TODO what's the soln
                 return new string[] {
                     "smallSquareFF,0,0",
@@ -85,7 +80,7 @@ public class BlockPuzzleManager : MonoBehaviour
                     "smallTriangle4FF,0,0",
                     "smallTriangleFF,0,0"
                 };
-            case "sapling":
+            case "Sapling":
                 if (lvlCount == 0)
                 {
                     // TODO what's the soln
@@ -115,7 +110,7 @@ public class BlockPuzzleManager : MonoBehaviour
                         "bigTriangle4FF,0,0"
                     };
                 }
-            case "storyteller":
+            case "Storyteller":
                 if (lvlCount == 0)
                 {
                     // TODO what's the soln
@@ -158,18 +153,18 @@ public class BlockPuzzleManager : MonoBehaviour
     {
         switch (level)
         {
-            case "bird":
-                return bird;
-            case "child":
-                return child;
-            case "gardener":
-                return gardener;
-            case "robot":
-                return robot;
-            case "sapling":
-                return (lvlCount == 0) ? sapling1 : sapling2;
-            case "storyteller":
-                return (lvlCount == 0) ? storyteller1 : storyteller2;
+            case "Bird":
+                return Bird;
+            case "Little Girl":
+                return LittleGirl;
+            case "Elderly Gardener":
+                return ElderlyGardener;
+            case "Robot":
+                return Robot;
+            case "Sapling":
+                return (lvlCount == 0) ? Sapling1 : Sapling2;
+            case "Storyteller":
+                return (lvlCount == 0) ? Storyteller1 : Storyteller2;
             default:
                 return null;
         }
@@ -177,7 +172,7 @@ public class BlockPuzzleManager : MonoBehaviour
 
     public void endLevel()
     {
-        if (lvlCount == 0 && (level == "sapling" || level == "storyteller"))
+        if (lvlCount == 0 && (level == "Sapling" || level == "Storyteller"))
         {
             ++lvlCount;
             loadLevel(level);
@@ -185,8 +180,7 @@ public class BlockPuzzleManager : MonoBehaviour
         else
         {
             lvlCount = 0;
-            Debug.Log("Return to main game");
-            // TODO return to main game
+            bossmansBossman.EndBlockPuzzle();
         }
     }
 }

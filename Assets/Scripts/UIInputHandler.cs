@@ -21,6 +21,7 @@ public class UIInputHandler : MonoBehaviour
     [SerializeField] GameObject memoryGainedUI;
     [SerializeField] GameObject newSpawnPointUI;
     [SerializeField] GameObject dialogueUI;
+    [SerializeField] GameObject blockPuzzle;
     GraphicRaycaster UI_raycaster;
 
     PointerEventData click_data;
@@ -29,6 +30,8 @@ public class UIInputHandler : MonoBehaviour
     private float memoryTime = 1f;
     private float timer = 0f;
     bool disableMemoryMenuToggle = false;
+
+    bool blockPuzzleFinished = false;
 
     void Awake()
     {
@@ -93,6 +96,7 @@ public class UIInputHandler : MonoBehaviour
     {
         memoryMenu.SetActive(true);
         disableMemoryMenuToggle = true;
+        blockPuzzleFinished = false;
 
         List<string> TypesToSelect = new List<string>();
         bool selectMultipleMemories = false; //used to determine if popup to select a memory should be shown
@@ -141,9 +145,10 @@ public class UIInputHandler : MonoBehaviour
                             else if (TypesToSelect.Count == 0)
                             {
                                 memoryMenu.SetActive(false);
-                                disableMemoryMenuToggle = false;
-                                dialogueManagerScript.SetQuestComplete(npcName); //mark completed
-                                yield break;
+
+                                blockPuzzle.SetActive(true);
+                                Debug.Log("Start block puzzle for " + npcName);
+                                blockPuzzle.GetComponent<BlockPuzzleManager>().loadLevel(npcName);
                             }
                         }
                         else //otherwise, show this memory is not compatible message
@@ -154,8 +159,20 @@ public class UIInputHandler : MonoBehaviour
                     }
                 }
             }
+            if (blockPuzzleFinished)
+            {
+                disableMemoryMenuToggle = false;
+                dialogueManagerScript.SetQuestComplete(npcName); //mark completed
+                yield break;
+            }
             yield return null; //don't return until next frame
         }
+    }
+
+    public void EndBlockPuzzle()
+    {
+        blockPuzzle.SetActive(false);
+        blockPuzzleFinished = true;
     }
 
     public IEnumerator ActivateMessage(GameObject messageWindow)

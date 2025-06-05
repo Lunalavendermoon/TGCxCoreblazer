@@ -155,8 +155,6 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
         if (levelManager.checkBlockPosition(pos, blockType))
         {
-            makeOpaque();
-
             Vector3Int snap = levelManager.snapToGrid(pos, blockType) + BlockLevelManager.blockOffset;
 
             if (isOnGrid)
@@ -173,7 +171,6 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         else
         {
             transform.position = resetPosition;
-            makeOpaque();
         }
 
         if (levelManager.metRequirements())
@@ -195,42 +192,10 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         levelManager.removeBlock(blockType, id);
     }
 
-    void makeTransparent() {
-        if (selected == false)
-        {
-            // AudioSFXManager.Instance.PlayAudio("pop");
-            selected = true;
-        }
-        Color col = renderer.color;
-        col.a = 0.8f;
-        renderer.color = col;
-    }
-
-    void makeOpaque() {
-        if (selected == true)
-        {
-            // AudioSFXManager.Instance.PlayAudio("pop");
-            selected = false;
-        }
-        Color col = renderer.color;
-        col.a = 1;
-        renderer.color = col;
-    }
-
     public void placeBlockAt(Vector3 position)
     {
         // AudioSFXManager.Instance.PlayAudio("thump");
         rectTransform.anchoredPosition3D = new Vector3(position.x + blockType.width * BlockLevelManager.pixelsPerUnit / 2,
                                                         position.y - blockType.height * BlockLevelManager.pixelsPerUnit / 2, 0);
-    }
-
-    public void hintColor()
-    {
-        // TODO
-        // float H, S;
-        // Color.RGBToHSV(renderer.color, out H, out S, out _);
-
-        // renderer.color = Color.HSVToRGB(H, S, 1.5f);
-        // makeTransparent();
     }
 }
