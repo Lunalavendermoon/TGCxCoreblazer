@@ -218,6 +218,8 @@ public class BlockLevelManager : MonoBehaviour
 
         block.GetComponent<Block2>().placeBlockAt(position + jitter);
 
+        block.GetComponent<Block2>().initResetPosition();
+
         addBlock(type, id, new Vector3Int(-1000000, -1000000, id));
     }
 

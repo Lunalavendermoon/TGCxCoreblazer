@@ -97,7 +97,6 @@ title: ElderlyGardener
     {$npcName}: No warmth, no bloom, no reason.
     {$npcName}: Why… why would anyone grow anything…
     {$npcName}: In a world like this?
-    <<start_fade "ElderlyGardener">>
 -> leave
 ===
 title: Bird
@@ -133,7 +132,6 @@ title: Bird
     {$npcName}: No one came.
     {$npcName}: Maybe they were never there.
     {$npcName}: Maybe I was never meant to be.
-    <<start_fade "Bird">>
 -> leave
 ===
 title: Robot
@@ -163,7 +161,6 @@ title: Robot
     {$npcName}: Connection: lost.
     {$npcName}: Heartbeat: simulated.
     {$npcName}: But no one ever…cared to return.
-    <<start_fade "Robot">>
 -> leave
 ===
 
@@ -191,7 +188,6 @@ title: Sapling
     {$npcName}: No more light.
     {$npcName}: Nothing waits above.
     {$npcName}: Only stillness.
-    <<start_fade "Sapling">>
 -> leave
 ===
 title: Storyteller
@@ -220,7 +216,6 @@ title: Storyteller
     {$npcName}: They don’t come.
     {$npcName}: Only silence.
     {$npcName}: And silence has no stories.
-    <<start_fade "Storyteller">>
 -> leave
 ===
 title: Cube
@@ -229,6 +224,8 @@ title: Cube
 ===
 title: Start
 ---
+<<set $npcName = "Little Girl">>
+<<set $acceptedMemoryType1 = "Resilience">> //FIX: should actually be wonder memory, i just made it community for testing
 What are memories?
 Fragments of time. 
 Echoes of joy, sorrow, love… loss.
@@ -237,41 +234,4 @@ Piece by piece, you will make me whole.
 Go, Weaver. 
 Collect what remains.
 <<play_cutscene>>
-===
-title: GoodEnd
----
-You… gave them away?
-I asked you to collect, not squander.
-These were mine — mine to use, to become again. You were to rebuild me!
-You ruined everything.
-
-Gardener: You gave me wonder when I had none.
-Child: You didn’t take from me. You listened.
-Bird: You reminded me I wasn’t alone.
-Robot: Your kindness was recorded. Protected.
-Storyteller: Now it’s your turn to be saved. It’s time for the grand finale!
-
-No… No! I was to be reborn! These were mine!
-Mine…
-
-What are memories?
-They are gifts. Acts of connection.
-They bind people. They build worlds.
-In giving, you created something no one could take.
-A world threaded together by interconnected memories.
-
-===
-title: BadEnd
----
-Yes… yes, you’ve done well.
-Every memory, mine again. Every thread pulled clean.
-With this, I awaken.
-You took and took — just as I would have.
-You understand now: the world is not given. It is claimed.
-Hahahaha…freedom at last!
-As for this dim world…let’s hope it rots alongside you.
-What are memories?
-Tools. Power. Leverage. The illusion of connection.
-You gathered them all… and gave nothing.
-
 ===
