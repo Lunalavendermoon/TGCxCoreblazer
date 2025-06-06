@@ -16,8 +16,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] DialogueRunner dialogueRunner; //for detecting if dialogue is running
     [SerializeField] RespawnScript respawnScript;
     [SerializeField] float max_distance_from_ground;
-    //[SerializeField] CinemachineCamera playerCamera;
-
+    [SerializeField] GameObject playerCamera;
+    [SerializeField] GameObject parkourCamera;
+    [SerializeField] IslandManager questProgressScript;
+    
     private float moveX;
     private float moveY;
     private bool isGrounded;
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpCooldownFinished;
 
     private PlayerInputActions inputActions;
+    private Vector3 currentDirection = Vector3.forward;
 
     private void Awake()
     {
@@ -56,7 +59,14 @@ public class PlayerMovement : MonoBehaviour
 
             //movement
             weight_max14 = MemoryData.MemoryList.Count;
-            transform.position += new Vector3(moveX, 0f, moveY) * (moveSpeed - weight_max14 / 2) * Time.deltaTime;
+
+            //NEW MOVEMENT
+            Vector3 moveDir = (transform.forward * moveY).normalized;
+            transform.position += moveDir * (moveSpeed - weight_max14 / 2f) * Time.deltaTime;
+            
+            //OLD MOVEMENT
+            //transform.position += new Vector3(moveX, 0f, moveY) * (moveSpeed - weight_max14 / 2) * Time.deltaTime;
+             
             //for physics based movement: rb.AddForce(new Vector3(moveX, 0f, moveY) * 2f * moveSpeed * Time.deltaTime, ForceMode.VelocityChange);
 
             Debug.DrawRay(transform.position, -transform.up * 10f, Color.red);
@@ -76,16 +86,33 @@ public class PlayerMovement : MonoBehaviour
                 jumpSound = true;
             }
 
-                //rotation
-                Vector3 direction = new Vector3(moveX, 0f, moveY).normalized;
-            float magnitude = new Vector3(moveX, 0f, moveY).magnitude;
-            if (magnitude > 0f)
+            //NEW ROTATION
+            // If there's X input, change the look direction (horizontal input only affects direction)
+            if (Mathf.Abs(moveX) > 0.1f)
             {
-                Quaternion current = transform.rotation;
-                //Quaternion rotation = Quaternion.LookRotation(npcPosition.transform.position - transform.position);
-                Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-                transform.rotation = Quaternion.Slerp(current, rotation, Time.deltaTime * rotationSpeed);
+                // Rotate left/right on horizontal input
+                currentDirection = Quaternion.Euler(0, moveX * rotationSpeed, 0) * currentDirection;
             }
+
+            // Smoothly rotate the player to face the current direction
+            if (currentDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(currentDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            }
+
+            //OLD ROTATION
+            //Vector3 direction = new Vector3(moveX, 0f, moveY).normalized;
+            //float magnitude = new Vector3(moveX, 0f, moveY).magnitude;
+            //if (magnitude > 0f)
+            //{
+            //    Quaternion current = transform.rotation;
+            //    //Quaternion rotation = Quaternion.LookRotation(npcPosition.transform.position - transform.position);
+            //    Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+            //    transform.rotation = Quaternion.Slerp(current, rotation, Time.deltaTime * rotationSpeed);
+            //}
+
+
         }
         else
         {
@@ -96,10 +123,21 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         respawnScript.updateCheckpoint(collision.gameObject.name);
-        //if(collision.gameObject.name.Contains("Parkour"))
-        //{
-        //    var followSettings = playerCamera.GetCinemachineComponent<CinemachineTransposer>();
-        //}
+        if(collision.gameObject.transform.parent)
+        {
+            if (collision.gameObject.transform.parent.name.Contains("Parkour"))
+            {
+                parkourCamera.SetActive(true);
+                playerCamera.SetActive(false);
+            }
+            else if (collision.gameObject.name.Contains("Island") || 
+                collision.gameObject.transform.parent && collision.gameObject.transform.parent.name.Contains("Island"))
+            {
+                playerCamera.SetActive(true);
+                parkourCamera.SetActive(false);
+                questProgressScript.toggleQuestUI();
+            }
+        }
     }
 
     private void OnJump()

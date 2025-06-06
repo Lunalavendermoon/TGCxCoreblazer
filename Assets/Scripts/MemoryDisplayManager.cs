@@ -68,7 +68,7 @@ public class MemoryDisplayManager : MonoBehaviour
         if (MemoryData.IsValidMemory(memoryName))
         {
             MemoryData.AddMemory(memoryName);
-            Debug.Log($"{memoryName} added to inventory");
+            //Debug.Log($"{memoryName} added to inventory");
             dialogueManagerScript.SetQuestComplete(npcName);
 
             //display and update memory gained UI
@@ -98,7 +98,7 @@ public class MemoryDisplayManager : MonoBehaviour
     public void ObtainMemory(string memoryName)
     {
         MemoryData.AddMemory(memoryName);
-        Debug.Log($"{memoryName} added to inventory");
+        //Debug.Log($"{memoryName} added to inventory");
 
         //display and update memory gained UI
         TextMeshProUGUI nameText = memoryGainedUI.transform.Find("MemoryName").GetComponent<TextMeshProUGUI>();
@@ -118,7 +118,7 @@ public class MemoryDisplayManager : MonoBehaviour
     {
         npcName = RemoveWhitespace(npcName);
         MemoryData.RemoveMemory(memoryName);
-        Debug.Log($"{memoryName} removed from inventory");
+        //Debug.Log($"{memoryName} removed from inventory");
         //dialogueManagerScript.SetQuestComplete(npcName);
         //don't mark complete until both memories given
         RefreshUI();

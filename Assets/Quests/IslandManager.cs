@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class IslandManager : MonoBehaviour
 {
     [SerializeField] DialogueManager dialogueManagerScript;
+
+    [SerializeField] GameObject questProgressUI;
+    [SerializeField] GameObject questProgressText;
 
     [SerializeField] QuestList StartQuestList;
     [SerializeField] QuestList Island1QuestList;
@@ -62,18 +66,19 @@ public class IslandManager : MonoBehaviour
             platformsParent.transform.position = new Vector3(currPosition.x, currPosition.y - startingDistance, currPosition.z);
         }
     }
-
     public void CheckCurrentIslandStatus()
     {
         if (islandNumber < allQuestsList.Count)
         {
             List<string> currentIslandQuests = allQuestsList[islandNumber].getQuestList();
             int numCompleteQuests = countCompleteQuests(currentIslandQuests);
+            TextMeshProUGUI progressText = questProgressText.GetComponent<TextMeshProUGUI>();
 
-            if(numCompleteQuests == currentIslandQuests.Count)
+            if (numCompleteQuests == currentIslandQuests.Count)
             {
-                Debug.Log(numCompleteQuests + "/" + currentIslandQuests.Count + " quests complete");
-                Debug.Log("Island" + islandNumber + " quests complete");
+                //Debug.Log(numCompleteQuests + "/" + currentIslandQuests.Count + " quests complete");
+                //Debug.Log("Island" + islandNumber + " quests complete");
+                questProgressUI.SetActive(false);
 
                 GameObject platformParent = allPlatformsList[islandNumber];
                 //play platform animation
@@ -83,7 +88,8 @@ public class IslandManager : MonoBehaviour
             }
             else
             {
-                Debug.Log(numCompleteQuests + "/" + currentIslandQuests.Count + " quests complete");
+                progressText.text = "Interact with NPCs (" + numCompleteQuests + "/" + currentIslandQuests.Count + ")";
+                //Debug.Log(numCompleteQuests + "/" + currentIslandQuests.Count + " quests complete");
             }
         }
     }
@@ -95,7 +101,7 @@ public class IslandManager : MonoBehaviour
         AudioManager.Instance.PlaySFX("rock");
         foreach (Transform child in platformParent.transform)
         {
-            Debug.Log("moving " + child);
+            //Debug.Log("moving " + child);
             StartCoroutine(moveVertically(child.gameObject, startingDistance, 2f));
             yield return new WaitForSeconds(0.25f);
         }
@@ -134,4 +140,22 @@ public class IslandManager : MonoBehaviour
         }
         return numComplete;
     }
+
+    public void toggleQuestUI()
+    {
+        List<string> currentIslandQuests = allQuestsList[islandNumber].getQuestList();
+        int numCompleteQuests = countCompleteQuests(currentIslandQuests);
+        TextMeshProUGUI progressText = questProgressText.GetComponent<TextMeshProUGUI>();
+
+        if (numCompleteQuests != currentIslandQuests.Count)
+        {
+            questProgressUI.SetActive(true);
+            progressText.text = "Interact with NPCs (" + numCompleteQuests + "/" + currentIslandQuests.Count + ")";
+        }
+        else
+        {
+            questProgressUI.SetActive(false);
+        }
+    }
+
 }

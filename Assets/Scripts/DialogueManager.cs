@@ -51,7 +51,9 @@ public class DialogueManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out objectHit, Mathf.Infinity, ignoreLayerMask))
             {
-                if (objectHit.collider.gameObject.CompareTag("hasDialogue"))
+                string npcName = objectHit.collider.gameObject.name;
+                npcName = RemoveWhitespace(npcName);
+                if (objectHit.collider.gameObject.CompareTag("hasDialogue") && !completedQuests.Contains(npcName))
                 {
                     //special case
                     if (objectHit.collider.gameObject.name == "LittleGirl")
@@ -59,17 +61,15 @@ public class DialogueManager : MonoBehaviour
                         if(completedQuests.Contains("BabyBear") && completedQuests.Contains("Adventurer"))
                         {
                             playerController.faceNPC(objectHit.collider.gameObject.transform);
-                            string npcName = objectHit.collider.gameObject.name;
                             npcFadeScript = objectHit.collider.gameObject.GetComponent<NPCParticles>();
-                            RunQuest(npcName);
+                            dialogueRunner.StartDialogue($"{npcName}");
                         }
                     }
                     else //regular - always triggers dialogue
                     {
                         playerController.faceNPC(objectHit.collider.gameObject.transform);
-                        string npcName = objectHit.collider.gameObject.name;
                         npcFadeScript = objectHit.collider.gameObject.GetComponent<NPCParticles>();
-                        RunQuest(npcName);
+                        dialogueRunner.StartDialogue($"{npcName}");
                     }
                 }
                 else if (objectHit.collider.gameObject.CompareTag("givesMemory"))
@@ -86,24 +86,11 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void RunQuest(string npcName)
-    {
-        npcName = RemoveWhitespace(npcName);
-        if(completedQuests.Contains(npcName))
-        {
-            Debug.Log($"Quest for {npcName} has been completed");
-        }
-        else
-        {
-            dialogueRunner.StartDialogue($"{npcName}");
-        }
-    }
-
     public void SetQuestComplete(string npcName)
     {
         npcName = RemoveWhitespace(npcName);
         completedQuests.Add(npcName);
-        Debug.Log($"{npcName} quest marked complete");
+        //Debug.Log($"{npcName} quest marked complete");
 
         islandManagerScript.CheckCurrentIslandStatus();
     }
