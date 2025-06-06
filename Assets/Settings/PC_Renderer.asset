@@ -27,7 +27,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
   - {fileID: 3155339602237092447}
-  m_RendererFeatureMap: ad6b866f10d7b46c5f721089a604ca2b
+  - {fileID: 4748514888868675820}
+  m_RendererFeatureMap: ad6b866f10d7b46c5f721089a604ca2becc0abf9211de641
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -74,6 +75,23 @@ MonoBehaviour:
       surfaceData: 2
     screenSpaceSettings:
       normalBlend: 0
+--- !u!114 &4748514888868675820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cdedda017562454aa6f9e3c023f2611, type: 3}
+  m_Name: ColorMaskFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    shader: {fileID: 4800000, guid: d4275131db1d0b54fa02c0058a697974, type: 3}
+    material: {fileID: 2100000, guid: 8d9581c324c5a3947b3fdb15ac3d9c34, type: 2}
+    renderPassEvent: 600
 --- !u!114 &7833122117494664109
 MonoBehaviour:
   m_ObjectHideFlags: 0
