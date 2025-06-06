@@ -1495,6 +1495,9 @@ MonoBehaviour:
   secondMemoryMessage: {fileID: 4585011288890353330}
   memoryDisplayManager: {fileID: 964630454307400725}
   memoryGainedUI: {fileID: 3188187673785126493}
+  newSpawnPointUI: {fileID: 0}
+  dialogueUI: {fileID: 0}
+  blockPuzzle: {fileID: 0}
 --- !u!114 &964630454307400725
 MonoBehaviour:
   m_ObjectHideFlags: 0
