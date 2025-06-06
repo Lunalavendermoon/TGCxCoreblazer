@@ -33,7 +33,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CenterCount: 3
+    - _CenterCount: 20
     - _Radius: 1
     - _Radius0: 0.36
     - _Radius1: 0.29
