@@ -17,6 +17,9 @@ public class DialogueManager : MonoBehaviour
     //wau using hashset smart, anne very big brain
     public HashSet<string> completedQuests = new HashSet<string>();
 
+    public HashSet<string> killedNPCs = new HashSet<string>();
+    public HashSet<string> savedNPCs = new HashSet<string>();
+
     // for completed interactions with environment objects
     HashSet<string> completedInteractions = new HashSet<string>();
 
@@ -103,6 +106,18 @@ public class DialogueManager : MonoBehaviour
 
     public void FadeNPC(string npc)
     {
+        npc = RemoveWhitespace(npc);
+        killedNPCs.Add(npc);
+
+        foreach(string npcName in killedNPCs)
+        {
+            Debug.Log("killed " + npcName);
+        }
+        foreach (string npcName in savedNPCs)
+        {
+            Debug.Log("saved " + npcName);
+        }
+
         GameObject obj = GameObject.Find(npc);
         if (obj != null)
         {

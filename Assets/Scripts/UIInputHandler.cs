@@ -95,6 +95,8 @@ public class UIInputHandler : MonoBehaviour
     public IEnumerator PromptMemorySelection(string npcName, string targetMemoryType1, string targetMemoryType2 = "None")
     {
         memoryMenu.SetActive(true);
+        dialogueManagerScript.savedNPCs.Add(npcName);
+
         disableMemoryMenuToggle = true;
         blockPuzzleFinished = false;
 

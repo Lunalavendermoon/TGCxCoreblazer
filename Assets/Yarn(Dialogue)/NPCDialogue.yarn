@@ -23,7 +23,7 @@ title: BabyBear
     {$npcName}: I remember that I…I? What did I do?
     {$npcName}: What did I feel?
     {$npcName}: I’m…I’m tired…
-    <<start_fade "BabyBear">>
+    <<start_fade "{$npcName}">>
 -> leave
 -> 3rd option for test
 ===
@@ -46,7 +46,7 @@ title: Adventurer
     {$npcName}: Why are we out here... all alone?
     {$npcName}: It’s cold…I just want to…
     {$npcName}: Never wake up again.
-    <<start_fade "Adventurer">>
+    <<start_fade "{$npcName}">>
 -> leave
 ===
 
@@ -97,6 +97,7 @@ title: ElderlyGardener
     {$npcName}: No warmth, no bloom, no reason.
     {$npcName}: Why… why would anyone grow anything…
     {$npcName}: In a world like this?
+    <<start_fade "{$npcName}">>
 -> leave
 ===
 title: Bird
@@ -132,6 +133,7 @@ title: Bird
     {$npcName}: No one came.
     {$npcName}: Maybe they were never there.
     {$npcName}: Maybe I was never meant to be.
+    <<start_fade "{$npcName}">>
 -> leave
 ===
 title: Robot
@@ -161,6 +163,7 @@ title: Robot
     {$npcName}: Connection: lost.
     {$npcName}: Heartbeat: simulated.
     {$npcName}: But no one ever…cared to return.
+    <<start_fade "{$npcName}">>
 -> leave
 ===
 
@@ -188,6 +191,7 @@ title: Sapling
     {$npcName}: No more light.
     {$npcName}: Nothing waits above.
     {$npcName}: Only stillness.
+    <<start_fade "{$npcName}">>
 -> leave
 ===
 title: Storyteller
@@ -216,6 +220,7 @@ title: Storyteller
     {$npcName}: They don’t come.
     {$npcName}: Only silence.
     {$npcName}: And silence has no stories.
+    <<start_fade "{$npcName}">>
 -> leave
 ===
 title: Cube
