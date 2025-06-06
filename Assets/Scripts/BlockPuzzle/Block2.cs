@@ -49,6 +49,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         isOnGrid = false;
         blockType = type;
         this.levelManager = levelManager;
+        resetPosition = transform.position;
 
         renderer = GetComponent<Image>();
         renderer.sprite = spriteByName(type.name);
@@ -62,13 +63,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         renderer.alphaHitTestMinimumThreshold = 0.1f; // Only respond to pixels with alpha > 0.1
     }
 
-    public void initResetPosition()
-    {
-        resetPosition = rectTransform.anchoredPosition3D;
-    }
-
-    public Sprite spriteByName(string name)
-    {
+    public Sprite spriteByName(string name) {
         switch (name)
         {
             case "bigSquare":
@@ -175,7 +170,7 @@ public class Block2 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         }
         else
         {
-            rectTransform.anchoredPosition3D = resetPosition;
+            transform.position = resetPosition;
         }
 
         if (levelManager.metRequirements())

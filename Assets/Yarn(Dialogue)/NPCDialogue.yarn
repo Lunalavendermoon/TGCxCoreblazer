@@ -13,10 +13,16 @@ title: BabyBear
 <<set $acceptedMemoryType1 = "None">> //accepted by NPC
 <<set $memoryToTake = "The Fellowship">> //for player to take
 {$npcName}: Are you new here?
+{$npcName}: I haven’t seen you around.
+{$npcName}: Do you want to go on an adventure together?
+{$npcName}: It’s quite cold now…but we can still have a lot of fun!
+{$npcName}: Like playing in the snow together?
 
 -> [Take memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: I remember that I…I? What did I do?
+    {$npcName}: What did I feel?
+    {$npcName}: I’m…I’m tired…
     <<start_fade "BabyBear">>
 -> leave
 -> 3rd option for test
@@ -28,10 +34,18 @@ title: Adventurer
 <<set $acceptedMemoryType1 = "None">> //accepted by NPC
 <<set $memoryToTake = "The Ascent">> //for player to take
 {$npcName}: Just gathering wood.
+{$npcName}: Even now, there’s a way to keep going.
+{$npcName}: That’s what my mentor always said.
+{$npcName}: Need a hand?
 
 -> [Take memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
     {$npcName}: W-wait...
+    {$npcName}: What did you do?
+    {$npcName}: Why does everything feel... heavy?
+    {$npcName}: Why are we out here... all alone?
+    {$npcName}: It’s cold…I just want to…
+    {$npcName}: Never wake up again.
     <<start_fade "Adventurer">>
 -> leave
 ===
@@ -41,12 +55,15 @@ title: LittleGirl
 <<set $npcName = "Little Girl">>
 <<set $acceptedMemoryType1 = "Resilience">>
 {$npcName}: I told her I’d wait right here. If I move, she might not find me again.
+{$npcName}: Everyone else left. I don’t want to forget.
 -> [Take memory]
     {$npcName}: I won’t let you have it. It’s the only memory I have left.
     -> [Offer Resilience memory]
         <<if check_has_memory_type($acceptedMemoryType1)>>
             <<prompt_memory_selection "{$npcName}" "{$acceptedMemoryType1}">>
             {$npcName}: ...She wouldn’t want me to be alone, would she?
+            {$npcName}: She always said flowers help things grow... even when you're sad.
+            {$npcName}: I remember in that field over there…there should be flowers.
         <<else>>
             You do not have the appropriate memory
         <<endif>>
