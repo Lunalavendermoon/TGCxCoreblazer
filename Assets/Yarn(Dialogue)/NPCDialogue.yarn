@@ -229,8 +229,6 @@ title: Cube
 ===
 title: Start
 ---
-<<set $npcName = "Little Girl">>
-<<set $acceptedMemoryType1 = "Resilience">> //FIX: should actually be wonder memory, i just made it community for testing
 What are memories?
 Fragments of time. 
 Echoes of joy, sorrow, love… loss.
@@ -238,5 +236,38 @@ And now, you will gather them.
 Piece by piece, you will make me whole.
 Go, Weaver. 
 Collect what remains.
-<<play_cutscene>>
+<<play_cutscene "start">>
+===
+title: Bad
+---
+Yes...yes, you’ve done well.
+Every memory, mine again. Every thread pulled clean.
+With this, I awaken.
+You took and took — just as I would have.
+You understand now. The world is not given. It is claimed.
+Hahahaha...freedom at last!
+As for this dim world...let’s hope it rots alongside you.
+<<play_cutscene "bad">>
+===
+title: BadEnd
+---
+What are memories?
+Tools. Power. Leverage. The illusion of connection.
+You gathered them all...and gave nothing.
+===
+title: Good
+---
+You...gave them away?
+I asked you to collect, not squander.
+These were mine — mine to use, to become again. You were to rebuild me!
+You ruined everything.
+<<play_cutscene "bad">>
+===
+title: GoodEnd
+---
+What are memories?
+They are gifts. Acts of connection.
+They bind people. They build worlds.
+In giving, you created something no one could take.
+A world threaded together by interconnected memories.
 ===
