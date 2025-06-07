@@ -8,31 +8,103 @@ public class CutsceneManager : MonoBehaviour
 {
     public GameObject linePresenter, lineBG, BG;
     public DialogueRunner dialogueRunner;
+    //public DialogueManager dialogueManager;
     public TextMeshProUGUI dialogue;
     public float fadeDuration = 0.5f;
-    public GameObject startingCutscene;
-    private VideoPlayer starting;
+    public GameObject startingCutscene, badCutscene, goodCutscene;
+    private VideoPlayer starting, badEnd, goodEnd;
+    public int testNum;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         starting = startingCutscene.GetComponent<VideoPlayer>();
+        badEnd = badCutscene.GetComponent<VideoPlayer>();
+        goodEnd = goodCutscene.GetComponent<VideoPlayer>();
         SpecialFormat(true);
         dialogueRunner.AddCommandHandler<bool>("special_format", SpecialFormat);
         dialogueRunner.AddCommandHandler("fade_out_text", FadeOut);
-        dialogueRunner.AddCommandHandler("play_cutscene", PlayCutsene);
+        dialogueRunner.AddCommandHandler<string>("play_cutscene", PlayCutscene);
         starting.loopPointReached += OnVideoEnd;
+        badEnd.loopPointReached += OnVideoEnd;
+        goodEnd.loopPointReached += OnVideoEnd;
+    }
+    public CanvasGroup bgCanvasGroup; // Drag your BG panel here in the inspector
+    public float fadeOutDuration = 0.5f; // Adjustable fade time
+
+    public void PlayCutscene(string name)
+    {
+        StartCoroutine(FadeOutBGAndPlayCutscene(name));
     }
 
-    public void PlayCutsene()
+    private IEnumerator FadeOutBGAndPlayCutscene(string name)
     {
-        BG.SetActive(false);
-        startingCutscene.SetActive(true);
-        starting.Play();
+        // make sure the BG actually exists
+        bgCanvasGroup.alpha = 1f;
+
+        // Then play the video
+        switch (name)
+        {
+            case "start":
+                startingCutscene.SetActive(true);
+                starting.Play();
+                break;
+            case "bad":
+                badCutscene.SetActive(true);
+                badEnd.Play();
+                break;
+            case "good":
+                goodCutscene.SetActive(true);
+                goodEnd.Play();
+                break;
+        }
+        // Fade out the BG instead of SetActive(false)
+        float time = 0f;
+        float startAlpha = bgCanvasGroup.alpha;
+
+        while (time < fadeOutDuration)
+        {
+            time += Time.deltaTime;
+            // float alpha = Mathf.Lerp(startAlpha, 0f, time / fadeOutDuration);
+            // bgCanvasGroup.alpha = alpha;
+            yield return null;
+        }
+
+        bgCanvasGroup.alpha = 0f;
+        bgCanvasGroup.interactable = false;
+        bgCanvasGroup.blocksRaycasts = false;
+    }
+
+    private IEnumerator PlayWhenPrepared(VideoPlayer vp)
+    {
+        vp.Prepare();
+
+        // Wait until the video is ready
+        while (!vp.isPrepared)
+            yield return null;
+
+        vp.Play();
     }
 
     void OnVideoEnd(VideoPlayer vp)
     {
-        SpecialFormat(false);
+        Debug.Log("video ended");
+        if (vp == starting)
+        {
+            SpecialFormat(false);
+        }
+        if (vp == badEnd)
+        {
+            if (/**dialogueManager.savedNPCs.Count < **/ testNum < 5)
+            {
+                dialogueRunner.StartDialogue("BadEnd");
+                bgCanvasGroup.alpha = 1f;
+            }
+            else
+            {
+                PlayCutscene("good");
+            }
+        }
         vp.gameObject.SetActive(false);
     }
     public void SpecialFormat(bool special)
@@ -41,14 +113,14 @@ public class CutsceneManager : MonoBehaviour
         {
             linePresenter.transform.position += new Vector3(0f, 5f, 0f);
             lineBG.SetActive(false);
-            BG.SetActive(true);
+            bgCanvasGroup.alpha = 1f;
             AudioManager.Instance.PlayBGM("cutscene");
         }
         else
         {
             linePresenter.transform.position += new Vector3(0f, -5f, 0f);
             lineBG.SetActive(true);
-            BG.SetActive(false);
+            bgCanvasGroup.alpha = 0f;
             AudioManager.Instance.PlayBGM("main");
         }
     }
