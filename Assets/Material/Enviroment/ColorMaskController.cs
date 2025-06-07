@@ -54,7 +54,7 @@ public class MultiCenterRevealController : MonoBehaviour
         for (int i = 0; i < MAX_CENTERS; i++)
         {
             displayRadii[i] = inCamera[i] ? radii[i] : 0f;
-            Debug.Log($"Target {i} radius: {displayRadii[i]}");
+            // Debug.Log($"Target {i} radius: {displayRadii[i]}");
         }
         material.SetInt("_CenterCount", count);
         material.SetVectorArray("_Centers", centers);

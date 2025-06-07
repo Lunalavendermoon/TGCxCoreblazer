@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 using Yarn.Unity;
 
@@ -13,7 +14,11 @@ public class CutsceneManager : MonoBehaviour
     public float fadeDuration = 0.5f;
     public GameObject startingCutscene, badCutscene, goodCutscene;
     private VideoPlayer starting, badEnd, goodEnd;
-    public int testNum;
+
+    public Image overlayImage;
+    public DialogueManager dialogueManager;
+
+    public PlayerMovement player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,6 +39,7 @@ public class CutsceneManager : MonoBehaviour
 
     public void PlayCutscene(string name)
     {
+        player.SetMovementEnabled(false);
         StartCoroutine(FadeOutBGAndPlayCutscene(name));
     }
 
@@ -41,6 +47,9 @@ public class CutsceneManager : MonoBehaviour
     {
         // make sure the BG actually exists
         bgCanvasGroup.alpha = 1f;
+        Color col = overlayImage.color;
+        col.a = 1f;
+        overlayImage.color = col;
 
         // Then play the video
         switch (name)
@@ -58,21 +67,27 @@ public class CutsceneManager : MonoBehaviour
                 goodEnd.Play();
                 break;
         }
-        // Fade out the BG instead of SetActive(false)
-        float time = 0f;
-        float startAlpha = bgCanvasGroup.alpha;
+        // // Fade out the BG instead of SetActive(false)
+        // float time = 0f;
+        // float startAlpha = bgCanvasGroup.alpha;
 
-        while (time < fadeOutDuration)
-        {
-            time += Time.deltaTime;
-            // float alpha = Mathf.Lerp(startAlpha, 0f, time / fadeOutDuration);
-            // bgCanvasGroup.alpha = alpha;
-            yield return null;
-        }
+        // while (time < fadeOutDuration)
+        // {
+        //     time += Time.deltaTime;
+        //     // float alpha = Mathf.Lerp(startAlpha, 0f, time / fadeOutDuration);
+        //     // bgCanvasGroup.alpha = alpha;
+        //     yield return null;
+        // }
+
+        yield return new WaitForSeconds(fadeOutDuration);
 
         bgCanvasGroup.alpha = 0f;
         bgCanvasGroup.interactable = false;
         bgCanvasGroup.blocksRaycasts = false;
+
+        Color col2 = overlayImage.color;
+        col2.a = 0f;
+        overlayImage.color = col2;
     }
 
     private IEnumerator PlayWhenPrepared(VideoPlayer vp)
@@ -91,11 +106,13 @@ public class CutsceneManager : MonoBehaviour
         Debug.Log("video ended");
         if (vp == starting)
         {
+            bgCanvasGroup.alpha = 0f;
             SpecialFormat(false);
+            player.SetMovementEnabled(true);
         }
         if (vp == badEnd)
         {
-            if (/**dialogueManager.savedNPCs.Count < **/ testNum < 5)
+            if (dialogueManager.savedNPCs.Count < 5)
             {
                 dialogueRunner.StartDialogue("BadEnd");
                 bgCanvasGroup.alpha = 1f;
@@ -111,14 +128,14 @@ public class CutsceneManager : MonoBehaviour
     {
         if (special)
         {
-            linePresenter.transform.position += new Vector3(0f, 5f, 0f);
+            linePresenter.transform.position += new Vector3(0f, 325f, 0f);
             lineBG.SetActive(false);
             bgCanvasGroup.alpha = 1f;
             AudioManager.Instance.PlayBGM("cutscene");
         }
         else
         {
-            linePresenter.transform.position += new Vector3(0f, -5f, 0f);
+            linePresenter.transform.position += new Vector3(0f, -325f, 0f);
             lineBG.SetActive(true);
             bgCanvasGroup.alpha = 0f;
             AudioManager.Instance.PlayBGM("main");

@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputActions inputActions;
     private Vector3 currentDirection = Vector3.forward;
 
+    private bool movementEnabled = true;
+
     private void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -49,10 +51,15 @@ public class PlayerMovement : MonoBehaviour
         inputActions.Player.Disable(); //stop listening
     }
 
+    public void SetMovementEnabled(bool isEnabled)
+    {
+        movementEnabled = isEnabled;
+    }
+
     private void Update()
     {
         //disable character movement during dialogue
-        if(!dialogueRunner.IsDialogueRunning) 
+        if (!dialogueRunner.IsDialogueRunning && movementEnabled)
         {
             moveX = inputActions.Player.Move.ReadValue<Vector2>().x; //in Vector3 - (x, 0, 0)
             moveY = inputActions.Player.Move.ReadValue<Vector2>().y; //in Vector 3 - (0, 0, z/y)
@@ -63,10 +70,10 @@ public class PlayerMovement : MonoBehaviour
             //NEW MOVEMENT
             Vector3 moveDir = (transform.forward * moveY).normalized;
             transform.position += moveDir * (moveSpeed - weight_max14 / 2f) * Time.deltaTime;
-            
+
             //OLD MOVEMENT
             //transform.position += new Vector3(moveX, 0f, moveY) * (moveSpeed - weight_max14 / 2) * Time.deltaTime;
-             
+
             //for physics based movement: rb.AddForce(new Vector3(moveX, 0f, moveY) * 2f * moveSpeed * Time.deltaTime, ForceMode.VelocityChange);
 
             Debug.DrawRay(transform.position, -transform.up * 10f, Color.red);
