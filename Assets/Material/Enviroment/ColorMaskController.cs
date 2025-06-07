@@ -11,9 +11,10 @@ public class MultiCenterRevealController : MonoBehaviour
     const int MAX_CENTERS = 32;
     private Vector4[] centers = new Vector4[MAX_CENTERS];
     public float[] radii = new float[MAX_CENTERS];
+    private float[] displayRadii = new float[MAX_CENTERS];
     private Coroutine[] animCoroutines = new Coroutine[MAX_CENTERS];
 
-    private bool[] maskStates = new bool[MAX_CENTERS];
+    private bool[] inCamera = new bool[MAX_CENTERS];
     public float maxRadius = 0.33f;
     public float animationDuration = 0.3f;
 
@@ -36,32 +37,43 @@ public class MultiCenterRevealController : MonoBehaviour
             {
                 Vector3 viewportPos = cam.WorldToViewportPoint(targets[i].transform.position);
                 centers[i] = new Vector4(viewportPos.x, viewportPos.y, 0, 0);
+                if (viewportPos.x < 0 || viewportPos.x > maxRadius || viewportPos.y < 0 || viewportPos.y > maxRadius)
+                {
+                    inCamera[i] = false;
+                }
+                else
+                {
+                    inCamera[i] = true;
+                }
             }
             else
             {
                 centers[i] = Vector4.zero;
             }
         }
-
+        for (int i = 0; i < MAX_CENTERS; i++)
+        {
+            displayRadii[i] = inCamera[i] ? radii[i] : 0f;
+            Debug.Log($"Target {i} radius: {displayRadii[i]}");
+        }
         material.SetInt("_CenterCount", count);
         material.SetVectorArray("_Centers", centers);
-        material.SetFloatArray("_Radii", radii);
+        material.SetFloatArray("_Radii", displayRadii);
 
-        // 🔧 Press number key 0 = toggle index 0
-        if (Input.GetKeyDown(KeyCode.Alpha0)) ToggleMask(0);
+        // Press number key 0 = toggle index 0
+        if (Input.GetKeyDown(KeyCode.Alpha0)) ToggleMask(0, 0);
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ToggleMask(0, 1);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ToggleMask(0, 0.5f);
     }
 
-    public void ToggleMask(int index)
+    public void ToggleMask(int index, float radius)
     {
         if (index < 0 || index >= MAX_CENTERS) return;
-
-        bool turnOn = !maskStates[index];
-        maskStates[index] = turnOn;
 
         if (animCoroutines[index] != null)
             StopCoroutine(animCoroutines[index]);
 
-        animCoroutines[index] = StartCoroutine(AnimateRadius(index, turnOn ? maxRadius : 0f));
+        animCoroutines[index] = StartCoroutine(AnimateRadius(index, radius));
     }
 
     private IEnumerator AnimateRadius(int index, float target)
