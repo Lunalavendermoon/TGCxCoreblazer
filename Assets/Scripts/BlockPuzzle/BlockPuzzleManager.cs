@@ -53,95 +53,86 @@ public class BlockPuzzleManager : MonoBehaviour
                 };
             case "Elderly Gardener":
                 return new string[] {
-                    // TODO what's the solution
-                    "smallSquareFF,1,2",
-                    "bigTriangle4FF,1,4",
-                    "smallTriangleFF,2,1",
-                    "smallSquareFF,3,1",
-                    "bigSquareFF,0,0",
-                    "bigSquareFF,0,0",
-                    "bigSquareFF,0,0",
-                    "smallSquareFF,0,0",
-                    "smallSquareFF,0,0",
-                    "smallSquareFF,0,0",
-                    "smallTriangleFF,0,0",
-                    "smallTriangle4FF,0,0"
+                    "smallSquareFF,1,3",
+                    "bigTriangle4FF,2,5",
+                    "smallTriangleFF,3,1",
+                    "smallSquareFF,1,4",
+                    "bigSquareFF,2,2",
+                    "bigSquareFF,2,4",
+                    "bigSquareFF,4,3",
+                    "smallTriangleFF,5,2",
+                    "smallTriangle4FF,5,5"
                 };
             case "Robot":
-                // TODO what's the soln
                 return new string[] {
-                    "smallSquareFF,0,0",
-                    "smallSquareFF,0,0",
-                    "smallTriangle3FF,0,0",
-                    "bigSquareFF,0,0",
-                    "bigSquareFF,0,0",
-                    "bigSquareFF,0,0",
-                    "bigSquareFF,0,0",
-                    "smallTriangle4FF,0,0",
-                    "smallTriangleFF,0,0"
+                    "smallSquareFF,5,1",
+                    "smallSquareFF,5,6",
+                    "smallTriangle3FF,1,4",
+                    "bigSquareFF,2,3",
+                    "bigSquareFF,3,2",
+                    "bigSquareFF,3,4",
+                    "bigSquareFF,5,3",
+                    "smallTriangle4FF,6,3",
+                    "smallTriangleFF,6,4"
                 };
             case "Sapling":
                 if (lvlCount == 0)
                 {
-                    // TODO what's the soln
                     return new string[] {
-                        "bigSquareFF,0,0",
-                        "bigTriangle4FF,0,0",
-                        "bigTriangleFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "smallSquareFF,0,0"
+                        "bigSquareFF,3,2",
+                        "bigTriangle4FF,3,4",
+                        "bigTriangleFF,4,3",
+                        "bigSquareFF,4,3",
+                        "bigSquareFF,5,2",
+                        "smallSquareFF,5,4"
                     };
                 }
                 else
                 {
-                    // TODO what's the soln
                     return new string[] {
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "smallSquareFF,0,0",
-                        "smallSquareFF,0,0",
-                        "smallTriangleFF,0,0",
-                        "bigTriangleFF,0,0",
-                        "bigTriangle3FF,0,0",
-                        "bigTriangle4FF,0,0"
+                        "bigSquareFF,2,2",
+                        "bigSquareFF,2,4",
+                        "bigSquareFF,2,3",
+                        "bigSquareFF,4,2",
+                        "bigSquareFF,4,4",
+                        "smallSquareFF,1,4",
+                        "smallSquareFF,6,3",
+                        "smallTriangleFF,1,3",
+                        "bigTriangleFF,3,3",
+                        "bigTriangle3FF,2,3",
+                        "bigTriangle4FF,4,3"
                     };
                 }
             case "Storyteller":
                 if (lvlCount == 0)
                 {
-                    // TODO what's the soln
                     return new string[] {
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigTriangleFF,0,0",
-                        "bigTriangle2FF,0,0",
-                        "bigTriangle3FF,0,0",
-                        "bigTriangle4FF,0,0",
-                        "smallSquareFF,0,0",
-                        "smallSquareFF,0,0"
+                        "bigSquareFF,2,2",
+                        "bigSquareFF,2,4",
+                        "bigSquareFF,4,2",
+                        "bigSquareFF,4,4",
+                        "bigTriangleFF,3,2",
+                        "bigTriangle2FF,5,1",
+                        "bigTriangle3FF,4,3",
+                        "bigTriangle4FF,2,4",
+                        "smallSquareFF,3,4",
+                        "smallSquareFF,6,1"
                     };
                 }
                 else
                 {
-                    // TODO what's the soln
                     return new string[] {
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "bigSquareFF,0,0",
-                        "smallSquareFF,0,0",
-                        "smallTriangle,0,0",
-                        "bigTriangle,0,0",
-                        "bigTriangle2,0,0",
-                        "bigTriangle2,0,0",
-                        "bigTriangle3,0,0",
-                        "bigTriangle4,0,0"
+                        "bigSquareFF,3,2",
+                        "bigSquareFF,6,0",
+                        "bigSquareFF,5,3",
+                        "bigSquareFF,4,3",
+                        "smallSquareFF,2,5",
+                        "smallTriangleFF,5,3",
+                        "bigTriangleFF,4,2",
+                        "bigTriangle2FF,3,3",
+                        "bigTriangle2FF,5,3",
+                        "bigTriangle3FF,5,1",
+                        "bigTriangle4FF,5,2"
                     };
                 }
             default:
