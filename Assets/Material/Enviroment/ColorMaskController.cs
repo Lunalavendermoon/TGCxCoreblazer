@@ -37,7 +37,7 @@ public class MultiCenterRevealController : MonoBehaviour
             {
                 Vector3 viewportPos = cam.WorldToViewportPoint(targets[i].transform.position);
                 centers[i] = new Vector4(viewportPos.x, viewportPos.y, 0, 0);
-                if (viewportPos.x < 0 || viewportPos.x > maxRadius || viewportPos.y < 0 || viewportPos.y > maxRadius)
+                if (viewportPos.x < -maxRadius || viewportPos.x > 2*maxRadius || viewportPos.y < -maxRadius || viewportPos.y > 2*maxRadius)
                 {
                     inCamera[i] = false;
                 }
@@ -60,7 +60,7 @@ public class MultiCenterRevealController : MonoBehaviour
         material.SetVectorArray("_Centers", centers);
         material.SetFloatArray("_Radii", displayRadii);
 
-        // Press number key 0 = toggle index 0
+        // Testing
         if (Input.GetKeyDown(KeyCode.Alpha0)) ToggleMask(0, 0);
         if (Input.GetKeyDown(KeyCode.Alpha1)) ToggleMask(0, 1);
         if (Input.GetKeyDown(KeyCode.Alpha2)) ToggleMask(0, 0.5f);
