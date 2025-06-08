@@ -12,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] PlayerMovement playerController;
     //[SerializeField] Movement2 playerController;
     [SerializeField] IslandManager islandManagerScript;
+    [SerializeField] ColorMaskController colorMaskController;
     PlayerInputActions playerInputActions;
 
     //wau using hashset smart, anne very big brain
@@ -35,6 +36,9 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         dialogueRunner.AddCommandHandler<string>("start_fade", FadeNPC);
+        dialogueRunner.AddCommandHandler<int>("remove_color", RemoveColor);
+        dialogueRunner.AddCommandHandler<int>("show_color", ShowColor);
+        dialogueRunner.AddCommandHandler<int>("half_show_color", HalfShowColor);
     }
 
     public void OnDisable()
@@ -89,6 +93,18 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public void RemoveColor(int index)
+    {   
+        colorMaskController.ToggleMask(index, 0f);
+    }
+    public void ShowColor(int index)
+    {
+        colorMaskController.ToggleMask(index, 1f);
+    }
+    public void HalfShowColor(int index)
+    {
+        colorMaskController.ToggleMask(index, .3f);
+    }
     public void SetQuestComplete(string npcName)
     {
         npcName = RemoveWhitespace(npcName);
