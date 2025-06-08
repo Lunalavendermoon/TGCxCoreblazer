@@ -91,7 +91,7 @@ public class IslandManager : MonoBehaviour
                 islandNumber += 1;
                 if(islandNumber == 4)
                 {
-                    Debug.Log("final trigger activated");
+                    //Debug.Log("final trigger activated");
                     finalCutsceneCollider.SetActive(true);
                 }
             }
