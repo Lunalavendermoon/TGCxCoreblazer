@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 [System.Serializable]
 public class SFXClipData
 {
@@ -28,6 +29,8 @@ public class AudioManager : MonoBehaviour
     private Dictionary<string, SFXClipData> bgmDict;
     private Dictionary<string, SFXClipData> sfxDict;
 
+    public DialogueRunner dialogueRunner;
+
     private void Awake()
     {
         if (Instance == null)
@@ -41,7 +44,10 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    private void Start()
+    {
+        dialogueRunner.AddCommandHandler<string>("play_bgm", PlayBGM);
+    }
     private void BuildDictionaries()
     {
         bgmDict = new Dictionary<string, SFXClipData>();

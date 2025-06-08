@@ -125,14 +125,14 @@ public class DialogueManager : MonoBehaviour
         npc = RemoveWhitespace(npc);
         killedNPCs.Add(npc);
 
-        foreach(string npcName in killedNPCs)
-        {
-            Debug.Log("killed " + npcName);
-        }
-        foreach (string npcName in savedNPCs)
-        {
-            Debug.Log("saved " + npcName);
-        }
+        //foreach(string npcName in killedNPCs)
+        //{
+        //    Debug.Log("killed " + npcName);
+        //}
+        //foreach (string npcName in savedNPCs)
+        //{
+        //    Debug.Log("saved " + npcName);
+        //}
 
         GameObject obj = GameObject.Find(npc);
         if (obj != null)

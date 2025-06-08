@@ -116,7 +116,10 @@ public class IslandManager : MonoBehaviour
         }
         StartCoroutine(delayExecution(4f));
         playerCamera.SetActive(true);
-        allCamerasList[islandNumber].SetActive(false);
+        if (islandNumber < allQuestsList.Count)
+        {
+            allCamerasList[islandNumber].SetActive(false);
+        }
     }
 
     private IEnumerator moveVertically(GameObject propToMove, float distanceY, float duration)

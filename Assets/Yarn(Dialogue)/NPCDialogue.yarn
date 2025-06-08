@@ -16,7 +16,7 @@ title: BabyBear
 {$npcName}: I haven’t seen you around.
 {$npcName}: Do you want to go on an adventure together?
 {$npcName}: It’s quite cold now…but we can still have a lot of fun!
-{$npcName}: Like playing in the snow together?
+{$npcName}: Like playing together?
 
 -> [Take memory]
     <<take_memory "{$npcName}" "{$memoryToTake}">>
@@ -244,6 +244,7 @@ title: Cube
 ===
 title: Start
 ---
+<<play_bgm "cutscene">>
 What are memories?
 Fragments of time. 
 Echoes of joy, sorrow, love… loss.
@@ -255,6 +256,7 @@ Collect what remains.
 ===
 title: Bad
 ---
+<<play_bgm "badEnd">>
 Yes...yes, you’ve done well.
 Every memory, mine again. Every thread pulled clean.
 With this, I awaken.
@@ -272,6 +274,7 @@ You gathered them all...and gave nothing.
 ===
 title: Good
 ---
+<<play_bgm "cutscene">>
 You...gave them away?
 I asked you to collect, not squander.
 These were mine — mine to use, to become again. You were to rebuild me!
