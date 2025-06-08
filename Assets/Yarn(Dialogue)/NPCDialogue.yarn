@@ -23,6 +23,7 @@ title: BabyBear
     {$npcName}: I remember that I…I? What did I do?
     {$npcName}: What did I feel?
     {$npcName}: I’m…I’m tired…
+    <<remove_color 9 >>
     <<start_fade "{$npcName}">>
 -> leave
 -> 3rd option for test
@@ -46,6 +47,7 @@ title: Adventurer
     {$npcName}: Why are we out here... all alone?
     {$npcName}: It’s cold…I just want to…
     {$npcName}: Never wake up again.
+    <<remove_color 11 >>
     <<start_fade "{$npcName}">>
 -> leave
 ===
@@ -64,6 +66,7 @@ title: LittleGirl
             {$npcName}: ...She wouldn’t want me to be alone, would she?
             {$npcName}: She always said flowers help things grow... even when you're sad.
             {$npcName}: I remember in that field over there…there should be flowers.
+            <<show_color 10 >>
         <<else>>
             You do not have the appropriate memory
         <<endif>>
@@ -87,6 +90,7 @@ title: ElderlyGardener
         {$npcName}: The miracle of life…it’s incredible. How something so small and fragile grows into something powerful.
         {$npcName}: Thank you. I remember now. Children bringing water. Friends trading cuttings. We built something... together.
         <<take_memory "{$npcName}" "{$memoryToReceive}">>
+        <<show_color 12 >>
     <<else>>
         You do not have the appropriate memory
     <<endif>>
@@ -97,6 +101,7 @@ title: ElderlyGardener
     {$npcName}: No warmth, no bloom, no reason.
     {$npcName}: Why… why would anyone grow anything…
     {$npcName}: In a world like this?
+    <<remove_color 12 >>
     <<start_fade "{$npcName}">>
 -> leave
 ===
@@ -123,6 +128,7 @@ title: Bird
         {$npcName}: Thank you so much.
         {$npcName}: Take this. It's from someone who never fit in... but was never left behind.
         <<take_memory "{$npcName}" "{$memoryToReceive}">>
+        <<show_color 14 >>
     <<else>>
         You do not have the appropriate memory
     <<endif>>
@@ -133,6 +139,7 @@ title: Bird
     {$npcName}: No one came.
     {$npcName}: Maybe they were never there.
     {$npcName}: Maybe I was never meant to be.
+    <<remove_color 14>>
     <<start_fade "{$npcName}">>
 -> leave
 ===
@@ -153,6 +160,7 @@ title: Robot
         {$npcName}: I was not built to feel. But I remember the warmth.
         {$npcName}: Identifying emotion… I was happy. May you carry it forward.
         <<take_memory "{$npcName}" "{$memoryToReceive}">>
+        <<show_color 16 >>
     <<else>>
         You do not have the appropriate memory
     <<endif>>
@@ -163,6 +171,7 @@ title: Robot
     {$npcName}: Connection: lost.
     {$npcName}: Heartbeat: simulated.
     {$npcName}: But no one ever…cared to return.
+    <<remove_color 16>>
     <<start_fade "{$npcName}">>
 -> leave
 ===
@@ -182,6 +191,7 @@ title: Sapling
         {$npcName}: ...So even the dark can birth dreams.
         {$npcName}: I’ll reach. Even if I don’t know what’s waiting.
         {$npcName}: Maybe...just maybe I’ll see the light.
+        <<show_color 17 >>
     <<else>>
         You do not have the appropriate memory
     <<endif>>
@@ -191,9 +201,11 @@ title: Sapling
     {$npcName}: No more light.
     {$npcName}: Nothing waits above.
     {$npcName}: Only stillness.
+    <<remove_color 17>>
     <<start_fade "{$npcName}">>
 -> leave
 ===
+
 title: Storyteller
 ---
 <<set $npcName = "Storyteller">>
@@ -211,6 +223,7 @@ title: Storyteller
         {$npcName}: Thank you, wanderer. You’ve returned more than laughter.
         {$npcName}: I shall spread my stories across the lands once again!
         {$npcName}: I’ll remember you, my savior!
+        <<show_color 18>>
     <<else>>
         You do not have the appropriate memory
     <<endif>>
@@ -220,6 +233,8 @@ title: Storyteller
     {$npcName}: They don’t come.
     {$npcName}: Only silence.
     {$npcName}: And silence has no stories.
+        {$npcName}: I’ll remember you, my savior!
+    <<remove_color 18>>
     <<start_fade "{$npcName}">>
 -> leave
 ===

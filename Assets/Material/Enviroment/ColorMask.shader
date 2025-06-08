@@ -37,6 +37,8 @@ Shader "Custom/ColorMask"
             float _Radii[MAX_CENTERS];
             int _CenterCount;
 
+            float3 _CameraWorldPos;
+
             Varyings vert(Attributes v)
             {
                 Varyings o;
@@ -51,15 +53,19 @@ Shader "Custom/ColorMask"
             {
                 float reveal = 0.0;
 
-                for (int idx = 0; idx < _CenterCount; idx++)
-                {
-                    float dist = distance(i.worldPos, _Centers[idx].xy);
-                    float radius = _Radii[idx];
-                    float strength = 1.0 - smoothstep(radius * 0.5, radius, dist);
-                    reveal = max(reveal, strength);
-                }
+        for (int idx = 0; idx < _CenterCount; idx++)
+         {
+             float distToCenter = distance(i.worldPos, _Centers[idx].xyz);
+            float distCameraToCenter = distance(_CameraWorldPos, _Centers[idx].xyz);
+            float scale = saturate(7 / distCameraToCenter); 
+            float scaledRadius = _Radii[idx] * scale*5;
 
-                float blend = saturate(reveal * _RevealAmount);
+            float strength = 1.0 - smoothstep(scaledRadius * 0.5, scaledRadius, distToCenter);
+            reveal = max(reveal, strength);
+        }
+
+
+                float blend = saturate(reveal +  _RevealAmount);
                 float4 col = tex2D(_MainTex, i.uv);
                 float lum = dot(col.rgb, float3(0.299, 0.587, 0.114));
                 float3 maskedColor = float3(lum, lum, lum);

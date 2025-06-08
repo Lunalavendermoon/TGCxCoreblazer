@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MultiCenterRevealController : MonoBehaviour
+public class ColorMaskController : MonoBehaviour
 {
     public GameObject[] targets;
     public float revealAmount = 1.0f;
@@ -37,7 +37,7 @@ public class MultiCenterRevealController : MonoBehaviour
             {
                 Vector3 viewportPos = cam.WorldToViewportPoint(targets[i].transform.position);
                 centers[i] = new Vector4(viewportPos.x, viewportPos.y, 0, 0);
-                if (viewportPos.x < -maxRadius || viewportPos.x > 2*maxRadius || viewportPos.y < -maxRadius || viewportPos.y > 2*maxRadius)
+                if (viewportPos.x < -maxRadius || viewportPos.x > 2 * maxRadius || viewportPos.y < -maxRadius || viewportPos.y > 2 * maxRadius)
                 {
                     inCamera[i] = false;
                 }
@@ -54,22 +54,20 @@ public class MultiCenterRevealController : MonoBehaviour
         for (int i = 0; i < MAX_CENTERS; i++)
         {
             displayRadii[i] = inCamera[i] ? radii[i] : 0f;
-            // Debug.Log($"Target {i} radius: {displayRadii[i]}");
+            //Debug.Log($"Target {i} radius: {displayRadii[i]}");
         }
         material.SetInt("_CenterCount", count);
         material.SetVectorArray("_Centers", centers);
         material.SetFloatArray("_Radii", displayRadii);
+        material.SetVector("_CameraWorldPos", cam.transform.position);
 
-        // Testing
-        if (Input.GetKeyDown(KeyCode.Alpha0)) ToggleMask(0, 0);
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ToggleMask(0, 1);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) ToggleMask(0, 0.5f);
+
     }
 
     public void ToggleMask(int index, float radius)
     {
         if (index < 0 || index >= MAX_CENTERS) return;
-
+        Debug.Log($"Toggling mask for index {index} to radius {radius}");
         if (animCoroutines[index] != null)
             StopCoroutine(animCoroutines[index]);
 
