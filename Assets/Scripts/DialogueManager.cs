@@ -18,7 +18,7 @@ public class DialogueManager : MonoBehaviour
     public HashSet<string> completedQuests = new HashSet<string>();
 
     public HashSet<string> killedNPCs = new HashSet<string>();
-    public HashSet<string> savedNPCs = new HashSet<string>();
+    public HashSet<string> savedNPCs = new HashSet<string>() { "a", "b", "c", "d", "r" };
 
     // for completed interactions with environment objects
     HashSet<string> completedInteractions = new HashSet<string>();

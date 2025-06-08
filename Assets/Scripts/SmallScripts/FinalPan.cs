@@ -9,10 +9,12 @@ public class FinalPan : MonoBehaviour
     [SerializeField] GameObject finalPanParent;
     [SerializeField] GameObject playerCamera;
     [SerializeField] GameObject player;
+    private bool finalPanFinished;
 
     private void Start()
     {
         //startPan();
+        finalPanFinished = false;
     }
     public void startPan()
     {
@@ -38,7 +40,11 @@ public class FinalPan : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
 
-        //playerCamera.SetActive(true);
-        //prevCamera.SetActive(false);
+        finalPanFinished = true;
+    }
+
+    public bool getPanFinished()
+    {
+        return finalPanFinished;
     }
 }

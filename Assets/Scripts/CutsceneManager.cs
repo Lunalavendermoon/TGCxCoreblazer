@@ -7,6 +7,8 @@ using Yarn.Unity;
 
 public class CutsceneManager : MonoBehaviour
 {
+    [SerializeField] FinalPan finalPanScript;
+    [SerializeField] CreditsAnimation creditsScript;
     public GameObject linePresenter, lineBG, BG;
     public DialogueRunner dialogueRunner;
     //public DialogueManager dialogueManager;
@@ -36,7 +38,13 @@ public class CutsceneManager : MonoBehaviour
     }
     public CanvasGroup bgCanvasGroup; // Drag your BG panel here in the inspector
     public float fadeOutDuration = 0.5f; // Adjustable fade time
-
+    private void Update()
+    {
+        if (finalPanScript.getPanFinished())
+        {
+            creditsScript.rollCredits();
+        }
+    }
     public void PlayCutscene(string name)
     {
         player.SetMovementEnabled(false);
@@ -61,10 +69,12 @@ public class CutsceneManager : MonoBehaviour
             case "bad":
                 badCutscene.SetActive(true);
                 badEnd.Play();
+                AudioManager.Instance.PlayBGM("Silence");
                 break;
             case "good":
                 goodCutscene.SetActive(true);
                 goodEnd.Play();
+                AudioManager.Instance.PlayBGM("cutscene");
                 break;
         }
         // // Fade out the BG instead of SetActive(false)
@@ -90,17 +100,6 @@ public class CutsceneManager : MonoBehaviour
         overlayImage.color = col2;
     }
 
-    private IEnumerator PlayWhenPrepared(VideoPlayer vp)
-    {
-        vp.Prepare();
-
-        // Wait until the video is ready
-        while (!vp.isPrepared)
-            yield return null;
-
-        vp.Play();
-    }
-
     void OnVideoEnd(VideoPlayer vp)
     {
         Debug.Log("video ended");
@@ -121,6 +120,13 @@ public class CutsceneManager : MonoBehaviour
             {
                 PlayCutscene("good");
             }
+        }
+        if (vp == goodEnd)
+        {
+            dialogueRunner.StartDialogue("GoodEnd");
+            BG.GetComponent<Image>().color = Color.white;
+            dialogue.color = Color.black;
+            bgCanvasGroup.alpha = 1f;
         }
         vp.gameObject.SetActive(false);
     }

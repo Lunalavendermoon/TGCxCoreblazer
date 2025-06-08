@@ -22,6 +22,7 @@ public class UIInputHandler : MonoBehaviour
     [SerializeField] GameObject newSpawnPointUI;
     [SerializeField] GameObject dialogueUI;
     [SerializeField] GameObject blockPuzzle;
+    [SerializeField] GameObject controlsUI;
     GraphicRaycaster UI_raycaster;
 
     PointerEventData click_data;
@@ -185,6 +186,33 @@ public class UIInputHandler : MonoBehaviour
         messageWindow.SetActive(false);
         //Debug.Log(messageWindow.name + " hidden");
     }
+
+    public void toggleControlsUI(bool on)
+    {
+        if(on)
+        {
+            controlsUI.SetActive(true);
+        }
+        else
+        {
+            controlsUI.SetActive(false);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //public void ShowMemoryGained(string memoryName)
     //{

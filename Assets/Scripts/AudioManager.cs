@@ -55,6 +55,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBGM(string clipName)
     {
+        if (clipName == "Silence")
+        {
+            bgmSource.Stop();
+            bgmSource.clip = null;
+            return;
+        }
+
         if (!bgmDict.TryGetValue(clipName, out var data) || data.clip == null) return;
 
         bgmSource.clip = data.clip;
@@ -62,6 +69,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.loop = true;
         bgmSource.Play();
     }
+
 
     public void PlaySFX(string clipName)
     {

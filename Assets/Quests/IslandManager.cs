@@ -25,6 +25,8 @@ public class IslandManager : MonoBehaviour
     [SerializeField] GameObject Platform2Camera;
     [SerializeField] GameObject Platform3Camera;
 
+    [SerializeField] GameObject finalCutsceneCollider;
+
     private List<QuestList> allQuestsList;
     private List<GameObject> allPlatformsList;
     private List<GameObject> allCamerasList;
@@ -65,6 +67,8 @@ public class IslandManager : MonoBehaviour
             Vector3 currPosition = platformsParent.transform.position;
             platformsParent.transform.position = new Vector3(currPosition.x, currPosition.y - startingDistance, currPosition.z);
         }
+
+        finalCutsceneCollider.SetActive(false);
     }
     public void CheckCurrentIslandStatus()
     {
@@ -85,6 +89,11 @@ public class IslandManager : MonoBehaviour
                 StartCoroutine(startPlatformRisingAnimation(platformParent));
 
                 islandNumber += 1;
+                if(islandNumber == 4)
+                {
+                    Debug.Log("final trigger activated");
+                    finalCutsceneCollider.SetActive(true);
+                }
             }
             else
             {
@@ -143,18 +152,21 @@ public class IslandManager : MonoBehaviour
 
     public void toggleQuestUI()
     {
-        List<string> currentIslandQuests = allQuestsList[islandNumber].getQuestList();
-        int numCompleteQuests = countCompleteQuests(currentIslandQuests);
-        TextMeshProUGUI progressText = questProgressText.GetComponent<TextMeshProUGUI>();
+        if (islandNumber < allQuestsList.Count)
+        {
+            List<string> currentIslandQuests = allQuestsList[islandNumber].getQuestList();
+            int numCompleteQuests = countCompleteQuests(currentIslandQuests);
+            TextMeshProUGUI progressText = questProgressText.GetComponent<TextMeshProUGUI>();
 
-        if (numCompleteQuests != currentIslandQuests.Count)
-        {
-            questProgressUI.SetActive(true);
-            progressText.text = "Interact with NPCs (" + numCompleteQuests + "/" + currentIslandQuests.Count + ")";
-        }
-        else
-        {
-            questProgressUI.SetActive(false);
+            if (numCompleteQuests != currentIslandQuests.Count)
+            {
+                questProgressUI.SetActive(true);
+                progressText.text = "Interact with NPCs (" + numCompleteQuests + "/" + currentIslandQuests.Count + ")";
+            }
+            else
+            {
+                questProgressUI.SetActive(false);
+            }
         }
     }
 

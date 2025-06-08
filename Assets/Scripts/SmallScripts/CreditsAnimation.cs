@@ -19,7 +19,7 @@ public class CreditsAnimation : MonoBehaviour
         canvasTransform = creditUI.GetComponent<RectTransform>();
         animationDuration = 15f;
 
-        rollCredits();
+        //rollCredits();
     }
 
     public void rollCredits()
